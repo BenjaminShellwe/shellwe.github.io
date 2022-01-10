@@ -3,7 +3,7 @@
         <page-header title="">
             <template #content>
                 <div>
-                    <div style="margin-bottom: 5px;">现在用于毕业设计开发</div>
+                    <div style="margin-bottom: 5px;">毕业设计开发</div>
                 </div>
             </template>
             <!--            <el-button-group style="margin-right: 10px;">-->
@@ -36,51 +36,39 @@
             <el-col :lg="16">
                 <el-row :gutter="20" style="margin: 0 -10px 20px -10px;">
                     <el-col :md="4">
-                        <div id="shellwe4" class="icon-box icon-box-1" @click="onIconClick('information',true)">
+                        <div :title="tips.information" class="icon-box icon-box-1" @click="onIconClick('information',true)">
                             <i class="el-icon-info" />
-                            <div class="title">
-                                <span :title="tips.information">信息总览</span>
-                            </div>
+                            <div class="title">信息总览</div>
                         </div>
                     </el-col>
                     <el-col :md="4">
-                        <div class="icon-box icon-box-2" @click="onIconClick('dictionary','')">
+                        <div :title="tips.dictionary" class="icon-box icon-box-2" @click="onIconClick('dictionary','')">
                             <i class="el-icon-notebook-2" />
-                            <div class="title">
-                                <span :title="tips.dictionary">个人字典</span>
-                            </div>
+                            <div class="title">个人字典</div>
                         </div>
                     </el-col>
                     <el-col :md="4">
-                        <div class="icon-box icon-box-3" @click="onIconClick('chat','')">
+                        <div :title="tips.chat" class="icon-box icon-box-3" @click="onIconClick('chat','')">
                             <i class="el-icon-chat-line-square" />
-                            <div class="title">
-                                <span :title="tips.chat">即时通信</span>
-                            </div>
+                            <div class="title">即时通信</div>
                         </div>
                     </el-col>
                     <el-col :md="4">
-                        <div class="icon-box icon-box-6" @click="onIconClick('extraFunction','')">
+                        <div :title="tips.extraFunction" class="icon-box icon-box-6" @click="onIconClick('extraFunction','')">
                             <i class="el-icon-camera" />
-                            <div class="title">
-                                <span :title="tips.extraFunction">更多功能</span>
-                            </div>
+                            <div class="title">更多功能</div>
                         </div>
                     </el-col>
                     <el-col :md="4">
-                        <div class="icon-box icon-box-5" @click="onIconClick('message','')">
+                        <div :title="tips.message" class="icon-box icon-box-5" @click="onIconClick('message','')">
                             <i class="el-icon-message" />
-                            <div class="title">
-                                <span :title="tips.message">站内通知</span>
-                            </div>
+                            <div class="title">站内通知</div>
                         </div>
                     </el-col>
                     <el-col :md="4">
-                        <div class="icon-box icon-box-4" @click="onIconClick('help','')">
+                        <div :title="tips.help" class="icon-box icon-box-4" @click="onIconClick('help','')">
                             <i class="el-icon-help" />
-                            <div class="title">
-                                <span :title="tips.help">快速帮助</span>
-                            </div>
+                            <div class="title">快速帮助</div>
                         </div>
                     </el-col>
                 </el-row>

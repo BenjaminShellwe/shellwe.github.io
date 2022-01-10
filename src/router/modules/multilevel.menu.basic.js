@@ -5,25 +5,25 @@ import EmptyLayout from '@/layout/empty'
 export default {
     path: '/multilevel_menu_basic',
     component: Layout,
-    redirect: '/multilevel_menu_basic/page',
+    redirect: '/multilevel_menu_basic/overview',
     name: 'multilevelMenuBasic',
     meta: {
-        title: '基础功能/still under construction',
+        title: '基础功能',
         icon: 'sidebar-menu'
     },
     children: [
         {
             //    模块(1) 信息总览010101
-            path: '',
+            path: 'overview',
             name: 'InformationChartOverview',
             component: () => import('@/views/index'),
             meta: {
-                title: '基本信息总览/still under construction'
+                title: '基本信息总览'
             }
         },
         {
             //    模块(3) 字典 通知 基础
-            path: '',
+            path: 'management',
             name: 'SystemFeaturesManagement',
             component: EmptyLayout,
             redirect: '',
@@ -32,9 +32,9 @@ export default {
             },
             children: [
                 {
-                    path: '',
+                    path: 'dic',
                     name: 'Dictionary',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
+                    component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                     meta: {
                         title: '数据字典'
                         //    前端功能要求1 设计交互页面
@@ -43,7 +43,7 @@ export default {
                     }
                 },
                 {
-                    path: '',
+                    path: 'notice',
                     name: 'Notification',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
@@ -54,7 +54,7 @@ export default {
                     }
                 },
                 {
-                    path: '',
+                    path: 'basic',
                     name: 'Basic',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
@@ -68,7 +68,7 @@ export default {
         },
         {
             //    模块(7) 角色,权限,用户,绩效,背调,安全,人管
-            path: '',
+            path: 'account_management',
             name: 'AccountContentManagement',
             // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/bankAccountManagement'),
             meta: {
@@ -76,7 +76,7 @@ export default {
             },
             children: [
                 {
-                    path: '',
+                    path: 'personal',
                     name: 'Personal',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
                     meta: {
@@ -86,7 +86,7 @@ export default {
                     }
                 },
                 {
-                    path: '',
+                    path: 'enterprises',
                     name: 'Enterprises',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
@@ -97,7 +97,7 @@ export default {
                     }
                 },
                 {
-                    path: '',
+                    path: 'security',
                     name: 'Security',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
@@ -111,7 +111,7 @@ export default {
         },
         {
             //    模块(4) 日志,监控,数统,脱敏
-            path: '',
+            path: 'monitor_manage',
             name: 'MonitoringManagement',
             // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/bankAccountManagement'),
             meta: {
@@ -119,7 +119,7 @@ export default {
             },
             children: [
                 {
-                    path: '',
+                    path: 'log',
                     name: 'Logging',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
                     meta: {
@@ -129,7 +129,7 @@ export default {
                     }
                 },
                 {
-                    path: '',
+                    path: 'monitor',
                     name: 'Monitoring',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
@@ -139,7 +139,7 @@ export default {
                     }
                 },
                 {
-                    path: '',
+                    path: 'statistic',
                     name: 'Statistics',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
@@ -149,7 +149,7 @@ export default {
                     }
                 },
                 {
-                    path: '',
+                    path: 'desensitize',
                     name: 'Desensitization',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
@@ -162,7 +162,7 @@ export default {
         },
         {
             //    模块(1) 帮助
-            path: '',
+            path: 'help',
             name: 'HelpManagement',
             // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/bankAccountManagement'),
             meta: {
@@ -170,7 +170,7 @@ export default {
             },
             children: [
                 {
-                    path: '',
+                    path: 'manual',
                     name: 'Manual',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
                     meta: {
@@ -180,7 +180,7 @@ export default {
                     }
                 },
                 {
-                    path: '',
+                    path: 'online',
                     name: 'Intelligence',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
@@ -190,7 +190,7 @@ export default {
                     }
                 },
                 {
-                    path: '',
+                    path: 'artificial',
                     name: 'Artificiality',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
