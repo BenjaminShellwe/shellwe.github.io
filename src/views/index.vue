@@ -1,6 +1,6 @@
 <template>
     <div>
-        <page-header title="">
+        <page-header title="信息总览">
             <template #content>
                 <div>
                     <div style="margin-bottom: 5px;">毕业设计开发</div>
@@ -60,7 +60,7 @@
                         </div>
                     </el-col>
                     <el-col :md="4">
-                        <div :title="tips.message" class="icon-box icon-box-5" @click="onIconClick('message','')">
+                        <div :title="tips.message" class="icon-box icon-box-5" @click="onIconClick('message',true)">
                             <i class="el-icon-message" />
                             <div class="title">站内通知</div>
                         </div>
@@ -130,6 +130,8 @@ export default {
                     router.push({path: '/multilevel_menu_basic/management/personal_dic'})
                 } if (val == 'chat') {
                     router.push({path: '/multilevel_menu_advanced/chat'})
+                } if (val == 'message') {
+                    router.push({path: '/multilevel_menu_advanced/message'})
                 } else {
                     console.log('Receiving an error!')
                 }

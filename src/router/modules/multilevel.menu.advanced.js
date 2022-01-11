@@ -12,14 +12,6 @@ export default {
     },
     children: [
         {
-            path: 'list1',
-            name: 'breadcrumbExampleList1',
-            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/example/breadcrumb_example/list1'),
-            meta: {
-                title: '列表1（平级模式）'
-            }
-        },
-        {
             path: 'chat',
             name: 'ChatRoom',
             component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/global_func_manage/chat/chat'),
@@ -27,6 +19,24 @@ export default {
                 title: '即时通信',
                 sidebar: false,
                 breadcrumb: false
+            }
+        },
+        {
+            path: 'message',
+            name: 'Message',
+            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/global_func_manage/message/message'),
+            meta: {
+                title: '站内通知',
+                sidebar: false,
+                breadcrumb: false
+            }
+        },
+        {
+            path: 'list1',
+            name: 'breadcrumbExampleList1',
+            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/example/breadcrumb_example/list1'),
+            meta: {
+                title: '列表1（平级模式）'
             }
         },
         {

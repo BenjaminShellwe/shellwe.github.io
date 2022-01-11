@@ -60,7 +60,7 @@ export default {
                 {
                     path: 'notice',
                     name: 'Notification',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
+                    component: () => import('@/views/global_func_manage/message/global_message'),
                     meta: {
                         title: '系统通知',
                         sidebar: true,

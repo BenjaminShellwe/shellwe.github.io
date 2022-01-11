@@ -1,6 +1,6 @@
 <template>
     <div>
-        <page-header>
+        <page-header title="个人字典">
             <template #content>
                 <div>
                     <div @click="back" @mouseover="changeMask(true)" @mouseout="changeMask(false)">返回上一页</div>
@@ -115,7 +115,7 @@
                 </el-table-column>
             </el-table>
             <el-dialog
-                title="操作提示"
+                title="来自shellwe的警告"
                 :visible.sync="dialogVisible"
                 width="30%"
             >

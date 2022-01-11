@@ -107,7 +107,7 @@
                 </el-table-column>
             </el-table>
             <el-dialog
-                title="操作提示"
+                title="来自shellwe的警告"
                 :visible.sync="dialogVisible"
                 width="30%"
             >
