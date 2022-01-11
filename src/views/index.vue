@@ -42,7 +42,7 @@
                         </div>
                     </el-col>
                     <el-col :md="4">
-                        <div :title="tips.dictionary" class="icon-box icon-box-2" @click="onIconClick('dictionary','')">
+                        <div :title="tips.dictionary" class="icon-box icon-box-2" @click="onIconClick('dictionary',true)">
                             <i class="el-icon-notebook-2" />
                             <div class="title">个人字典</div>
                         </div>
@@ -125,9 +125,11 @@ export default {
         onIconClick(val, state) {
             function executeFunc(val) {
                 if (val == 'information') {
-                    router.go(1)
+                    router.go(0)
+                } if (val == 'dictionary') {
+                    router.push({path: '/multilevel_menu_basic/management/personal_dic'})
                 } else {
-                    console.log('Receiving an error  information')
+                    console.log('Receiving an error!')
                 }
             }
 
@@ -138,22 +140,13 @@ export default {
                 })
             } else {
                 executeFunc(val)
+                console.log('执行')
             }
         },
         timeNow() {
             var h = new Date().getHours()
             var m = new Date().getMinutes()
             return h + ':' + m
-        },
-        onIconMouseover() {
-            function $() {
-            }
-            $(function() {
-                $('shellwe5').one('mouseover', function() {
-                    console.log('Clicking action will refresh the page')
-                    $(this).unbind()
-                })
-            })
         }
     }
 }

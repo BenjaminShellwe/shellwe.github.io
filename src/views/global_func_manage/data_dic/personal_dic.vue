@@ -9,7 +9,7 @@
                     <el-col :span="24">
                         <div class="textHead">
                             <el-form-item>
-                                <span>高级</span>
+                                <div @click="back" @mouseover="changeMask(true)" @mouseout="changeMask(false)">返回</div>
                             </el-form-item>
                         </div>
                     </el-col>
@@ -132,6 +132,21 @@
 
 <script>
 export default {
-    name: 'personal_dic'
+    name: 'PersonalDic',
+    methods: {
+        back() {
+            history.go(-1)
+        },
+        // 修改二维码显示状态
+        changeMask: function(b) {
+            if (b) {
+                document.getElementById('abc').style.cursor = 'pointer'
+            } else {
+                document.getElementById('abc').style.cursor = 'wait'
+            }
+            console.log(b)
+        }
+
+    }
 }
 </script>

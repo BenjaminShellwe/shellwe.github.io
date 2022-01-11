@@ -17,8 +17,11 @@ export default {
             path: 'overview',
             name: 'InformationChartOverview',
             component: () => import('@/views/index'),
+            redirect: '',
             meta: {
-                title: '基本信息总览'
+                title: '基本信息总览',
+                sidebar: false,
+                breadcrumb: false
             }
         },
         {
@@ -26,20 +29,32 @@ export default {
             path: 'management',
             name: 'SystemFeaturesManagement',
             component: EmptyLayout,
-            redirect: '',
+            redirect: '/multilevel_menu_basic/management/global_dic',
             meta: {
                 title: '系统功能管理'
             },
             children: [
                 {
-                    path: 'dic',
-                    name: 'Dictionary',
+                    path: 'global_dic',
+                    name: 'Dictionary_G',
                     component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                     meta: {
-                        title: '数据字典'
+                        title: '数据字典',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1 设计交互页面
                         //    前端功能要求2 完善访问路径
                         //    后端功能要求1 实现用户字典
+                    }
+                },
+                {
+                    path: 'personal_dic',
+                    name: 'Dictionary_P',
+                    component: () => import('@/views/global_func_manage/data_dic/personal_dic'),
+                    meta: {
+                        title: '个人字典',
+                        sidebar: false,
+                        breadcrumb: false
                     }
                 },
                 {
@@ -47,7 +62,9 @@ export default {
                     name: 'Notification',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
-                        title: '系统通知'
+                        title: '系统通知',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1 设计交互页面
                         //    前端功能要求2 完善访问路径
                         //    后端功能要求1 实现通知管理(全局/指定)
@@ -58,7 +75,9 @@ export default {
                     name: 'Basic',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
-                        title: '基础设置'
+                        title: '基础设置',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1 设计交互页面
                         //    前端功能要求2 完善访问路径
                         //    后端功能要求1 首页 菜单等
@@ -72,7 +91,9 @@ export default {
             name: 'AccountContentManagement',
             // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/bankAccountManagement'),
             meta: {
-                title: '账户内容管理'
+                title: '账户内容管理',
+                sidebar: true,
+                breadcrumb: true
             },
             children: [
                 {
@@ -80,7 +101,9 @@ export default {
                     name: 'Personal',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
                     meta: {
-                        title: '个人账户'
+                        title: '个人账户',
+                        sidebar: true,
+                        breadcrumb: true
                     //    前端功能要求1 根据登录账户判断是否为改角色 完善访问路径和交互页面
                     //    后端功能要求1 实现 角色,权限,用户,绩效,背调 功能
                     }
@@ -90,7 +113,9 @@ export default {
                     name: 'Enterprises',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
-                        title: '企业账户'
+                        title: '企业账户',
+                        sidebar: true,
+                        breadcrumb: true
                     //    前端功能要求1 根据登录账户判断是否为改角色 完善访问路径和交互页面
                     //    后端功能要求1 实现 角色,权限,用户,绩效,背调 功能 人员管理
                     //    后端2 企业基础信息及设置
@@ -101,7 +126,9 @@ export default {
                     name: 'Security',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
-                        title: '安全设置'
+                        title: '安全设置',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1 根据登录账户判断是否为改角色 完善访问路径和交互页面
                         //    后端功能要求1 实现 角色,权限,用户,绩效,背调 功能
                         //    后端2 企业基础信息及设置,安全设置
@@ -123,7 +150,9 @@ export default {
                     name: 'Logging',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
                     meta: {
-                        title: '系统日志'
+                        title: '系统日志',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1  完善访问路径和交互页面
                         //    后端功能要求1  日志
                     }
@@ -133,7 +162,9 @@ export default {
                     name: 'Monitoring',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
-                        title: '监控设置'
+                        title: '监控设置',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1 完善访问路径和交互页面
                         //    后端功能要求1 行为监控
                     }
@@ -143,7 +174,9 @@ export default {
                     name: 'Statistics',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
-                        title: '数据统计'
+                        title: '数据统计',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1 完善访问路径和交互页面
                         //    后端功能要求1 统计
                     }
@@ -153,7 +186,9 @@ export default {
                     name: 'Desensitization',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
-                        title: '数据脱敏'
+                        title: '数据脱敏',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1 完善访问路径和交互页面
                         //    后端功能要求1 数据脱敏
                     }
@@ -174,7 +209,9 @@ export default {
                     name: 'Manual',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
                     meta: {
-                        title: '使用手册'
+                        title: '使用手册',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1  完善访问路径和交互页面
                         //    后端功能要求1  个人以及企业
                     }
@@ -184,7 +221,9 @@ export default {
                     name: 'Intelligence',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
-                        title: '在线助理'
+                        title: '在线助理',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1 完善访问路径和交互页面
                         //    后端功能要求1 AI
                     }
@@ -194,7 +233,9 @@ export default {
                     name: 'Artificiality',
                     // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
                     meta: {
-                        title: '人工客服'
+                        title: '人工客服',
+                        sidebar: true,
+                        breadcrumb: true
                         //    前端功能要求1 完善访问路径和交互页面
                         //    后端功能要求1 及时聊天
                     }
