@@ -1,26 +1,30 @@
 <template>
     <div>
+        <page-header>
+            <template #content>
+                <div>
+                    <div @click="back" @mouseover="changeMask(true)" @mouseout="changeMask(false)">返回上一页</div>
+                </div>
+            </template>
+        </page-header>
         <!-- 卡片视图区域 -->
         <el-card class="box-card itemSpacing">
-            <div style="border-bottom: 1px solid #c0c4cc;" />
             <el-form :inline="true">
                 <!--卡片区域第一行-->
                 <el-row>
                     <el-col :span="24">
-                        <div class="textHead">
-                            <el-form-item>
-                                <div @click="back" @mouseover="changeMask(true)" @mouseout="changeMask(false)">返回</div>
-                            </el-form-item>
+                        <div>
+                            <el-form-item />
                         </div>
                     </el-col>
                 </el-row>
                 <!--卡片区域第二行-->
                 <el-row>
                     <el-col :span="8">
-                        <el-form-item label="项目名称" prop="projectName">
+                        <el-form-item label="模板名称" prop="modelName">
                             <el-input
                                 size="small"
-                                placeholder="请输入项目名称"
+                                placeholder="请输入模板名称"
                                 clearable
                             />
                         </el-form-item>
@@ -34,11 +38,12 @@
                             />
                         </el-form-item>
                     </el-col>
+
                     <el-col :span="8">
                         <div class="elbRight">
-                            <el-button>重置</el-button>
-                            <el-button type="primary">查询</el-button>
-                            <el-button type="primary">新增</el-button>
+                            <el-button @click="dialogVisible = true">重置</el-button>
+                            <el-button type="primary" @click="dialogVisible = true">查询</el-button>
+                            <el-button type="primary" @click="dialogVisible = true">新增</el-button>
                         </div>
                     </el-col>
                 </el-row>
@@ -55,14 +60,14 @@
                     fixed
                     prop="none"
                     label="列"
-                    width="50"
+                    width="80"
                     type="index"
                 />
                 <el-table-column
                     fixed
                     prop="name"
                     label="名称"
-                    width="250"
+                    width="300"
                 />
                 <el-table-column
                     prop="notes"
@@ -70,31 +75,34 @@
                     width="360"
                 />
                 <el-table-column
+                    prop="state"
+                    label="状态"
+                    width="200"
+                />
+                <el-table-column
                     fixed="right"
                     label="操作"
-                    width="320"
+                    width="360"
                 >
                     <template>
-                        <el-dropdown size="small" split-button type="primary">
+                        <el-dropdown size="small" split-button type="primary" @click="dialogVisible = true">
                             编辑
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item
-                                    @click="dialogVisible = true"
-                                >
-                                    网银账号授权
+                            <el-dropdown-menu slot="dropdown" @click="dialogVisible = true">
+                                <el-dropdown-item @click="dialogVisible = true">
+                                    信息变更
                                 </el-dropdown-item>
-                                <el-dropdown-item
-                                    @click="dialogVisible = true"
-                                >
-                                    修改部门权限
+                                <el-dropdown-item>
+                                    修改权限
                                 </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
+                        &nbsp;
                         <el-button
                             type="primary"
                             size="small"
+                            @click="dialogVisible = true"
                         >
-                            查看流水详情
+                            详情
                         </el-button>
                         <el-button
                             type="danger"
@@ -111,9 +119,9 @@
                 :visible.sync="dialogVisible"
                 width="30%"
             >
-                <span>时间原因修改增加的操作暂时不做添加</span>
+                <span>开发中 此操作暂时拒绝</span>
                 <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取 消</el-button>
+                    <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
                     <el-button type="primary" @click="dialogVisible = false">明 白</el-button>
                 </span>
             </el-dialog>
@@ -131,13 +139,39 @@
 </template>
 
 <script>
+import PageHeader from '@/components/PageHeader'
 export default {
     name: 'PersonalDic',
+    components: {PageHeader},
+    data() {
+        return {
+            dialogVisible: false,
+            currentPage2: 5,
+            currentPage3: 5,
+            currentPage4: 4,
+            tableData: [{
+                name: 'Shellwe',
+                notes: '测试数据',
+                state: '正常'
+            }, {
+                name: 'Shellwe',
+                notes: '响应操作',
+                state: '停用'
+            }, {
+                name: 'Shellwe',
+                notes: '不会改变',
+                state: '弃用'
+            }]
+        }
+    },
+    mounted: function() {
+        this.loadInformation()
+    },
     methods: {
         back() {
             history.go(-1)
         },
-        // 修改二维码显示状态
+        // 修改显示状态
         changeMask: function(b) {
             if (b) {
                 document.getElementById('abc').style.cursor = 'pointer'
@@ -145,8 +179,13 @@ export default {
                 document.getElementById('abc').style.cursor = 'wait'
             }
             console.log(b)
+        },
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`)
+        },
+        handleCurrentChange(val) {
+            console.log(`当前页: ${val}`)
         }
-
     }
 }
 </script>
