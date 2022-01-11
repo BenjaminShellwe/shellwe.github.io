@@ -48,7 +48,7 @@
                         </div>
                     </el-col>
                     <el-col :md="4">
-                        <div :title="tips.chat" class="icon-box icon-box-3" @click="onIconClick('chat','')">
+                        <div :title="tips.chat" class="icon-box icon-box-3" @click="onIconClick('chat',true)">
                             <i class="el-icon-chat-line-square" />
                             <div class="title">即时通信</div>
                         </div>
@@ -128,6 +128,8 @@ export default {
                     router.go(0)
                 } if (val == 'dictionary') {
                     router.push({path: '/multilevel_menu_basic/management/personal_dic'})
+                } if (val == 'chat') {
+                    router.push({path: '/multilevel_menu_advanced/chat'})
                 } else {
                     console.log('Receiving an error!')
                 }
@@ -144,8 +146,8 @@ export default {
             }
         },
         timeNow() {
-            var h = new Date().getHours()
-            var m = new Date().getMinutes()
+            const h = new Date().getHours()
+            const m = new Date().getMinutes()
             return h + ':' + m
         }
     }

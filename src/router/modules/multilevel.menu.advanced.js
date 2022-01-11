@@ -7,7 +7,7 @@ export default {
     redirect: '/multilevel_menu_advanced/list1',
     name: 'breadcrumbExample',
     meta: {
-        title: '要钱功能',
+        title: '高级功能',
         icon: 'currency-yen'
     },
     children: [
@@ -17,6 +17,16 @@ export default {
             component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/example/breadcrumb_example/list1'),
             meta: {
                 title: '列表1（平级模式）'
+            }
+        },
+        {
+            path: 'chat',
+            name: 'ChatRoom',
+            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/global_func_manage/chat/chat'),
+            meta: {
+                title: '即时通信',
+                sidebar: false,
+                breadcrumb: false
             }
         },
         {

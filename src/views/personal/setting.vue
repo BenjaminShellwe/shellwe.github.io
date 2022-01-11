@@ -45,7 +45,7 @@
                         <div class="item">
                             <div class="content">
                                 <div class="title">密保手机</div>
-                                <div class="desc">已绑定手机：187****3441</div>
+                                <div class="desc">已绑定手机：176****2321</div>
                             </div>
                             <div class="action">
                                 <el-button type="text">修改</el-button>
