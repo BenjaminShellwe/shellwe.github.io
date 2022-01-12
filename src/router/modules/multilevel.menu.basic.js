@@ -73,7 +73,7 @@ export default {
                 {
                     path: 'basic',
                     name: 'Basic',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
+                    component: () => import('@/views/global_func_manage/basic_settings/basic'),
                     meta: {
                         title: '基础设置',
                         sidebar: true,
@@ -89,7 +89,8 @@ export default {
             //    模块(7) 角色,权限,用户,绩效,背调,安全,人管
             path: 'account_management',
             name: 'AccountContentManagement',
-            // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/bankAccountManagement'),
+            component: EmptyLayout,
+            redirect: '/multilevel_menu_basic/account_management/personal',
             meta: {
                 title: '账户内容管理',
                 sidebar: true,
@@ -99,7 +100,7 @@ export default {
                 {
                     path: 'personal',
                     name: 'Personal',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
+                    component: () => import('@/views/account_management/personal/personal'),
                     meta: {
                         title: '个人账户',
                         sidebar: true,
@@ -111,7 +112,7 @@ export default {
                 {
                     path: 'enterprises',
                     name: 'Enterprises',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
+                    component: () => import('@/views/account_management/enterprises/enterprises'),
                     meta: {
                         title: '企业账户',
                         sidebar: true,
@@ -124,7 +125,7 @@ export default {
                 {
                     path: 'security',
                     name: 'Security',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
+                    component: () => import('@/views/account_management/security/security'),
                     meta: {
                         title: '安全设置',
                         sidebar: true,
@@ -140,7 +141,8 @@ export default {
             //    模块(4) 日志,监控,数统,脱敏
             path: 'monitor_manage',
             name: 'MonitoringManagement',
-            // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/bankAccountManagement'),
+            component: EmptyLayout,
+            redirect: '/multilevel_menu_basic/monitor_manage/log',
             meta: {
                 title: '账户监控管理'
             },
@@ -148,7 +150,7 @@ export default {
                 {
                     path: 'log',
                     name: 'Logging',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
+                    component: () => import('@/views/monitor_manage/log/log'),
                     meta: {
                         title: '系统日志',
                         sidebar: true,
@@ -160,7 +162,7 @@ export default {
                 {
                     path: 'monitor',
                     name: 'Monitoring',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
+                    component: () => import('@/views/monitor_manage/monitor/monitor'),
                     meta: {
                         title: '监控设置',
                         sidebar: true,
@@ -172,7 +174,7 @@ export default {
                 {
                     path: 'statistic',
                     name: 'Statistics',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
+                    component: () => import('@/views/monitor_manage/statistic/statistic'),
                     meta: {
                         title: '数据统计',
                         sidebar: true,
@@ -184,7 +186,7 @@ export default {
                 {
                     path: 'desensitize',
                     name: 'Desensitization',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
+                    component: () => import('@/views/monitor_manage/desensitize/desensitize'),
                     meta: {
                         title: '数据脱敏',
                         sidebar: true,
@@ -199,7 +201,8 @@ export default {
             //    模块(1) 帮助
             path: 'help',
             name: 'HelpManagement',
-            // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/bankAccountManagement'),
+            component: EmptyLayout,
+            redirect: '/multilevel_menu_basic/help/manual',
             meta: {
                 title: '支援以及帮助'
             },
@@ -207,7 +210,7 @@ export default {
                 {
                     path: 'manual',
                     name: 'Manual',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedAlert'),
+                    component: () => import('@/views/help/manual'),
                     meta: {
                         title: '使用手册',
                         sidebar: true,
@@ -219,7 +222,7 @@ export default {
                 {
                     path: 'online',
                     name: 'Intelligence',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
+                    component: () => import('@/views/help/online'),
                     meta: {
                         title: '在线助理',
                         sidebar: true,
@@ -231,7 +234,7 @@ export default {
                 {
                     path: 'artificial',
                     name: 'Artificiality',
-                    // component: () => import('@/views/multilevel_menu_example/foundation/foundation_sub/advancedSetting'),
+                    component: () => import('@/views/help/artificial'),
                     meta: {
                         title: '人工客服',
                         sidebar: true,
