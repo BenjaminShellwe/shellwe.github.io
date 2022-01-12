@@ -202,11 +202,23 @@ export default {
             path: 'help',
             name: 'HelpManagement',
             component: EmptyLayout,
-            redirect: '/multilevel_menu_basic/help/manual',
+            redirect: '/multilevel_menu_basic/help/index',
             meta: {
                 title: '支援以及帮助'
             },
             children: [
+                {
+                    path: 'index',
+                    name: 'Index',
+                    component: () => import('@/views/help/index'),
+                    meta: {
+                        title: '帮助说明',
+                        sidebar: false,
+                        breadcrumb: true
+                        //    前端功能要求1  完善访问路径和交互页面
+                        //    后端功能要求1  个人以及企业
+                    }
+                },
                 {
                     path: 'manual',
                     name: 'Manual',

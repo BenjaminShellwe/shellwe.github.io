@@ -32,6 +32,7 @@
 <script>
 import PageMain from '@/components/PageMain'
 export default {
+    name: 'GlobalDic',
     components: {PageMain},
     data() {
         return {

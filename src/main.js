@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
+import clipboard from 'clipboard'
+Vue.prototype.clipboard = clipboard
+
 import Glide from 'vue-glide-js'
 import 'vue-glide-js/dist/vue-glide.css'
 Vue.use(Glide)

@@ -21,7 +21,7 @@
 import PageHeader from '@/components/PageHeader'
 import PageMain from '@/components/PageMain'
 export default {
-    name: 'Basic',
+    name: 'Statistic',
     components: {PageMain, PageHeader},
     methods: {
         back() {

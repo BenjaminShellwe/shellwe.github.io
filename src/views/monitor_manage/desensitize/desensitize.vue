@@ -21,7 +21,7 @@
 import PageHeader from '@/components/PageHeader'
 import PageMain from '@/components/PageMain'
 export default {
-    name: 'Basic',
+    name: 'Desensitize',
     components: {PageMain, PageHeader},
     methods: {
         back() {

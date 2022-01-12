@@ -66,7 +66,7 @@
                         </div>
                     </el-col>
                     <el-col :md="4">
-                        <div :title="tips.help" class="icon-box icon-box-4" @click="onIconClick('help','')">
+                        <div :title="tips.help" class="icon-box icon-box-4" @click="onIconClick('help',true)">
                             <i class="el-icon-help" />
                             <div class="title">快速帮助</div>
                         </div>
@@ -132,6 +132,8 @@ export default {
                     router.push({path: '/multilevel_menu_advanced/chat'})
                 } if (val == 'message') {
                     router.push({path: '/multilevel_menu_advanced/message'})
+                } if (val == 'help') {
+                    router.push({path: '/multilevel_menu_basic/help/index'})
                 } else {
                     console.log('Receiving an error!')
                 }
