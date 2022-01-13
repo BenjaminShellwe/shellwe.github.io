@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <template>
     <div id="search" :class="{'searching': isShow}" @click="isShow && $eventBus.$emit('global-search-toggle')">
         <div class="container">

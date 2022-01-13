@@ -104,6 +104,7 @@ export default {
 }
 </script>
 
+<!--suppress CssInvalidPropertyValue -->
 <style lang="scss" scoped>
 .user {
     display: flex;

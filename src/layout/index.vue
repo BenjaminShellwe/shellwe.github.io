@@ -204,6 +204,7 @@ export default {
 }
 </script>
 
+<!--suppress CssInvalidFunction -->
 <style lang="scss" scoped>
 [data-mode=mobile] {
     .sidebar-container {

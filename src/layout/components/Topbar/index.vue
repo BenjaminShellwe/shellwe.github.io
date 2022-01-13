@@ -1,3 +1,4 @@
+<!--suppress CssInvalidFunction -->
 <template>
     <div class="topbar-container">
         <div class="left-box">
