@@ -13,8 +13,11 @@
         </page-header>
         <page-main>
             <span class="hover" @click="$eventBus.$emit('global-theme-toggle')">
-                主题设置
+                主题设置窗口呼出
             </span>
+        </page-main>
+        <page-main>
+
         </page-main>
     </div>
 </template>

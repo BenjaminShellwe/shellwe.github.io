@@ -15,6 +15,17 @@
                         <el-radio-button :label="false">关闭</el-radio-button>
                     </el-radio-group>
                 </el-form-item>
+                <el-form-item label="主题选择">
+                    <el-select v-model="value" placeholder="原始主题">
+                        <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                            :disabled="item.disabled">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="侧边栏导航">
                     <el-radio-group v-model="sidebarCollapse">
                         <el-radio-button :label="true">收起</el-radio-button>
@@ -81,6 +92,18 @@ export default {
     props: {},
     data() {
         return {
+            options: [{
+                value: '选项1',
+                label: '原始主题'
+            }, {
+                value: '选项2',
+                label: '夜间主题'
+            }, {
+                value: '选项3',
+                label: '更多主题',
+                disabled: true
+            }],
+            value: '',
             isShow: false
         }
     },
