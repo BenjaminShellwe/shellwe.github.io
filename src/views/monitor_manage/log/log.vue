@@ -3,7 +3,7 @@
         <page-header title="系统日志">
             <template #content>
                 <div class="inLine">
-                    <p @click="back">返回上一页</p>
+                    <p class="hover" @click="back">返回上一页</p>
                 </div>
                 &nbsp;
                 <div class="inLine">
@@ -30,3 +30,8 @@ export default {
     }
 }
 </script>
+<style>
+.hover {
+    cursor: pointer;
+}
+</style>

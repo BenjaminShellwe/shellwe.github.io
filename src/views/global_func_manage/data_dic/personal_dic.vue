@@ -3,7 +3,7 @@
         <page-header title="个人字典">
             <template #content>
                 <div>
-                    <div @click="back" @mouseover="changeMask(true)" @mouseout="changeMask(false)">返回上一页</div>
+                    <div class="hover" @click="back" @mouseover="changeMask(true)" @mouseout="changeMask(false)">返回上一页</div>
                 </div>
             </template>
         </page-header>
@@ -189,3 +189,8 @@ export default {
     }
 }
 </script>
+<style>
+.hover {
+    cursor: pointer;
+}
+</style>

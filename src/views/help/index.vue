@@ -3,7 +3,7 @@
         <page-header title="帮助说明">
             <template #content>
                 <div class="inLine">
-                    <p @click="back">返回上一页</p>
+                    <p class="hover" @click="back">返回上一页</p>
                 </div>
                 &nbsp;
                 <div class="inLine">

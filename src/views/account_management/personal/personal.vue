@@ -3,7 +3,7 @@
         <page-header title="个人账户">
             <template #content>
                 <div class="inLine">
-                    <p @click="back">返回上一页</p>
+                    <p class="hover" @click="back">返回上一页</p>
                 </div>
                 &nbsp;
                 <div class="inLine">
@@ -22,6 +22,16 @@ import PageHeader from '@/components/PageHeader'
 import PageMain from '@/components/PageMain'
 export default {
     name: 'Basic',
-    components: {PageMain, PageHeader}
+    components: {PageMain, PageHeader},
+    methods: {
+        back() {
+            history.go(-1)
+        }
+    }
 }
 </script>
+<style>
+.hover {
+    cursor: pointer;
+}
+</style>

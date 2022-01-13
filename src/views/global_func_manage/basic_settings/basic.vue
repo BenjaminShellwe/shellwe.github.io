@@ -3,7 +3,7 @@
         <page-header title="基础设置">
             <template #content>
                 <div class="inLine">
-                    <p @click="back">返回上一页</p>
+                    <p class="hover" @click="back">返回上一页</p>
                 </div>
             &nbsp;
                 <div class="inLine">
@@ -12,7 +12,9 @@
             </template>
         </page-header>
         <page-main>
-            本页面还在设计中
+            <span class="hover" @click="$eventBus.$emit('global-theme-toggle')">
+                主题设置
+            </span>
         </page-main>
     </div>
 </template>
@@ -30,4 +32,8 @@ export default {
     }
 }
 </script>
-
+<style>
+.hover {
+    cursor: pointer;
+}
+</style>

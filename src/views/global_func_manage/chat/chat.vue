@@ -3,7 +3,7 @@
         <page-header title="即时通信">
             <template #content>
                 <div class="inLine">
-                    <p @click="back">返回上一页</p>
+                    <p class="hover" @click="back">返回上一页</p>
                 </div>
                 &nbsp;
                 <div class="inLine">
@@ -90,5 +90,8 @@ export default {
 <style>
 .inLine {
     display: inline-block;
+}
+.hover {
+    cursor: pointer;
 }
 </style>
