@@ -15,6 +15,7 @@
             <span class="hover" @click="$eventBus.$emit('global-theme-toggle')">
                 主题设置窗口呼出
             </span>
+            <span>主题制作暂时暂停</span>
         </page-main>
         <page-main>
 

@@ -6,10 +6,6 @@
                     <div style="margin-bottom: 5px;">毕业设计开发</div>
                 </div>
             </template>
-            <!--            <el-button-group style="margin-right: 10px;">-->
-            <!--                <el-button type="success" plain @click="open(` `)">el按钮1</el-button>-->
-            <!--                <el-button type="primary" plain @click="open(` `)">el按钮2</el-button>-->
-            <!--            </el-button-group>-->
         </page-header>
         <el-row :gutter="20" style="margin: 0 10px;">
             <el-col :lg="8">
