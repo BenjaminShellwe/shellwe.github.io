@@ -7,7 +7,7 @@
                 </div>
                 &nbsp;
                 <div class="inLine">
-                    此页为系统使用手册
+                    设计中
                 </div>
             </template>
         </page-header>

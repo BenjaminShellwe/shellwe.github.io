@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
+import mammoth from 'mammoth'
+Vue.prototype.mammoth = mammoth
+
 import clipboard from 'clipboard'
 Vue.prototype.clipboard = clipboard
 
