@@ -58,7 +58,7 @@
                             <el-button-group style="margin-right: 10px;">
                                 <el-button type="success" plain @click="pageValueChange('role')">角色信息总览(角色)</el-button>
                                 <el-button type="primary" plain @click="pageValueChange('permission')">权限控制总览(权限)</el-button>
-                                <el-button type="warn" plain @click="pageValueChange('remain')">绩效信息总览(绩效)</el-button>
+                                <el-button type="warn" plain @click="pageValueChange('performance')">绩效信息总览(绩效)</el-button>
                             </el-button-group>
                         </el-card>
                     </el-col>

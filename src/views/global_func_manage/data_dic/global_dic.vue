@@ -168,8 +168,7 @@ export default {
                 model_name: '示例1',
                 model_explain: '展示示例',
                 model_state: '有效'
-            }
-            ]
+            }]
         }
     },
     watch: {
