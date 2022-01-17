@@ -201,7 +201,7 @@ export default {
                 model_readWriteType: '毕设创建生成写入',
                 model_userName: 'Benjamin Thomas Shellwe',
                 model_accountName: 'shellweTheAdmin',
-                model_realName: '吴俊威',
+                model_realName: 'wjw',
                 model_resourceType: '软件资源',
                 model_resourceName: '软件工程系毕业设计',
                 model_operationName: '毕设创建生成写入',
