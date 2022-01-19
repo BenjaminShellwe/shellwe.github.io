@@ -1,7 +1,6 @@
 {
     "name": "fip-admin",
     "version": "1.0.0",
-    "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
         "build:test": "vue-cli-service build --mode test --dest dist-test",

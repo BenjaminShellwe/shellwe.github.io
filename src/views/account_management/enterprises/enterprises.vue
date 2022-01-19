@@ -13,16 +13,48 @@
         </page-header>
         <page-main title="注意,本页面所有功能都处于开发阶段,因为本页内容相对较多,故不会为所有操作提供事件监听!">
             <el-row :gutter="10" style="margin-bottom: 5px;">
-                <el-col :span="3">
+                <el-col>
                     <el-card>
-                        <h3>企业基本信息</h3>
-                    </el-card>
-                </el-col>
-                <el-col :span="21">
-                    <el-card>
-                        企业基本信息<br>
-                        企业基本信息简介<br>
-                        简介
+                        <el-descriptions class="margin-top" title="企业基本信息" :column="3" :size="size" border>
+                            <template slot="extra">
+                                <el-button type="primary" size="small">操作</el-button>
+                            </template>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-user"></i>
+                                    名称
+                                </template>
+                                TernaryProjectTeam
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-mobile-phone"></i>
+                                    联系
+                                </template>
+                                shellwe.top
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-location-outline"></i>
+                                    地址
+                                </template>
+                                湛江市
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-tickets"></i>
+                                    备注
+                                </template>
+                                <el-tag size="small">企业</el-tag>
+                            </el-descriptions-item>
+                            <el-descriptions-item>
+                                <template slot="label">
+                                    <i class="el-icon-office-building"></i>
+                                    联系地址
+                                </template>
+                                广东省广州市从化区广从南路 548 号
+                            </el-descriptions-item>
+                        </el-descriptions>
                     </el-card>
                 </el-col>
             </el-row>
@@ -34,9 +66,7 @@
                 </el-col>
                 <el-col :span="21">
                     <el-card>
-                        企业基本信息<br>
-                        企业基本信息简介<br>
-                        简介
+                        企业基本信息
                     </el-card>
                 </el-col>
             </el-row>
@@ -109,6 +139,7 @@ export default {
     data() {
         return {
             dialogVisible: false,
+            size: '',
             page: {
                 content: false,
                 loginButton: true,

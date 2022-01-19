@@ -8,11 +8,13 @@
                 &nbsp;
                 <div class="inLine">
                     此页为系统监控设置
+                    由于开发技术有限，可能将会使用第三方完整监控服务
                 </div>
             </template>
         </page-header>
         <page-main>
             本页面还在设计中
+            由于开发技术有限，可能将会使用第三方完整监控服务
         </page-main>
     </div>
 </template>
