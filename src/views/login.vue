@@ -43,7 +43,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="register">注 册</el-button>
+                <el-button :disabled="pageButtonDisabled" @click="register">注 册</el-button>
                 <el-button v-show="pageButtonVisible" type="primary" @click="pageDialogFormVisible = false">返 回</el-button>
             </div>
         </el-dialog>
@@ -58,8 +58,7 @@ export default {
     data() {
         return {
             msg: '',
-            msg1: '用户名可用',
-            msg2: '用户名已存在',
+            pageButtonDisabled: true,
             pageButtonVisible: false,
             pageDialogFormVisible: false,
             pageFormLabelWidth: '100px',
@@ -119,13 +118,6 @@ export default {
             this.form.password = '123456'
             this.handleLogin()
         },
-        funcSuccess() {
-            this.$notify({
-                title: '成功',
-                message: '您已成功注册账号',
-                type: 'success'
-            })
-        },
         userPasswordLimit: function() {
             this.userPassword = this.userPassword.replace(/[^a-zA-Z0-9]/g, '')
         },
@@ -140,14 +132,19 @@ export default {
             if (this.userName.length <= 0) {
                 this.msg = '用户名不能为空'
             } else {
+                console.log('执行axios')
                 axios.post('/user/select', {
-                    userName: this.userName,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}   // 跨域
-                }).then(function(dat) {
-                    if (dat.data === '0') {
-                        this.msg = this.msg1
-                    } else if (dat.data === '1')
-                        this.msg = this.msg2
+                    userName: this.userName
+                }).then(data => {
+                    console.log(data)
+                    if (data.data == '0') {
+                        this.msg = '用户名可创建'
+                        this.pageButtonDisabled = false
+                    } else if (data.data == '1') {
+                        this.msg = '用户名已存在'
+                    }
+                }).catch(function() {
+                    console.log('存在错误 请联系shellwe')
                 })
             }
         },
@@ -162,6 +159,7 @@ export default {
          * 点击注册按钮事件
          * */
         register: function() {
+            this.loading = true
             if (this.userName.length <= 0) {
                 alert('用户名不能为空')
             } else if (this.userPassword.length <= 0) {
@@ -173,8 +171,12 @@ export default {
                     userPassword: this.userPassword,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}   // 跨域
                 }).then(function(dat) {
-                    if (dat.data == '1') {
-                        this.funcSuccess()
+                    if (dat?.data == '1') {
+                        this.$notify({
+                            title: '成功',
+                            message: '您已成功注册账号',
+                            type: 'success'
+                        })
                         this.pageDialogFormVisible = false
                     } else {
                         alert('注册失败')
