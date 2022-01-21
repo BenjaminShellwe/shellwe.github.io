@@ -21,7 +21,10 @@
                     </el-form-item>
                 </div>
                 <el-checkbox v-model="form.remember">记住我</el-checkbox>
-                <el-button :loading="loading" type="primary" style="width: 100%;" @click.native.prevent="handleLogin">登 录</el-button>
+                <el-button-group style="margin-left: 10px;">
+                    <el-button :loading="loading" type="primary" style="width: 50%;" size="small" @click.native.prevent="handleLogin">登 录</el-button>
+                    <el-button :loading="loading" type="primary" style="width: 50%;" size="small" @click="pageDialogFormVisible = true">注 册</el-button>
+                </el-button-group>
                 <div style="margin-top: 20px; margin-bottom: -10px; color: #666; font-size: 14px; text-align: center; font-weight: bold;">
                     <span style="margin-right: 5px;">演示帐号一键登录：</span>
                     <el-button type="danger" size="mini" @click="testAccount('admin')">admin</el-button>
@@ -30,15 +33,39 @@
             </el-form>
         </div>
         <Copyright v-if="$store.state.settings.showCopyright" />
+        <el-dialog title="快速注册" :visible.sync="pageDialogFormVisible">
+            <el-form :model="form">
+                <el-form-item label="账户名称" :label-width="pageFormLabelWidth">
+                    <input v-model="userName" class="form-control" type="text" placeholder="用户名" @blur="blur" @focus="focus" @input="userNameLimit"> {{ msg }}<br>
+                </el-form-item>
+                <el-form-item label="用户密码" :label-width="pageFormLabelWidth">
+                    <input v-model="userPassword" class="form-control" type="password" placeholder="密码" @input="userPasswordLimit"><br>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="register">注 册</el-button>
+                <el-button v-show="pageButtonVisible" type="primary" @click="pageDialogFormVisible = false">返 回</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-    name: 'Login',
+    name: 'LoginSignup',
     data() {
         return {
+            msg: '',
+            msg1: '用户名可用',
+            msg2: '用户名已存在',
+            pageButtonVisible: false,
+            pageDialogFormVisible: false,
+            pageFormLabelWidth: '100px',
             title: process.env.VUE_APP_TITLE,
+            userName: '',
+            userPassword: '',
             form: {
                 account: localStorage.login_account || '',
                 password: '',
@@ -91,6 +118,70 @@ export default {
             this.form.account = account
             this.form.password = '123456'
             this.handleLogin()
+        },
+        funcSuccess() {
+            this.$notify({
+                title: '成功',
+                message: '您已成功注册账号',
+                type: 'success'
+            })
+        },
+        userPasswordLimit: function() {
+            this.userPassword = this.userPassword.replace(/[^a-zA-Z0-9]/g, '')
+        },
+        // 限制输入特殊字符
+        userNameLimit: function() {
+            this.userName = this.userName.replace(/[ `~!@#$%^&*()_\-+=<>?:"{}|,./;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、]/g, '')
+        },
+        /**
+         * 失去焦点
+         * */
+        blur: function() {
+            if (this.userName.length <= 0) {
+                this.msg = '用户名不能为空'
+            } else {
+                axios.post('/user/select', {
+                    userName: this.userName,
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}   // 跨域
+                }).then(function(dat) {
+                    if (dat.data === '0') {
+                        this.msg = this.msg1
+                    } else if (dat.data === '1')
+                        this.msg = this.msg2
+                })
+            }
+        },
+        /**
+         * 获取焦点
+         * */
+        focus: function() {
+            this.msg = null
+        },
+
+        /**
+         * 点击注册按钮事件
+         * */
+        register: function() {
+            if (this.userName.length <= 0) {
+                alert('用户名不能为空')
+            } else if (this.userPassword.length <= 0) {
+                alert('密码不能为空')
+            } else {
+                this.loading = true
+                axios.post('/user/addUser', {
+                    userName: this.userName,
+                    userPassword: this.userPassword,
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}   // 跨域
+                }).then(function(dat) {
+                    if (dat.data == '1') {
+                        this.funcSuccess()
+                        this.pageDialogFormVisible = false
+                    } else {
+                        alert('注册失败')
+                    }
+                })
+            }
+
         }
     }
 }

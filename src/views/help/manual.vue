@@ -14,7 +14,7 @@
         <page-main>
             本页面还在设计中<br>
             本页将再系统完成后开发,恕暂不提供浏览
-            需要阅读临时手册请点击 <span @click="beenClick">➡此处⬅</span>
+            需要阅读临时手册请点击 <span class="hover" @click="beenClick">➡此处⬅</span>
         </page-main>
     </div>
 </template>
