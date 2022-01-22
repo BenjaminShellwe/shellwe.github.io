@@ -22,8 +22,8 @@
                 </div>
                 <el-checkbox v-model="form.remember">记住我</el-checkbox>
                 <el-button-group style="margin-left: 10px;">
-                    <el-button :loading="loading" type="primary" style="width: 50%;" size="small" @click.native.prevent="handleLogin">登 录</el-button>
-                    <el-button :loading="loading" type="primary" style="width: 50%;" size="small" @click="pageDialogFormVisible = true">注 册</el-button>
+                    <el-button :loading="pageButtonLoading" type="primary" style="width: 50%;" size="small" @click.native.prevent="handleLogin">登 录</el-button>
+                    <el-button :loading="pageButtonLoading" type="primary" style="width: 50%;" size="small" @click="pageDialogFormVisible = true">注 册</el-button>
                 </el-button-group>
                 <div style="margin-top: 20px; margin-bottom: -10px; color: #666; font-size: 14px; text-align: center; font-weight: bold;">
                     <span style="margin-right: 5px;">演示帐号一键登录：</span>
@@ -36,7 +36,8 @@
         <el-dialog title="快速注册" :visible.sync="pageDialogFormVisible">
             <el-form :model="form">
                 <el-form-item label="账户名称" :label-width="pageFormLabelWidth">
-                    <input v-model="userName" class="form-control" type="text" placeholder="用户名" @blur="blur" @focus="focus" @input="userNameLimit"> {{ msg }}<br>
+                    <input v-model="userName" class="form-control" type="text" placeholder="用户名" @blur="blur" @focus="focus" @input="userNameLimit">
+                    <br>{{ msg }}<br>
                 </el-form-item>
                 <el-form-item label="用户密码" :label-width="pageFormLabelWidth">
                     <input v-model="userPassword" class="form-control" type="password" placeholder="密码" @input="userPasswordLimit"><br>
@@ -59,6 +60,7 @@ export default {
         return {
             msg: '',
             pageButtonDisabled: true,
+            pageButtonLoading: false,
             pageButtonVisible: false,
             pageDialogFormVisible: false,
             pageFormLabelWidth: '100px',
@@ -100,17 +102,45 @@ export default {
             })
         },
         handleLogin() {
-            this.$refs.form.validate(valid => {
-                if (valid) {
-                    this.loading = true
-                    this.$store.dispatch('user/login', this.form).then(() => {
-                        this.loading = false
-                        this.form.remember && localStorage.setItem('login_account', this.form.account)
-                        this.$router.push({ path: this.redirect || '/' })
-                    }).catch(() => {
-                        this.loading = false
+            this.pageButtonLoading = true
+            axios.post('/user/selectUserName', {
+                userName: this.form.account,
+                userPassword: this.form.password
+                // headers: {'Content-Type': application/x-www-form-urlencoded'}   // 跨域
+            }).then(data => {
+                if (data.data == '0') {
+                    alert('用户不存在')
+                    this.pageButtonLoading = false
+                } else if (data.data == '1') {
+                    console.log('1data.data= ' + data.data)
+                    alert('登录失败，账号或密码错误')
+                    this.pageButtonLoading = false
+                } else if (data.data == '2') {
+                    // 当前窗体跳转
+                    this.$refs.form.validate(valid => {
+                        if (valid) {
+                            this.loading = true
+                            this.$store.dispatch('user/login', this.form).then(() => {
+                                this.loading = false
+                                console.log('处理中')
+                                this.form.remember && localStorage.setItem('login_account', this.form.account)
+                                console.log('跳转')
+                                this.$router.push({ path: this.redirect || '/' })
+                            }).catch(() => {
+                                this.pageButtonLoading = false
+                            })
+                        }
                     })
                 }
+                // 新窗体跳转
+                // window.open('/user/successLogin')
+            }).catch(function() {
+                // console.log('0data.data= ' + data.data)
+                // console.log('11userName= ' + this.userName)
+                // console.log('22userPassword= ' + this.userPassword)
+                // console.log('33this.form.account= ' + this.form.account)
+                // console.log('44this.form.password= ' + this.form.password)
+                console.log('传输失败')
             })
         },
         testAccount(account) {
@@ -170,8 +200,8 @@ export default {
                     userName: this.userName,
                     userPassword: this.userPassword,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}   // 跨域
-                }).then(function(dat) {
-                    if (dat?.data == '1') {
+                }).then(data => {
+                    if (data.data == '1') {
                         this.$notify({
                             title: '成功',
                             message: '您已成功注册账号',
