@@ -30,7 +30,7 @@ public class UserController {
     public String successLogin() { return "successLogin"; }
 
     @RequestMapping("/successRegister")
-    public String successRegister() { return "successRegister"; }
+    public String successRegister() { return "1"; }
 
     @ResponseBody
     @RequestMapping(value = "/select", method = RequestMethod.POST)
@@ -49,32 +49,35 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/selectUserName", method = RequestMethod.POST)
-    public String selectUserName(@RequestBody User user) {
+    public int selectUserName(@RequestBody User user) {
         String userName = user.getUserName();
         String userPassword = user.getUserPassword();
-        System.out.println(userName + userPassword);
+        System.out.println(userName +"+"+ userPassword);
 
-        String result = "-1";
+        int result = -1;
 
         //将输入的密码加密
-        String passwordMD5 = passwordMD5(userName, userPassword);
+        //String passwordMD5 = passwordMD5(userName, userPassword);
 
         //用户不存在
         if (userMapper.selectUserName(userName) == null) {
 //            return "用户不存在";
-            result = "0";
+            result = 0;
+            System.out.println("0用户 "+ userName +" 不存在");
             return result;
             //用户存在，但密码输入错误
-        }else
-        if(!userMapper.selectUserPassword(userName).equals(passwordMD5) ){
-            result = "1";
+        }else if(!userMapper.selectUserPassword(userName).equals(userPassword) ){
+            System.out.println("1账号或密码输入错误");
+            result = 1;
             return result;
 //            return "账号或密码输入错误";
-        }else if(userMapper.selectUserPassword(userName).equals(passwordMD5)) {
-            result = "2";
+        }else if(userMapper.selectUserPassword(userName).equals(userPassword)&&userMapper.selectUserName(userName).equals(userName)) {
+            result = 2;
+            System.out.println("2成功登录");
 //            return "成功登录";
             return result;
         }
+        System.out.println(result);
         return result;
     }
 
@@ -83,11 +86,16 @@ public class UserController {
     public String addUser(@RequestBody User user) {
         String userName = user.getUserName();
         String userPassword = user.getUserPassword();
-        System.out.println(userName + "***" + userPassword);
-        String passwordMD5 = passwordMD5(userName, userPassword);
+        if(userName == user.getUserName()){
+            System.out.println(userName + " is already exist");
+            return "0";
+        }else{
+            System.out.println(userName + "***" + userPassword);
+            String passwordMD5 = passwordMD5(userName, userPassword);
 //        userMapper.addUser(userName, passwordMD5);
-        userMapper.addUser(userName, userPassword);
-        return "1";
+            userMapper.addUser(userName, userPassword);
+            return "1";
+        }
     }
 
     public String passwordMD5(String userName, String userPassword) {
