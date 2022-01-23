@@ -1,15 +1,15 @@
-import Layout from '@/layout'
+import EmptyLayout from '@/layout/empty'
 
 export default {
     path: '/component_extend_example',
-    component: Layout,
+    component: EmptyLayout,
     redirect: '/component_extend_example/pageheader',
     name: 'componentExtendExample',
     meta: {
         title: '扩展组件',
         icon: 'sidebar-component',
-        sidebar: false,
-        breadcrumb: false
+        sidebar: true,
+        breadcrumb: true
     },
     children: [
         {

@@ -1,21 +1,21 @@
-import Layout from '@/layout'
+import EmptyLayout from '@/layout/empty'
 
 export default {
-    path: '/component_basic_example',
-    component: Layout,
-    redirect: '/component_basic_example/icon',
+    path: 'component_basic_example',
+    component: EmptyLayout,
+    redirect: 'component_basic_example/icon',
     name: 'componentBasicExample',
     meta: {
         title: '基础组件（部分）',
         icon: 'sidebar-component',
-        sidebar: false,
+        sidebar: true,
         breadcrumb: true
     },
     children: [
         {
             path: 'icon',
             name: 'componentBasicExampleIcon',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/icon.json'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/icon'),
             meta: {
                 title: '图标'
             }

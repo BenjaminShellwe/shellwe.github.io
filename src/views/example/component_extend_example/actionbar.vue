@@ -15,7 +15,7 @@
                         </el-form-item>
                         <el-form-item label="活动区域">
                             <el-select v-model="form.region" placeholder="请选择活动区域">
-                                <el-option label="区域一" value="shanghai" />
+                                <el-option label="区域一" value="guangzhou" />
                                 <el-option label="区域二" value="beijing" />
                             </el-select>
                         </el-form-item>
@@ -28,21 +28,21 @@
                                 <el-time-picker v-model="form.date2" placeholder="选择时间" style="width: 100%;" />
                             </el-col>
                         </el-form-item>
-                        <el-form-item label="即时配送">
+                        <el-form-item label="即时开始">
                             <el-switch v-model="form.delivery" />
                         </el-form-item>
                         <el-form-item label="活动性质">
                             <el-checkbox-group v-model="form.type">
-                                <el-checkbox label="美食/餐厅线上活动" name="type" />
-                                <el-checkbox label="地推活动" name="type" />
+                                <el-checkbox label="会议/调研线上活动" name="type" />
+                                <el-checkbox label="宣传活动" name="type" />
                                 <el-checkbox label="线下主题活动" name="type" />
-                                <el-checkbox label="单纯品牌曝光" name="type" />
+                                <el-checkbox label="单纯背景调查" name="type" />
                             </el-checkbox-group>
                         </el-form-item>
                         <el-form-item label="特殊资源">
                             <el-radio-group v-model="form.resource">
-                                <el-radio label="线上品牌商赞助" />
-                                <el-radio label="线下场地免费" />
+                                <el-radio label="线上内部会议" />
+                                <el-radio label="线下安排会议" />
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item label="活动形式">
@@ -53,7 +53,7 @@
                         </el-form-item>
                         <el-form-item label="活动区域">
                             <el-select v-model="form.region" placeholder="请选择活动区域">
-                                <el-option label="区域一" value="shanghai" />
+                                <el-option label="区域一" value="guangzhou" />
                                 <el-option label="区域二" value="beijing" />
                             </el-select>
                         </el-form-item>
@@ -66,21 +66,21 @@
                                 <el-time-picker v-model="form.date2" placeholder="选择时间" style="width: 100%;" />
                             </el-col>
                         </el-form-item>
-                        <el-form-item label="即时配送">
+                        <el-form-item label="即时开始">
                             <el-switch v-model="form.delivery" />
                         </el-form-item>
                         <el-form-item label="活动性质">
                             <el-checkbox-group v-model="form.type">
-                                <el-checkbox label="美食/餐厅线上活动" name="type" />
-                                <el-checkbox label="地推活动" name="type" />
+                                <el-checkbox label="会议/调研线上活动" name="type" />
+                                <el-checkbox label="宣传活动" name="type" />
                                 <el-checkbox label="线下主题活动" name="type" />
-                                <el-checkbox label="单纯品牌曝光" name="type" />
+                                <el-checkbox label="单纯背景调查" name="type" />
                             </el-checkbox-group>
                         </el-form-item>
                         <el-form-item label="特殊资源">
                             <el-radio-group v-model="form.resource">
-                                <el-radio label="线上品牌商赞助" />
-                                <el-radio label="线下场地免费" />
+                                <el-radio label="线上内部会议" />
+                                <el-radio label="线下安排会议" />
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item label="活动形式">
@@ -91,7 +91,7 @@
                         </el-form-item>
                         <el-form-item label="活动区域">
                             <el-select v-model="form.region" placeholder="请选择活动区域">
-                                <el-option label="区域一" value="shanghai" />
+                                <el-option label="区域一" value="guangzhou" />
                                 <el-option label="区域二" value="beijing" />
                             </el-select>
                         </el-form-item>
@@ -109,16 +109,16 @@
                         </el-form-item>
                         <el-form-item label="活动性质">
                             <el-checkbox-group v-model="form.type">
-                                <el-checkbox label="美食/餐厅线上活动" name="type" />
-                                <el-checkbox label="地推活动" name="type" />
+                                <el-checkbox label="会议/调研线上活动" name="type" />
+                                <el-checkbox label="宣传活动" name="type" />
                                 <el-checkbox label="线下主题活动" name="type" />
-                                <el-checkbox label="单纯品牌曝光" name="type" />
+                                <el-checkbox label="单纯背景调查" name="type" />
                             </el-checkbox-group>
                         </el-form-item>
                         <el-form-item label="特殊资源">
                             <el-radio-group v-model="form.resource">
-                                <el-radio label="线上品牌商赞助" />
-                                <el-radio label="线下场地免费" />
+                                <el-radio label="线上内部会议" />
+                                <el-radio label="线下安排会议" />
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item label="活动形式">

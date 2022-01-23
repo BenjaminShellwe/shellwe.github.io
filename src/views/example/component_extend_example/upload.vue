@@ -1,5 +1,6 @@
 <template>
     <div>
+        <router-view />
         <page-header title="上传" content="ImageUpload / ImagesUpload / FileUpload" />
         <page-main title="单图上传">
             <image-upload :url.sync="image" action="http://scrm.1daas.com/api/upload/upload" name="image" :width="250" :height="150" :data="{'token':'TKD628431923530324'}" @on-success="handleSuccess1" />

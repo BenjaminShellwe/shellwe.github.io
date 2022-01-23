@@ -14,7 +14,7 @@ export default {
     props: {},
     data() {
         return {
-            area: ['浙江省', '杭州市', '西湖区']
+            area: ['广东省', '广州市', '从化区']
         }
     },
     created() {},

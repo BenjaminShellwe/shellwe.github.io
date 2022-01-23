@@ -6,11 +6,30 @@
         <page-main>
             <el-button @click="getPermission">测试：获取用户权限</el-button>
         </page-main>
+        <el-dialog
+            title="来自shellwe的警告"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :before-close="nameCheck">
+            <span>此处必须输入验证信息</span>
+            <el-input v-model="pageInput" placeholder="请输入测试人员名称"></el-input>{{ msg }}
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="back()">返 回</el-button>
+                <el-button type="primary" @click="nameCheck">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            dialogVisible: true,
+            pageInput: '',
+            msg: ''
+        }
+    },
     methods: {
         getPermission() {
             this.$store.dispatch('user/getPermissions').then(res => {
@@ -23,6 +42,19 @@ export default {
         },
         open(url) {
             window.open(url, 'top')
+        },
+        nameCheck(val) {
+            console.log(this.pageInput)
+            val = this.pageInput
+            if (val == '林裕峰' || val == 'shellwe') {
+                this.dialogVisible = false
+            } else {
+                this.msg = '此字符未授权 !请尝试全名'
+                this.dialogVisible = true
+            }
+        },
+        back() {
+            history.go(-1)
         }
     }
 }

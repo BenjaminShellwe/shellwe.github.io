@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import store from '@/store/index'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css' // progress bar style
-
 Vue.use(VueRouter)
 
 import Layout from '@/layout'
@@ -69,14 +68,7 @@ const constantRoutes = [
 
 import MultilevelMenuBasic from './modules/multilevel.menu.basic'
 import MultilevelMenuAdvanced from './modules/multilevel.menu.advanced'
-import KeepAliveExample from './modules/example/keep.alive.example'
-import ComponentBasicExample from './modules/example/component.basic.example'
-import ComponentExtendExample from './modules/example/component.extend.example'
-import PermissionExample from './modules/example/permission.example'
-import MockExample from './modules/example/mock.example'
-// import VideosExample from './modules/videos.example'
 import ExTernalLinkExample from './modules/external.link.example'
-
 // 当 children 不为空的主导航只有一项时，则隐藏
 let asyncRoutes = [
     {
@@ -85,12 +77,6 @@ let asyncRoutes = [
             icon: 'sidebar-default'
         },
         children: [
-            ComponentBasicExample,
-            ComponentExtendExample,
-            PermissionExample,
-            KeepAliveExample,
-            MockExample,
-
             MultilevelMenuBasic,
             MultilevelMenuAdvanced,
             ExTernalLinkExample

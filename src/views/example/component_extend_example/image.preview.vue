@@ -3,7 +3,8 @@
         <page-header title="图片预览" content="ImagePreview" />
         <page-main>
             <div>
-                <image-preview src="https://s1.ax1x.com/2020/07/03/NOeqld.jpg" :width="200" />
+                <image-preview :src="imgUrl" :width="350" />
+                <image-preview :src="imgUrl1" :width="350" />
             </div>
             <div>
                 <image-preview src="" width="100px" height="100px" />
@@ -16,7 +17,10 @@
 export default {
     props: {},
     data() {
-        return {}
+        return {
+            imgUrl: require('../../../assets/images/yuf.png'),
+            imgUrl1: require('../../../assets/images/yuf1.jpg')
+        }
     },
     created() {},
     mounted() {},

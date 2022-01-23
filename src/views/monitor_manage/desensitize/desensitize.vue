@@ -86,7 +86,7 @@ export default {
     },
     methods: {
         back() {
-            history.go(-1)
+            this.$router.push({ path: '/multilevel_menu_advanced' })
         }
     }
 }

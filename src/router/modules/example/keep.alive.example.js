@@ -1,16 +1,15 @@
-import Layout from '@/layout'
 import EmptyLayout from '@/layout/empty'
 
 export default {
     path: '/keep_alive_example',
-    component: Layout,
+    component: EmptyLayout,
     redirect: '/keep_alive_example/page',
     name: 'keepAliveExample',
     meta: {
         title: '页面缓存',
         icon: 'sidebar-keep-alive',
-        sidebar: false,
-        breadcrumb: false
+        sidebar: true,
+        breadcrumb: true
     },
     children: [
         {

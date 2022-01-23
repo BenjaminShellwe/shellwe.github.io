@@ -1,5 +1,6 @@
 <template>
     <div class="alert">
+        <router-view />
         <el-alert show-icon type="info" :closable="false" close-text="前往 ElementUI 官网">
             <template slot="title">
                 基础组件来自 ElementUI ，更多组件及使用技巧请查看 <el-link type="primary" href="https://element.eleme.cn/#/zh-CN" target="_blank">ElementUI 官网</el-link>

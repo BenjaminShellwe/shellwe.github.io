@@ -1,16 +1,16 @@
-import Layout from '@/layout'
+import EmptyLayout from '@/layout/empty'
 
 export default {
     path: '/mock_example',
-    component: Layout,
+    component: EmptyLayout,
     redirect: '/mock_example/index',
     name: 'mockExample',
     meta: {
         title: 'Mock',
         icon: 'sidebar-mock',
         badge: 'NEW',
-        sidebar: false,
-        breadcrumb: false
+        sidebar: true,
+        breadcrumb: true
     },
     children: [
         {
@@ -19,8 +19,8 @@ export default {
             component: () => import(/* webpackChunkName: 'mock_example' */ '@/views/example/mock_example'),
             meta: {
                 title: 'Mock',
-                sidebar: false,
-                breadcrumb: false,
+                sidebar: true,
+                breadcrumb: true,
                 activeMenu: '/mock_example'
             }
         }

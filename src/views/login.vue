@@ -44,7 +44,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button :disabled="pageButtonDisabled" @click="register">注 册</el-button>
+                <el-button :disabled="pageButtonDisabled" @click="reject">注 册</el-button>
                 <el-button v-show="pageButtonVisible" type="primary" @click="pageDialogFormVisible = false">返 回</el-button>
             </div>
         </el-dialog>
@@ -135,11 +135,6 @@ export default {
                 // 新窗体跳转
                 // window.open('/user/successLogin')
             }).catch(function() {
-                // console.log('0data.data= ' + data.data)
-                // console.log('11userName= ' + this.userName)
-                // console.log('22userPassword= ' + this.userPassword)
-                // console.log('33this.form.account= ' + this.form.account)
-                // console.log('44this.form.password= ' + this.form.password)
                 console.log('传输失败')
             })
         },
@@ -178,13 +173,15 @@ export default {
                 })
             }
         },
+        reject() {
+            alert('为保证数据库安全,目前不开放注册')
+        },
         /**
          * 获取焦点
          * */
         focus: function() {
             this.msg = null
         },
-
         /**
          * 点击注册按钮事件
          * */
