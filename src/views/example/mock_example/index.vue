@@ -10,9 +10,10 @@
             title="来自shellwe的警告"
             :visible.sync="dialogVisible"
             width="30%"
-            :before-close="nameCheck">
+            :before-close="nameCheck"
+        >
             <span>此处必须输入验证信息</span>
-            <el-input v-model="pageInput" placeholder="请输入测试人员名称"></el-input>{{ msg }}
+            <el-input v-model="pageInput" placeholder="请输入测试人员名称" />{{ msg }}
             <span slot="footer" class="dialog-footer">
                 <el-button @click="back()">返 回</el-button>
                 <el-button type="primary" @click="nameCheck">确 定</el-button>

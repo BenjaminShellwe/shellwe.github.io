@@ -21,35 +21,35 @@
                             </template>
                             <el-descriptions-item>
                                 <template slot="label">
-                                    <i class="el-icon-user"></i>
+                                    <i class="el-icon-user" />
                                     名称
                                 </template>
                                 TernaryProjectTeam
                             </el-descriptions-item>
                             <el-descriptions-item>
                                 <template slot="label">
-                                    <i class="el-icon-mobile-phone"></i>
+                                    <i class="el-icon-mobile-phone" />
                                     联系
                                 </template>
                                 shellwe.top
                             </el-descriptions-item>
                             <el-descriptions-item>
                                 <template slot="label">
-                                    <i class="el-icon-location-outline"></i>
+                                    <i class="el-icon-location-outline" />
                                     地址
                                 </template>
                                 湛江市
                             </el-descriptions-item>
                             <el-descriptions-item>
                                 <template slot="label">
-                                    <i class="el-icon-tickets"></i>
+                                    <i class="el-icon-tickets" />
                                     备注
                                 </template>
                                 <el-tag size="small">企业</el-tag>
                             </el-descriptions-item>
                             <el-descriptions-item>
                                 <template slot="label">
-                                    <i class="el-icon-office-building"></i>
+                                    <i class="el-icon-office-building" />
                                     联系地址
                                 </template>
                                 广东省广州市从化区广从南路 548 号
@@ -72,7 +72,7 @@
             </el-row>
             <el-row :gutter="10" style="margin-bottom: 5px;">
                 <div v-show="page.loginButton" class="pageStyle">此语句应该绑定一个登录验证事件</div>
-                <el-button-group v-show="page.loginButton" >
+                <el-button-group v-show="page.loginButton">
                     <el-button type="primary" size="mini" class="pageStyle" @click="pageLogin('E')">登录企业管理账户</el-button>
                     <el-button type="primary" size="mini" @click="pageLogin('P')">登录企业个人账户</el-button>
                 </el-button-group>

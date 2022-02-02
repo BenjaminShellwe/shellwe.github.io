@@ -1,43 +1,67 @@
-<!-- Code Explanation Ver 0.1 --by shellwe
-"VEcharts" here is a bar or column table
-The following code controls the vertical(xAxis) and vertical(yAxis) respectively.
-"type" in "series" can input word "line" or "bar" for different view.
--->
 <template>
-    <div id="this-is-bar-chart" v-echarts="barChartOptions" class="chart" />
+    <div class="Echarts">
+        <div id="charts" style="width: 400px; height: 400px;" />
+    </div>
 </template>
 
 <script>
-import VEcharts from 'vue-echarts-directive'
 export default {
     name: 'VEcharts',
-    directives: {
-        'echarts': VEcharts
+    mounted() {
+        this.echarts()
     },
-    data() {
-        return {
-            barChartOptions: {
+    methods: {
+        echarts() {
+            var chart = this.$echarts.init(document.getElementById('charts'))
+            // 配置图表
+            var option = {
                 tooltip: {},
-                xAxis: {
-                    data: ['A', 'B', 'C', 'D', 'E']
+                angleAxis: {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                 },
-                yAxis: {},
+                radiusAxis: {},
+                polar: {},
                 series: [
                     {
-                        name: 'Num',
-                        type: 'line',
-                        data: [5, 20, 36, 10, 10]
+                        type: 'bar',
+                        data: [1, 2, 3, 4, 3, 5, 1],
+                        coordinateSystem: 'polar',
+                        name: 'A',
+                        stack: 'a',
+                        emphasis: {
+                            focus: 'series'
+                        }
+                    },
+                    {
+                        type: 'bar',
+                        data: [2, 4, 6, 1, 3, 2, 1],
+                        coordinateSystem: 'polar',
+                        name: 'B',
+                        stack: 'a',
+                        emphasis: {
+                            focus: 'series'
+                        }
+                    },
+                    {
+                        type: 'bar',
+                        data: [1, 2, 3, 4, 1, 2, 5],
+                        coordinateSystem: 'polar',
+                        name: 'C',
+                        stack: 'a',
+                        emphasis: {
+                            focus: 'series'
+                        }
                     }
-                ]
+                ],
+                legend: {
+                    show: true,
+                    data: ['A', 'B', 'C']
+                }
             }
+            chart.setOption(option)
         }
     }
 }
 </script>
 
-<style scoped>
-.chart {
-    width: 400px;
-    height: 400px;
-}
-</style>

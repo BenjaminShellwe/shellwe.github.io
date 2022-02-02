@@ -66,6 +66,7 @@ const constantRoutes = [
     }
 ]
 
+import MultilevelMenuHR from './modules/multilevel.menu.hr'
 import MultilevelMenuBasic from './modules/multilevel.menu.basic'
 import MultilevelMenuAdvanced from './modules/multilevel.menu.advanced'
 import ExTernalLinkExample from './modules/external.link.example'
@@ -78,6 +79,7 @@ let asyncRoutes = [
         },
         children: [
             MultilevelMenuBasic,
+            MultilevelMenuHR,
             MultilevelMenuAdvanced,
             ExTernalLinkExample
         ]

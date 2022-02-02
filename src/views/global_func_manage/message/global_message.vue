@@ -20,7 +20,7 @@
                 inactive-text="自定义"
                 @click.native="changeIsNeedCaptcha(isShow)"
             />
-            <div >
+            <div>
                 <span v-show="isShow" id="collapsible0" style="color: red;">注意,选择系统化将会由后台管理通知权重</span>
                 <span v-show="isHide" id="collapsible1" style="color: lightgreen;">注意,选择自定义将需要手动配置管理通知权重</span>
             </div>

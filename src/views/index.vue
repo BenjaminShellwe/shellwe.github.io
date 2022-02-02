@@ -11,7 +11,6 @@
             <el-col :lg="8">
                 <page-main title="基本信息" style="margin: 0 0 0 0;">
                     <div class="fa-info">
-                        <img style="width: 150px;">
                         <h1>Welcome!! {{ $store.state.user.account }}</h1>
                         <h4>Login time {{ timeNow() }} <br> There will be some welcome message</h4>
                         <el-table :data="diff" row-key="prop" size="mini" border stripe>
@@ -26,6 +25,12 @@
                                 </template>
                             </el-table-column>
                         </el-table>
+                    </div>
+                    <br>
+                    <!--                    <VEcharts />-->
+                    <br>
+                    <div class="Echarts">
+                        <div id="chartsUni" style="width: 500px; height: 450px;" />
                     </div>
                 </page-main>
             </el-col>
@@ -68,18 +73,21 @@
                         </div>
                     </el-col>
                 </el-row>
-                <Glide />
-                <page-main title="卡片2 题目" style="margin: 0;">
-                    <div class="question">
-                        <ol class="answer">
-                            <li><span>次标题1</span>内容</li>
-                            <li><span>次标题2</span></li>
-                            <li><span>次标题3</span></li>
-                            <li><span>次标题4</span></li>
-                            <li><span>次标题5</span></li>
-                        </ol>
-                    </div>
+                <page-main>
+                    <VCalendar />
                 </page-main>
+
+                <!--                <page-main title="卡片2 题目" style="margin: 0;">-->
+                <!--                    <div class="question">-->
+                <!--                        <ol class="answer">-->
+                <!--                            <li><span>次标题1</span>内容</li>-->
+                <!--                            <li><span>次标题2</span></li>-->
+                <!--                            <li><span>次标题3</span></li>-->
+                <!--                            <li><span>次标题4</span></li>-->
+                <!--                            <li><span>次标题5</span></li>-->
+                <!--                        </ol>-->
+                <!--                    </div>-->
+                <!--                </page-main>-->
             </el-col>
         </el-row>
     </div>
@@ -87,11 +95,14 @@
 
 <script>
 import router from '@/router'
-
+import PageMain from '@/components/PageMain'
 export default {
-
+    name: 'IndexPage',
+    components: {PageMain},
     data() {
         return {
+            currentRole: 'dashboard',
+
             tips: {
                 information: 'Click to refresh',
                 dictionary: 'Set your personal data dictionary',
@@ -99,7 +110,6 @@ export default {
                 extraFunction: 'More action',
                 message: 'Manage notification',
                 help: 'Get online help'
-
             },
             location: {
                 origin: location.origin
@@ -113,6 +123,9 @@ export default {
                 ]
             }]
         }
+    },
+    mounted() {
+        this.echartsUni()
     },
     methods: {
         open(url) {
@@ -149,6 +162,60 @@ export default {
             const h = new Date().getHours()
             const m = new Date().getMinutes()
             return h + ':' + m
+        },
+        echartsUni() {
+            var chartUni = this.$echarts.init(document.getElementById('chartsUni'))
+            // 配置图表
+            var option = {
+                tooltip: {},
+                angleAxis: {
+                    type: 'category'
+                },
+                radiusAxis: {},
+                polar: {},
+                series: [
+                    {
+                        type: 'pie',
+                        color: [
+                            '#ff0000',
+                            '#ff9650',
+                            '#f4fa3e',
+                            '#467cff',
+                            '#4eff43',
+                            '#ff9f7f',
+                            '#fb7293',
+                            '#E062AE',
+                            '#E690D1',
+                            '#e7bcf3',
+                            '#9d96f5',
+                            '#8378EA',
+                            '#96BFFF'
+                        ],
+                        data: [
+                            {
+                                value: 3,
+                                name: '到期'
+                            }, {
+                                value: 4,
+                                name: '紧急'
+                            }, {
+                                value: 2,
+                                name: '待办'
+                            }, {
+                                value: 2,
+                                name: '移交'
+                            }, {
+                                value: 2,
+                                name: '完成'
+                            }]
+                    }
+                ],
+                roseType: 'area',
+                legend: {
+                    show: false
+                }
+            }
+            chartUni.setOption(option)
         }
     }
 }
@@ -188,43 +255,7 @@ export default {
     cursor: pointer;
     transition: 0.2s;
     &:hover {
-        color: #fff;
-    }
-    &-1 {
-        color: #ffc069;
-        &:hover {
-            background-color: #ffc069;
-        }
-    }
-    &-2 {
-        color: #b37feb;
-        &:hover {
-            background-color: #b37feb;
-        }
-    }
-    &-3 {
-        color: #95de64;
-        &:hover {
-            background-color: #95de64;
-        }
-    }
-    &-4 {
-        color: #ff85c0;
-        &:hover {
-            background-color: #ff85c0;
-        }
-    }
-    &-5 {
-        color: #ff9c6e;
-        &:hover {
-            background-color: #ff9c6e;
-        }
-    }
-    &-6 {
-        color: #282c34;
-        &:hover {
-            background-color: #282c34;
-        }
+        color: #a1a1a1;
     }
     i {
         font-size: 24px;

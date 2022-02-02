@@ -17,9 +17,6 @@
             </span>
             <span>主题制作暂时暂停</span>
         </page-main>
-        <page-main>
-
-        </page-main>
     </div>
 </template>
 

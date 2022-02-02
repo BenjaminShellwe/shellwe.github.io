@@ -3,15 +3,21 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
+const echarts = require('echarts')
+// import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
+import moment from 'moment'
+Vue.prototype.moment = moment
+
+import layer from 'vue-layer'
+Vue.prototype.layer = layer(Vue)
+
 import mammoth from 'mammoth'
 Vue.prototype.mammoth = mammoth
 
 import clipboard from 'clipboard'
 Vue.prototype.clipboard = clipboard
-
-import Glide from 'vue-glide-js'
-import 'vue-glide-js/dist/vue-glide.css'
-Vue.use(Glide)
 
 import api from './api'
 Vue.prototype.$api = api

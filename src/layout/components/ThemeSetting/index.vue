@@ -22,8 +22,8 @@
                             :key="item.value"
                             :label="item.label"
                             :value="item.value"
-                            :disabled="item.disabled">
-                        </el-option>
+                            :disabled="item.disabled"
+                        />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="侧边栏导航">
