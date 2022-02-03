@@ -21,7 +21,7 @@
                                     <span>个人中心</span>
                                 </div>
                                 <div class="name-role">
-                                    <span class="sender">Admin - {{ $store.state.user.account }}</span>
+                                    <span class="sender">登录人员 - {{ $store.state.user.account }}</span>
                                 </div>
                                 <div class="register-info">
                                     <span class="register-info">
@@ -90,12 +90,15 @@
                                     <span>职位资料</span>
                                 </div>
                                 <div>
+                                    正在部署,请等待开发完毕<br>
+                                    正在部署,请等待开发完毕<br>
                                     正在部署,请等待开发完毕
                                 </div>
                             </el-card>
                         </div>
                     </el-col>
                 </el-row>
+
             </div>
         </page-main>
         <el-dialog

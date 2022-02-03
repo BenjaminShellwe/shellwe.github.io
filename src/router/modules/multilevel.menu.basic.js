@@ -100,9 +100,9 @@ export default {
                 {
                     path: 'personal',
                     name: 'Personal',
-                    component: () => import('@/views/account_management/personal/personal'),
+                    component: () => import('@/views/personal/setting'),
                     meta: {
-                        title: '个人账户',
+                        title: '个人设置',
                         sidebar: true,
                         breadcrumb: true
                     //    前端功能要求1 根据登录账户判断是否为改角色 完善访问路径和交互页面

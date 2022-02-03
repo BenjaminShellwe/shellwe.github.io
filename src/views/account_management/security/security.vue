@@ -7,7 +7,7 @@
                 </div>
                 &nbsp;
                 <div class="inLine">
-                    此页为账户的安全设置
+                    此页为账户的安全设置 这里又花了一个晚上去搞 echarts
                 </div>
             </template>
         </page-header>
@@ -21,35 +21,40 @@
                     </el-carousel>
                 </div>
                 <div>
-                    <el-col :span="16">
-                        <el-row>
+                    <el-row>
+                        <el-col :span="8">
+                            <div class="Echarts" style="height: 260px;" shadow="hover">
+                                <div id="chartsUni" style="width: 400px; height: 350px;" />
+                            </div>
+                        </el-col>
+                        <el-col :span="16">
                             <el-card class="pageCard" shadow="hover">
-                                1模仿对象,阿里云后台安全中心
+                                左边这个就是一个晚上的成果
                             </el-card>
-                        </el-row>
-                        <el-row>
-                            <el-card class="pageCard" shadow="hover">
-                                2
-                            </el-card>
-                        </el-row>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-row>
-                            <el-card class="pageCardRol" shadow="hover">
-                                3
-                            </el-card>
-                        </el-row>
-                    </el-col>
+                        </el-col>
+                    </el-row>
+                    <el-row />
+                    <el-row>
+                        <el-card class="pageCardRol" shadow="hover">
+                            3
+                        </el-card>
+                    </el-row>
                 </div>
                 <div>
                     <el-row>
                         <el-col>
                             <el-card class="pageCard" shadow="hover">
-                                4
+                                <el-row>
+                                    <el-col :span="16">
+                                        <el-input v-model="pageInputValue" type="number" placeholder="仅能输入0-1的零后两位小数" />
+                                    </el-col>
+                                    <el-col :span="8">
+                                        <el-button @click="handleChartsChange()">提交</el-button>
+                                    </el-col>
+                                </el-row>
                             </el-card>
-
                             <el-card shadow="hover">
-                                5
+                                {{ pageInputValue }}
                             </el-card>
                         </el-col>
                     </el-row>
@@ -62,6 +67,7 @@
 <script>
 import PageHeader from '@/components/PageHeader'
 import PageMain from '@/components/PageMain'
+var chartUni
 export default {
     name: 'Basic',
     components: {PageMain, PageHeader},
@@ -71,9 +77,146 @@ export default {
             default: '120px'
         }
     },
+    data() {
+        return {
+            pageInputValue: ''
+        }
+    },
+    computed: {
+    },
+    mounted() {
+        this.echartsUni()
+    },
     methods: {
         back() {
             history.go(-1)
+        },
+        change() {
+            this.$forceUpdate()
+        },
+        echartsUni() {
+            chartUni = this.$echarts.init(document.getElementById('chartsUni'))
+            // 配置图表
+            var option = {
+                series: [
+                    {
+                        type: 'gauge',
+                        startAngle: 180,
+                        endAngle: 0,
+                        min: 0,
+                        max: 1,
+                        splitNumber: 8,
+                        axisLine: {
+                            lineStyle: {
+                                width: 6,
+                                color: [
+                                    [0.25, '#FF6E76'],
+                                    [0.5, '#FDDD60'],
+                                    [0.75, '#58D9F9'],
+                                    [1, '#7CFFB2']
+                                ]
+                            }
+                        },
+                        pointer: {
+                            icon: 'path://M12.8,0.7l12,40.1H0.7L12.8,0.7z',
+                            length: '12%',
+                            width: 20,
+                            offsetCenter: [0, '-60%'],
+                            itemStyle: {
+                                color: 'auto'
+                            }
+                        },
+                        axisTick: {
+                            length: 12,
+                            lineStyle: {
+                                color: 'auto',
+                                width: 2
+                            }
+                        },
+                        splitLine: {
+                            length: 20,
+                            lineStyle: {
+                                color: 'auto',
+                                width: 5
+                            }
+                        },
+                        axisLabel: {
+                            color: '#464646',
+                            fontSize: 20,
+                            distance: -60,
+                            formatter: function(value) {
+                                if (value === 0.875) {
+                                    return 'A'
+                                } else if (value === 0.625) {
+                                    return 'B'
+                                } else if (value === 0.375) {
+                                    return 'C'
+                                } else if (value === 0.125) {
+                                    return 'D'
+                                }
+                                return ''
+                            }
+                        },
+                        title: {
+                            offsetCenter: [0, '-20%'],
+                            fontSize: 30
+                        },
+                        detail: {
+                            fontSize: 35,
+                            offsetCenter: [0, '0%'],
+                            valueAnimation: true,
+                            formatter: function(value) {
+                                if (value >= 0 && value <= 0.25) {
+                                    return '\n' + Math.round(value * 100) + '\n处于高危'
+                                }
+                                if (value >= 0.25 && value <= 0.5) {
+                                    return '\n' + Math.round(value * 100) + '\n处于中危'
+                                }
+                                if (value >= 0.5 && value <= 0.75) {
+                                    return '\n' + Math.round(value * 100) + '\n暂时低危'
+                                }
+                                if (value >= 0.75 && value < 1) {
+                                    return '\n' + Math.round(value * 100) + '\n基本安全'
+                                }
+                                if (value == 1) {
+                                    return '\n' + Math.round(value * 100) + '\n暂无异常'
+                                } if (value == '' || value == 'undefined' || value == null || isNaN) {
+                                    return '\n未检测到数据'
+                                } else {
+                                    return '\n数据异常' + value
+                                }
+                            },
+                            color: 'auto'
+                        },
+                        data: [
+                            {
+                                value: null,
+                                name: '安全值'
+                            }
+                        ]
+                    }
+                ],
+                legend: {
+                    show: false
+                }
+            }
+            chartUni.setOption(option)
+        },
+        handleChartsChange() {
+            let inputValue = this.pageInputValue
+            chartUni.setOption({
+                series: [
+                    {
+                        data: [
+                            {
+                                value: inputValue,
+                                name: '安全值已被修改'
+                            }
+                        ]
+                    }
+                ]
+            })
+            console.log(inputValue)
         }
     }
 }

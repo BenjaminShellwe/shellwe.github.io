@@ -177,11 +177,11 @@ export default {
                     {
                         type: 'pie',
                         color: [
-                            '#ff0000',
-                            '#ff9650',
-                            '#f4fa3e',
-                            '#467cff',
-                            '#4eff43',
+                            '#d20000',
+                            '#cb5600',
+                            '#dee33a',
+                            '#26449a',
+                            '#287e24',
                             '#ff9f7f',
                             '#fb7293',
                             '#E062AE',
@@ -196,7 +196,7 @@ export default {
                                 value: 3,
                                 name: '到期'
                             }, {
-                                value: 4,
+                                value: 10,
                                 name: '紧急'
                             }, {
                                 value: 2,
@@ -205,7 +205,7 @@ export default {
                                 value: 2,
                                 name: '移交'
                             }, {
-                                value: 2,
+                                value: 10,
                                 name: '完成'
                             }]
                     }
