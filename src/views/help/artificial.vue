@@ -12,8 +12,7 @@
             </template>
         </page-header>
         <page-main>
-            本页面还在设计中
-            页面设计推后
+            本页面还在设计中 人工客服设计由人事部门管理
         </page-main>
     </div>
 </template>
