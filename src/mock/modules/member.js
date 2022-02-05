@@ -24,7 +24,10 @@ module.exports = [
                     'permission.browse',
                     'permission.create',
                     'permission.edit',
-                    'permission.remove'
+                    'permission.remove',
+                    'supplay.department.browse',
+                    'supplay.department_job.browse',
+                    'supplay.role.browse'
                 ]
             } else if (option.query.account == 'test') {
                 permissions = [

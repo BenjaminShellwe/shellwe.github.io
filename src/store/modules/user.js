@@ -37,6 +37,7 @@ const actions = {
         commit('menu/invalidRoutes', null, {root: true})
     },
     // 获取我的权限
+    // 在此修改权限设置 可能要配合springboot
     getPermissions({state, commit}) {
         return new Promise(resolve => {
             // 通过 mock 获取权限

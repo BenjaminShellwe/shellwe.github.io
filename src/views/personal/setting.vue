@@ -103,7 +103,7 @@
                                         <div>
                                             <el-tooltip content="表内信息从数据库获取,无法直接手动修改" placement="bottom" effect="light">
                                                 <el-descriptions title="职位信息" direction="vertical" :column="4" border>
-                                                    <el-descriptions-item label="用户名">shellwe</el-descriptions-item>
+                                                    <el-descriptions-item label="用户名">吴俊威(shellwe)</el-descriptions-item>
                                                     <el-descriptions-item label="手机号">17600000000</el-descriptions-item>
                                                     <el-descriptions-item label="职位" :span="2">HR-admin项目负责人</el-descriptions-item>
                                                     <el-descriptions-item label="备注">

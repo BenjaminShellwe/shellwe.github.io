@@ -1,13 +1,13 @@
 <template>
     <div>
-        <page-header title="安全设置">
+        <page-header title="安全中心">
             <template #content>
                 <div class="inLine">
                     <p @click="back">返回上一页</p>
                 </div>
                 &nbsp;
                 <div class="inLine">
-                    此页为账户的安全设置 这里又花了一个晚上去搞 echarts
+                    此页为账户的安全设置
                 </div>
             </template>
         </page-header>
@@ -22,21 +22,54 @@
                 </div>
                 <div>
                     <el-row>
-                        <el-col :span="8">
+                        <el-col :span="6">
                             <div class="Echarts" style="height: 260px;" shadow="hover">
                                 <div id="chartsUni" style="width: 400px; height: 350px;" />
                             </div>
                         </el-col>
-                        <el-col :span="16">
+                        <el-col :span="18">
                             <el-card class="pageCard" shadow="hover">
-                                左边这个就是一个晚上的成果
+                                <h3>发现 问题</h3>
+                                <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
+                            </el-card>
+                            <el-card class="pageCard" shadow="hover">
+                                <h3>发现 问题</h3>
+                                <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
                             </el-card>
                         </el-col>
                     </el-row>
                     <el-row />
                     <el-row>
-                        <el-card class="pageCardRol" shadow="hover">
-                            3
+                        <el-card class="pageCardRol" style="height: 260px;" shadow="hover">
+                            安全风险
+                            <el-row>
+                                <el-col :span="8">
+                                    <div class="grid-content">
+                                        <div class="Echarts">
+                                            <div id="chartsBin" style="width: 500px; height: 250px;" />
+                                        </div>
+                                    </div>
+                                </el-col>
+                                <el-col :span="8">
+                                    <div class="grid-content">
+                                        <div class="Echarts">
+                                            <div id="chartsTer" style="width: 500px; height: 250px;" />
+                                        </div>
+                                    </div>
+                                </el-col>
+                                <el-col :span="4">
+                                    <div class="grid-content">
+                                        <sapn style="font-weight: bold;">基本检测</sapn><br>
+                                        <span>检查后台数据存取情况</span><br>
+                                        <el-button size="mini" plain>立即检查</el-button>
+                                    </div>
+                                </el-col>
+                                <el-col :span="4">
+                                    <sapn style="font-weight: bold;">操作监控</sapn><br>
+                                    <span>监控后台操作情况</span><br>
+                                    <el-button size="mini" plain>立即检查</el-button>
+                                </el-col>
+                            </el-row>
                         </el-card>
                     </el-row>
                 </div>
@@ -67,7 +100,7 @@
 <script>
 import PageHeader from '@/components/PageHeader'
 import PageMain from '@/components/PageMain'
-var chartUni
+var chartUni, chartBin, chartTer
 export default {
     name: 'Basic',
     components: {PageMain, PageHeader},
@@ -201,6 +234,61 @@ export default {
                 }
             }
             chartUni.setOption(option)
+            function dateString(i) {
+                let date = new Date()
+                date.setDate(date.getDate() + i)
+                let m = date.getMonth() + 1 < 10 ? (date.getMonth() + 1) : date.getMonth() + 1
+                console.log(m)
+                let d = date.getDate() < 10 ? date.getDate() : date.getDate()
+                console.log(d)
+                return  (m) + '月' + (d) + '日'
+            }
+            chartBin = this.$echarts.init(document.getElementById('chartsBin'))
+            var optionBin = {
+                title: {
+                    text: '待处理告警示'
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [dateString(-6), dateString(-5), dateString(-4), dateString(-3), dateString(-2), dateString(-1), dateString(0) ]
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        data: [5, 5, 8, 15, 1, 1, 0],
+                        type: 'line',
+                        areaStyle: {},
+                        color: ['#ff9650']
+                    }
+                ]
+            }
+            chartBin.setOption(optionBin)
+            chartTer = this.$echarts.init(document.getElementById('chartsTer'))
+            var optionTer = {
+                title: {
+                    text: '待修复缺漏洞'
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [dateString(-6), dateString(-5), dateString(-4), dateString(-3), dateString(-2), dateString(-1), dateString(0) ]
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        data: [2, 3, 3, 2, 1, 1, 0],
+                        type: 'line',
+                        areaStyle: {},
+                        color: ['#50dfff']
+                    }
+                ]
+            }
+            chartTer.setOption(optionTer)
         },
         handleChartsChange() {
             let inputValue = this.pageInputValue

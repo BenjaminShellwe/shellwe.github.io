@@ -4,7 +4,7 @@
             <template #content>
                 <div>
                     <div class="hover" @click="back">返回上一页</div>
-                    <div style="margin-bottom: 5px;">此页面为全局字典设置,在此页面控制本账号全局字典使用方式</div>
+                    <div>此页面为全局字典设置,在此页面控制本账号全局字典使用方式</div>
                     <span>是否开启数据字典 </span>
                     <el-switch
                         v-model="isShow"

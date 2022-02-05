@@ -19,7 +19,10 @@ export default {
                 'permission.browse',
                 'permission.create',
                 'permission.edit',
-                'permission.remove'
+                'permission.remove',
+                'supplay.department.browse',
+                'supplay.department_job.browse',
+                'supplay.role.browse'
             ]
         } else if (req.query.account == 'test') {
             permissions = [
