@@ -27,7 +27,7 @@
                                            'supplay.department_job.browse',
                                            'supplay.role.browse']"
                         >
-                            (!!目前本账号拥有最高权限!!)
+                            (!!目前本账号拥有最高权限!!仅fip)
                         </span>
                     </div>
                 </div>

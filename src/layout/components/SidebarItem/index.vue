@@ -99,7 +99,7 @@ export default {
 ::v-deep .el-submenu,
 ::v-deep .el-menu-item {
     .svg-icon {
-        font-size: 20px;
+        font-size: 25px;
         margin-right: 10px;
         vertical-align: -0.25em;
         transition: all 0.3s;
