@@ -13,9 +13,9 @@ export default {
     },
     children: [
         {
-            //    模块(1) 信息总览010101
             path: 'index',
             name: 'HumanResourcesIndex',
+            component: EmptyLayout,
             // component: () => import('@/views/index'),
             redirect: '',
             meta: {
@@ -29,6 +29,7 @@ export default {
             name: 'RecruitmentManagement',
             component: EmptyLayout,
             // redirect: '/multilevel_menu_basic/management/global_dic',
+            redirect: '',
             meta: {
                 title: '招聘管理'
             },
@@ -36,7 +37,7 @@ export default {
                 {
                     path: 'overview',
                     name: 'RecruitmentOverview',
-                    // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
+                    component: EmptyLayout,
                     meta: {
                         title: '管理总览',
                         sidebar: true,
@@ -46,19 +47,9 @@ export default {
                         {
                             path: 'vacancies',
                             name: 'Vacancies',
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
+                            component: () => import('@/views/human_resources/recruitment/vacancies'),
                             meta: {
-                                title: '职位空缺管理',
-                                sidebar: true,
-                                breadcrumb: true
-                            }
-                        },
-                        {
-                            path: 'posting',
-                            name: 'Posting',
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
-                            meta: {
-                                title: '职位发布管理',
+                                title: '职位空缺发布',
                                 sidebar: true,
                                 breadcrumb: true
                             }
@@ -66,6 +57,7 @@ export default {
                         {
                             path: 'process',
                             name: 'Process',
+                            component: EmptyLayout,
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
                                 title: '招聘流程管理',
@@ -74,48 +66,31 @@ export default {
                             }
                         },
                         {
-                            path: 'resumeCI',
-                            name: 'ResumeCollectionIntegration',
+                            path: 'resume',
+                            name: 'ResumeCollectionFilter',
+                            component: EmptyLayout,
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
-                                title: '简历收集整合',
-                                sidebar: true,
-                                breadcrumb: true
-                            }
-                        },
-                        {
-                            path: 'filter',
-                            name: 'ResumeFilter',
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
-                            meta: {
-                                title: '简历初筛过滤',
-                                sidebar: true,
-                                breadcrumb: true
-                            }
-                        },
-                        {
-                            path: 'evaluate',
-                            name: 'Evaluation',
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
-                            meta: {
-                                title: '基本评测工具',
+                                title: '简历收集初筛',
                                 sidebar: true,
                                 breadcrumb: true
                             }
                         },
                         {
                             path: 'interview',
-                            name: 'InterviewManagement',
+                            name: 'InterviewEvaluationManagement',
+                            component: EmptyLayout,
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
-                                title: '面试管理功能',
+                                title: '面试评测功能',
                                 sidebar: true,
                                 breadcrumb: true
                             }
                         },
                         {
-                            path: 'recruitment',
-                            name: 'RecruitmentManagement',
+                            path: 'recruit',
+                            name: 'Recruitment',
+                            component: EmptyLayout,
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
                                 title: '员工录用管理',
@@ -128,7 +103,8 @@ export default {
                 {
                     path: 'channel',
                     name: 'ChannelManagement',
-                    // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
+                    component: EmptyLayout,
+                    redirect: '',
                     meta: {
                         title: '渠道管理',
                         sidebar: true,
@@ -180,7 +156,8 @@ export default {
                 {
                     path: 'report',
                     name: 'StatisticalReport',
-                    // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
+                    component: EmptyLayout,
+                    redirect: '',
                     meta: {
                         title: '统计报表',
                         sidebar: true,
@@ -244,6 +221,7 @@ export default {
         {
             path: 'salary',
             name: 'SalaryManagement',
+            component: EmptyLayout,
             // component: () => import('@/views/index'),
             redirect: '',
             meta: {
@@ -275,7 +253,7 @@ export default {
                     }
                 },
                 {
-                    path: 'Tax',
+                    path: 'tax',
                     name: 'SalaryTaxCalculation',
                     // component: () => import('@/views/index'),
                     redirect: '',
@@ -290,6 +268,7 @@ export default {
         {
             path: 'attendance',
             name: 'AttendanceManagement',
+            component: EmptyLayout,
             // component: () => import('@/views/index'),
             redirect: '',
             meta: {
@@ -299,7 +278,7 @@ export default {
             },
             children: [
                 {
-                    path: 'data',
+                    path: 'settings',
                     name: 'BasicDataSettings',
                     // component: () => import('@/views/index'),
                     redirect: '',
@@ -336,6 +315,7 @@ export default {
         {
             path: 'training',
             name: 'TrainingManagement',
+            component: EmptyLayout,
             // component: () => import('@/views/index'),
             redirect: '',
             meta: {
@@ -404,6 +384,7 @@ export default {
         {
             path: 'performance',
             name: 'PerformanceManagement',
+            component: EmptyLayout,
             // component: () => import('@/views/index'),
             redirect: '',
             meta: {
@@ -415,6 +396,7 @@ export default {
         {
             path: 'background',
             name: 'BackgroundInvestigationManagement',
+            component: EmptyLayout,
             // component: () => import('@/views/index'),
             redirect: '',
             meta: {

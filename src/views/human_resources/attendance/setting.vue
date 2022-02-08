@@ -4,6 +4,7 @@
 
 <script>
 export default {
-    name: 'filter'
+    name: 'setting'
 }
 </script>
+

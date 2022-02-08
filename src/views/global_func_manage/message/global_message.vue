@@ -3,8 +3,7 @@
         <page-header title="通知设置">
             <template #content>
                 <div>
-                    <div class="hover" @click="back">返回上一页</div>
-                    &nbsp;&nbsp;
+                    <div class="hover" @click="back">返回上一页&nbsp;&nbsp;</div>
                     <div class="inLine">此页面设置本管理系统通知推送</div>
                 </div>
             </template>
