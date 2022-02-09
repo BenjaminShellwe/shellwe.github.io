@@ -57,7 +57,6 @@ export default {
                         {
                             path: 'recruitment',
                             name: 'RecruitmentInterviewManagement',
-                            // component: EmptyLayout,
                             component: () => import('@/views/human_resources/recruitment/recruitment'),
                             meta: {
                                 title: '招聘面试管理',
