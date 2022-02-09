@@ -5,119 +5,49 @@
                 <div>
                     <div class="hover" @click="back">返回上一页&nbsp;&nbsp;</div>
                     <div class="inLine">此页面设置控制企业将空缺或已空缺的职位</div>
+                    <div>{{ $store.state.settings.permissions }}</div>
                 </div>
             </template>
         </page-header>
-        <page-main title="即将空缺职位">
+        <el-card style="margin-left: 20px; margin-right: 20px;">
+            <el-row>
+                <span>快捷定位按钮&nbsp;&nbsp;</span>
+                <el-button plain @click="handleToPosition('Oni')">即将空缺职位栏</el-button>
+                <el-button plain @click="handleToPosition('Bin')">已经空缺职位栏</el-button>
+                <el-button plain @click="handleToPosition('Ter')">空缺信息调整栏</el-button>
+            </el-row>
+        </el-card>
+        <page-main id="pageOni" title="即将空缺职位">
             <el-table
                 :data="pagePropsValueOni"
                 style="width: 100%;"
-                border>
-                <el-table-column type="expand" label="展开" width="50px">
-                    <template #default="props">
-                        <el-form label-position="left" inline>
-                            <el-descriptions class="margin-top" title="离职申请详情" :column="4" :size="size" border>
-                                <template slot="extra">
-                                    <el-button type="primary" size="small" style="margin-right: 20px;">操作</el-button>
-                                </template>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <i class="el-icon-user" />
-                                        真实姓名
-                                    </template>
-                                    <span>{{ props.row.name }}</span>
-                                </el-descriptions-item>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <svg-icon name="gender" />
-                                        员工性别
-                                    </template>
-                                    <span>{{ props.row.sex }}</span>
-                                </el-descriptions-item>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <svg-icon name="application" />
-                                        申请事件 ID
-                                    </template>
-                                    <span>{{ props.row.id }}</span>
-                                </el-descriptions-item>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <i class="el-icon-mobile-phone" />
-                                        手机号码
-                                    </template>
-                                    <span>{{ props.row.phone }}</span>
-                                </el-descriptions-item>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <i class="el-icon-office-building" />
-                                        联系地址
-                                    </template>
-                                    <span>{{ props.row.address }}</span>
-                                </el-descriptions-item>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <svg-icon name="department" />
-                                        所属部门
-                                    </template>
-                                    <span>{{ props.row.department }}</span>
-                                </el-descriptions-item>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <svg-icon name="position" />
-                                        所在职位
-                                    </template>
-                                    <el-tag size="small"><span>{{ props.row.position }}</span></el-tag>
-                                </el-descriptions-item>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <svg-icon name="description" />
-                                        基本描述
-                                    </template>
-                                    <span>{{ props.row.description }}</span>
-                                </el-descriptions-item>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <svg-icon name="applyTime" />
-                                        申请时间
-                                    </template>
-                                    <span>{{ props.row.createdTime }}</span>
-                                </el-descriptions-item>
-                                <el-descriptions-item>
-                                    <template slot="label">
-                                        <svg-icon name="resign" />
-                                        预计离职
-                                    </template>
-                                    <span>{{ props.row.estimatedTime }}</span>
-                                </el-descriptions-item>
-                                <br>
-                            </el-descriptions>
-                        </el-form>
-                    </template>
-                </el-table-column>
+                :row-class-name="tableRowClassName"
+            >
                 <el-table-column
-                    label="申请事务 ID"
                     prop="id"
+                    label="事务ID"
                 />
                 <el-table-column
-                    label="员工名称"
-                    prop="name"
-                />
-                <el-table-column
-                    label="所在职位"
                     prop="position"
+                    label="即将空缺"
                 />
                 <el-table-column
-                    label="基本描述"
-                    prop="description"
+                    prop="department"
+                    label="所属部门"
+                />
+                <el-table-column
+                    prop="estimatedTime"
+                    label="截止时间"
                 />
             </el-table>
         </page-main>
-        <page-main title="已经空缺职位">
+        <page-main id="pageBin" title="已经空缺职位">
             <el-table
                 :data="pagePropsValueBin"
                 style="width: 100%;"
-                border>
+                :row-class-name="tableRowClassName"
+                border
+            >
                 <el-table-column type="expand" label="展开" width="50px">
                     <template #default="props">
                         <el-form label-position="left" inline>
@@ -225,20 +155,437 @@
                 />
             </el-table>
         </page-main>
-        <page-main title="空缺信息调整">
-            <el-card>离职审批;部门,职位状态调整;空缺职位信息调整;职位发布</el-card>
+        <page-main id="pageTer" title="空缺信息调整">
+            <el-tabs tab-position="left">
+                <el-tab-pane label="空缺发布">
+                    <el-form ref="pageForm" :model="pageForm" :rules="rules" label-width="110px">
+                        <el-form-item label="空缺职位名称" prop="position">
+                            <el-input v-model="pageForm.position" />
+                        </el-form-item>
+                        <el-form-item label="空缺职位部门" prop="position">
+                            <el-select v-model="pageForm.department" placeholder="选择部门">
+                                <el-option label="人事部门" value="HR" />
+                                <el-option label="教辅部门" value="education" />
+                                <el-option label="软件部门" value="software" />
+                            </el-select>
+                        </el-form-item>
+                        <el-row>
+                            <el-col :span="8">
+                                <el-form-item label="预设发布时间" prop="date">
+                                    <el-date-picker v-model="pageForm.date" :disabled.sync="publish" type="datetime" placeholder="选择日期" style="width: 100%;" />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="立即发布">
+                                    <el-switch
+                                        v-model="publish"
+                                        @change="handlePropChange"
+                                    />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                !!预留!!
+                            </el-col>
+                        </el-row>
+                        <el-form-item label="!!薪资预留!!">
+                            <el-switch v-model="pageForm.delivery" />
+                        </el-form-item>
+                        <el-form-item label="!!条件预留!!">
+                            <el-switch v-model="pageForm.delivery" />
+                        </el-form-item>
+                        <el-form-item label="招聘性质" prop="type">
+                            <el-checkbox-group v-model="pageForm.type">
+                                <el-checkbox label="线上招聘" name="type" />
+                                <el-checkbox label="线下招聘" name="type" />
+                                <el-checkbox label="内推招聘" name="type" />
+                                <el-checkbox label="第三方商" name="type" />
+                            </el-checkbox-group>
+                        </el-form-item>
+                        <el-form-item label="特殊资源">
+                            <el-radio-group v-model="pageForm.resource">
+                                <el-radio label="!!预留!!" />
+                                <el-radio label="!!预留!!" />
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="附加说明">
+                            <el-input v-model="pageForm.desc" type="textarea" />
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="onSubmit('pageForm')">发布</el-button>
+                            <el-button @click="resetForm('pageForm')">重置</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-tab-pane>
+                <el-tab-pane label="离职审批">
+                    <el-table
+                        :data="pagePropsValueOni"
+                        style="width: 100%;"
+                        border
+                    >
+                        <el-table-column type="expand" label="展开" width="50px">
+                            <template #default="props">
+                                <el-form label-position="left" inline>
+                                    <el-descriptions class="margin-top" title="离职申请详情" :column="4" :size="size" border>
+                                        <template slot="extra">
+                                            <el-button type="primary" size="small" style="margin-right: 20px;">操作</el-button>
+                                        </template>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <i class="el-icon-user" />
+                                                真实姓名
+                                            </template>
+                                            <span>{{ props.row.name }}</span>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="gender" />
+                                                员工性别
+                                            </template>
+                                            <span>{{ props.row.sex }}</span>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="application" />
+                                                申请事件 ID
+                                            </template>
+                                            <span>{{ props.row.id }}</span>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <i class="el-icon-mobile-phone" />
+                                                手机号码
+                                            </template>
+                                            <span>{{ props.row.phone }}</span>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <i class="el-icon-office-building" />
+                                                联系地址
+                                            </template>
+                                            <span>{{ props.row.address }}</span>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="department" />
+                                                所属部门
+                                            </template>
+                                            <span>{{ props.row.department }}</span>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="position" />
+                                                所在职位
+                                            </template>
+                                            <el-tag size="small"><span>{{ props.row.position }}</span></el-tag>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="description" />
+                                                基本描述
+                                            </template>
+                                            <span>{{ props.row.description }}</span>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="applyTime" />
+                                                申请时间
+                                            </template>
+                                            <span>{{ props.row.createdTime }}</span>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="resign" />
+                                                预计离职
+                                            </template>
+                                            <span>{{ props.row.estimatedTime }}</span>
+                                        </el-descriptions-item>
+                                        <br>
+                                    </el-descriptions>
+                                </el-form>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                            label="申请事务 ID"
+                            prop="id"
+                        />
+                        <el-table-column
+                            label="员工名称"
+                            prop="name"
+                        />
+                        <el-table-column
+                            label="所在职位"
+                            prop="position"
+                        />
+                        <el-table-column
+                            label="基本描述"
+                            prop="description"
+                        />
+                    </el-table>
+                </el-tab-pane>
+                <el-tab-pane label="状态调整">
+                    <el-table
+                        :data="pagePropsValueBin"
+                        border
+                        height="235"
+                        style="width: 100%;"
+                    >
+                        <el-table-column
+                            fixed
+                            prop="id"
+                            label="事务ID"
+                        />
+                        <el-table-column
+                            prop="position"
+                            label="职位名称"
+                        />
+                        <el-table-column
+                            prop="positionStatus"
+                            label="职位状态"
+                        />
+                        <el-table-column
+                            prop="department"
+                            label="归属部门"
+                        />
+                        <el-table-column
+                            prop="departmentStatus"
+                            label="部门状态"
+                        />
+                        <el-table-column
+                            prop="createdTime"
+                            label="创建时间"
+                        />
+                        <el-table-column
+                            fixed="right"
+                            label="操作"
+                            width="100"
+                        >
+                            <template>
+                                <el-button type="text" size="small">查看</el-button>
+                                <el-button type="text" size="small" @click="pageTemplateShow=true">编辑</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>
+                <div v-show="pageTemplateShow" style="margin-top: 10px;">
+                    <el-form ref="form" :model="pagePropsValueBin" label-width="80px" size="mini">
+                        <el-row>
+                            <el-col :span="4">
+                                <el-form-item label="事务ID">
+                                    <el-input v-model="pagePropsValueBin.id" :placeholder="pagePropsValueBin.id" disabled />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="职位名称">
+                                    <el-input v-model="pagePropsValueBin.position" :placeholder="pagePropsValueBin.position" disabled />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="职位状态">
+                                    <el-input v-model="pagePropsValueBin.positionStatus" :placeholder="pagePropsValueBin.positionStatus" />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="归属部门">
+                                    <el-input v-model="pagePropsValueBin.department" :placeholder="pagePropsValueBin.department" disabled />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item label="部门状态">
+                                    <el-input v-model="pagePropsValueBin.departmentStatus" :placeholder="pagePropsValueBin.departmentStatus" />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item size="mini">
+                                    <el-button type="primary" @click="pageTemplateShow=false">修改</el-button>
+                                    <el-button>取消</el-button>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                    </el-form>
+                </div>
+                <el-tab-pane v-auth="'permission.edit'" label="信息调整">
+                    <el-alert
+                        title="仅拥有高级权限管理员可见与编辑"
+                        type="error">
+                    </el-alert>
+                    <el-table
+                        :data="pagePropsValueOni.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
+                        style="width: 100%;"
+                        border
+                    >
+                        <el-table-column
+                            v-for="(item, index) in pageTableHeaderOni"
+                            :key="index"
+                            :prop="index"
+                            :label="item"
+                            :fit="true"
+                            sortable
+                            min-width="30px"
+                        />
+                        <el-table-column
+                            align="right"
+                            fixed="right"
+                            width="160px"
+                        >
+                            <template slot="header">
+                                <input
+                                    v-model="search"
+                                    size="mini"
+                                    placeholder="输入事务ID搜索"
+                                    style="width: 135px;"
+                                >
+                            </template>
+                            <template slot-scope="scope">
+                                <el-button
+                                    size="mini"
+                                    @click="handleEdit(scope.$index, scope.row)"
+                                >
+                                    Edit
+                                </el-button>
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.$index, scope.row)"
+                                >
+                                    Delete
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <br>
+                    <el-alert
+                        title="仅拥有高级权限管理员可见与编辑"
+                        type="error">
+                    </el-alert>
+                    <el-table
+                        :data="pagePropsValueBin.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
+                        style="width: 100%;"
+                        border
+                    >
+                        <el-table-column
+                            v-for="(item, index) in pageTableHeaderBin"
+                            :key="index"
+                            :prop="index"
+                            :label="item"
+                            :fit="true"
+                            sortable
+                            min-width="30px"
+                        />
+                        <el-table-column
+                            align="right"
+                            fixed="right"
+                            width="160px"
+                        >
+                            <template slot="header">
+                                <input
+                                    v-model="search"
+                                    size="mini"
+                                    placeholder="输入事务ID搜索"
+                                    style="width: 135px;"
+                                >
+                            </template>
+                            <template slot-scope="scope">
+                                <el-button
+                                    size="mini"
+                                    @click="handleEdit(scope.$index, scope.row)"
+                                >
+                                    Edit
+                                </el-button>
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.$index, scope.row)"
+                                >
+                                    Delete
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>
+            </el-tabs>
         </page-main>
+        <el-card>离职审批;部门,职位状态调整;空缺职位信息调整;职位发布</el-card>
     </div>
 </template>
 
 <script>
 import PageMain from '@/components/PageMain'
+
 export default {
     name: 'Vacancies',
     components: {PageMain},
     data() {
         return {
             size: '',
+            search: '',
+            pageTemplateShow: false,
+            publish: false,
+            pageForm: {
+                position: '',
+                department: '',
+                date: '',
+                publish: false,
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: ''
+            },
+            rules: {
+                position: [
+                    { required: true, message: '请输入职位名称', trigger: 'blur' },
+                    { min: 3, max: 25, message: '长度在 3 到 25 个字符', trigger: 'blur' }
+                ],
+                department: [
+                    { required: true, message: '请选择一个部门', trigger: 'change' }
+                ],
+                date: [
+                    { type: 'date', required: false, message: '请选择日期', trigger: 'change' }
+                ],
+                publish: [
+                    { type: 'array', required: true, message: '请选择发布时间性质', trigger: 'change' }
+                ],
+                delivery: [
+                    { type: 'array', required: false, message: '暂无', trigger: 'change' }
+                ],
+                type: [
+                    { type: 'array', required: true, message: '请选择招聘性质', trigger: 'change' }
+                ],
+                resource: [
+                    { required: false, message: '暂无', trigger: 'change' }
+                ],
+                desc: [
+                    { required: false, message: '暂无', trigger: 'change' }
+                ],
+                null: [
+                    { required: false }
+                ]
+            },
+            pageTableHeaderOni: {
+                id: '事务ID',
+                name: '账户姓名',
+                sex: '用户性别',
+                phone: '电话号码',
+                address: '记录地址',
+                department: '所属部门',
+                position: '所属职位',
+                description: '基本描述',
+                createdTime: '创建时间',
+                estimatedTime: '到期时间'
+            },
+            pageTableHeaderBin: {
+                id: '事务ID',
+                position: '空缺职位',
+                positionStatus: '职位状态',
+                department: '所属部门',
+                director: '部门主管',
+                phoneD: '主管电话',
+                manager: '部门经理',
+                phoneM: '经理电话',
+                departmentStatus: '部门状态',
+                description: '基本描述',
+                createdTime: '创建时间',
+                estimatedTime: '到期时间'
+            },
             pagePropsValueOni: [
                 {
                     id: '202202081942',
@@ -254,24 +601,24 @@ export default {
                 },
                 {
                     id: '202202081943',
-                    name: 'Sebastian1',
+                    name: 'Jack',
                     sex: '男',
                     phone: '12300000000',
                     address: '法兰西普罗旺斯',
-                    department: '教辅部门',
-                    position: '声乐/乐器教辅导师',
+                    department: '软件部门',
+                    position: '测试工程师',
                     description: '准备离职',
                     createdTime: '2022/02/08',
                     estimatedTime: '2022/03/08'
                 },
                 {
                     id: '202202081944',
-                    name: 'Sebastian2',
-                    sex: '男',
+                    name: 'Rose',
+                    sex: '女',
                     phone: '12300000000',
                     address: '法兰西普罗旺斯',
-                    department: '教辅部门',
-                    position: '声乐/乐器教辅导师',
+                    department: '人事部门',
+                    position: '人事主管',
                     description: '准备离职',
                     createdTime: '2022/02/08',
                     estimatedTime: '2022/03/08'
@@ -296,7 +643,7 @@ export default {
                     id: '202202081946',
                     position: '辅导员',
                     positionStatus: '正在招聘',
-                    department: '辅导部门',
+                    department: '教辅部门',
                     director: 'Seven',
                     phoneD: '17600000000',
                     manager: 'shellwe',
@@ -326,6 +673,51 @@ export default {
     methods: {
         back() {
             history.go(-1)
+        },
+        onSubmit(formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    alert('submit!')
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields()
+        },
+        handlePropChange() {
+            console.log('work?')
+            if (this.publish) {
+                this.rules.date = [
+                    { required: false, trigger: 'change' }
+                ]
+            }
+            console.log('work!')
+        },
+        handleToPosition(key) {
+            const PageId = document.querySelector('#page' + key)
+            window.scrollTo({
+                'top': PageId.offsetTop,
+                'behavior': 'smooth'
+            })
+        },
+        handleEdit(index, row) {
+            console.log(index, row)
+        },
+        handleDelete(index, row) {
+            console.log(index, row)
+        },
+        tableRowClassName({row}) {
+            if (row.department === '教辅部门') {
+                return 'education-row'
+            } else if (row.department === '软件部门') {
+                return 'software-row'
+            } else if (row.department === '人事部门') {
+                return 'humanResources-row'
+            }
+            return ''
         }
     }
 }
@@ -336,5 +728,14 @@ export default {
 }
 .el-descriptions__header {
     margin-bottom: 13px;
+}
+.el-table .education-row {
+    background: #fdffd0;
+}
+.el-table .software-row {
+    background: #c3d0ff;
+}
+.el-table .humanResources-row {
+    background: #ccffc5;
 }
 </style>

@@ -5,7 +5,7 @@
 
 <script>
 export default {
-    name: 'resumeCI'
+    name: 'Resume'
 }
 </script>
 

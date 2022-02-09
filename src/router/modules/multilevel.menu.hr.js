@@ -55,12 +55,12 @@ export default {
                             }
                         },
                         {
-                            path: 'process',
-                            name: 'Process',
-                            component: EmptyLayout,
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
+                            path: 'recruitment',
+                            name: 'RecruitmentInterviewManagement',
+                            // component: EmptyLayout,
+                            component: () => import('@/views/human_resources/recruitment/recruitment'),
                             meta: {
-                                title: '招聘流程管理',
+                                title: '招聘面试管理',
                                 sidebar: true,
                                 breadcrumb: true
                             }
@@ -68,32 +68,10 @@ export default {
                         {
                             path: 'resume',
                             name: 'ResumeCollectionFilter',
-                            component: EmptyLayout,
+                            component: () => import('@/views/test'),
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
-                                title: '简历收集初筛',
-                                sidebar: true,
-                                breadcrumb: true
-                            }
-                        },
-                        {
-                            path: 'interview',
-                            name: 'InterviewEvaluationManagement',
-                            component: EmptyLayout,
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
-                            meta: {
-                                title: '面试评测功能',
-                                sidebar: true,
-                                breadcrumb: true
-                            }
-                        },
-                        {
-                            path: 'recruit',
-                            name: 'Recruitment',
-                            component: EmptyLayout,
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
-                            meta: {
-                                title: '员工录用管理',
+                                title: '简历筛选录用',
                                 sidebar: true,
                                 breadcrumb: true
                             }
@@ -140,16 +118,6 @@ export default {
                                 sidebar: true,
                                 breadcrumb: true
                             }
-                        },
-                        {
-                            path: 'social',
-                            name: 'SocialNetworkPlatform',
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
-                            meta: {
-                                title: '社交网络平台',
-                                sidebar: true,
-                                breadcrumb: true
-                            }
                         }
                     ]
                 },
@@ -185,21 +153,11 @@ export default {
                             }
                         },
                         {
-                            path: 'cycle',
+                            path: 'analysis',
                             name: 'RecruitmentCycleAnalysis',
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
-                                title: '招聘周期分析',
-                                sidebar: true,
-                                breadcrumb: true
-                            }
-                        },
-                        {
-                            path: 'cost',
-                            name: 'RecruitmentCostAnalysis',
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
-                            meta: {
-                                title: '招聘成本分析',
+                                title: '周期成本分析',
                                 sidebar: true,
                                 breadcrumb: true
                             }
@@ -330,7 +288,7 @@ export default {
                     // component: () => import('@/views/index'),
                     redirect: '',
                     meta: {
-                        title: '培训信息总览',
+                        title: '培训详情总览',
                         sidebar: true,
                         breadcrumb: true
                     }
@@ -347,34 +305,12 @@ export default {
                     }
                 },
                 {
-                    path: 'details',
-                    name: 'TrainingDetailsQuery',
-                    // component: () => import('@/views/index'),
-                    redirect: '',
-                    meta: {
-                        title: '培训详情查询',
-                        sidebar: true,
-                        breadcrumb: true
-                    }
-                },
-                {
                     path: 'results',
                     name: 'TrainingResultsStatistics',
                     // component: () => import('@/views/index'),
                     redirect: '',
                     meta: {
                         title: '培训结果统计',
-                        sidebar: true,
-                        breadcrumb: true
-                    }
-                },
-                {
-                    path: 'notset',
-                    name: 'notset',
-                    // component: () => import('@/views/index'),
-                    redirect: '',
-                    meta: {
-                        title: '预留',
                         sidebar: true,
                         breadcrumb: true
                     }
