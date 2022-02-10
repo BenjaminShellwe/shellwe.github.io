@@ -723,6 +723,9 @@ export default {
 }
 </script>
 <style>
+.hover {
+    cursor: pointer;
+}
 .el-descriptions__title {
     margin-left: 30px;
 }

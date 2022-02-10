@@ -67,12 +67,21 @@ export default {
                         {
                             path: 'resume',
                             name: 'ResumeCollectionFilter',
-                            component: () => import('@/views/test'),
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
+                            component: () => import('@/views/human_resources/recruitment/resume'),
                             meta: {
                                 title: '简历筛选录用',
                                 sidebar: true,
                                 breadcrumb: true
+                            }
+                        },
+                        {
+                            path: 'builder',
+                            name: 'ResumeBuilder',
+                            component: () => import('@/views/human_resources/recruitment/builder'),
+                            meta: {
+                                title: '简历生成工具',
+                                sidebar: true,
+                                breadcrumb: false
                             }
                         }
                     ]
@@ -91,29 +100,9 @@ export default {
                         {
                             path: 'enterprise',
                             name: 'EnterpriseRecruitmentPortal',
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
+                            component: () => import('@/views/human_resources/recruitment/enterprise'),
                             meta: {
                                 title: '企业招聘门户',
-                                sidebar: true,
-                                breadcrumb: true
-                            }
-                        },
-                        {
-                            path: 'internal',
-                            name: 'InternalReferralChannel',
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
-                            meta: {
-                                title: '内部推荐渠道',
-                                sidebar: true,
-                                breadcrumb: true
-                            }
-                        },
-                        {
-                            path: 'third',
-                            name: 'ThirdPartyProvider',
-                            // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
-                            meta: {
-                                title: '第三方供应商',
                                 sidebar: true,
                                 breadcrumb: true
                             }
@@ -134,6 +123,7 @@ export default {
                         {
                             path: 'external',
                             name: 'ExternalTalentPoolInventoryReport',
+                            component: () => import('@/views/test'),
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
                                 title: '外库盘点报表',
@@ -147,8 +137,8 @@ export default {
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
                                 title: '渠道有效分析',
-                                sidebar: true,
-                                breadcrumb: true
+                                sidebar: false,
+                                breadcrumb: false
                             }
                         },
                         {
@@ -157,8 +147,8 @@ export default {
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
                                 title: '周期成本分析',
-                                sidebar: true,
-                                breadcrumb: true
+                                sidebar: false,
+                                breadcrumb: false
                             }
                         },
                         {
@@ -167,8 +157,8 @@ export default {
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
                                 title: '招聘任务统计',
-                                sidebar: true,
-                                breadcrumb: true
+                                sidebar: false,
+                                breadcrumb: false
                             }
                         }
                     ]
@@ -190,7 +180,7 @@ export default {
                 {
                     path: 'summary',
                     name: 'SalarySummary',
-                    // component: () => import('@/views/index'),
+                    component: () => import('@/views/human_resources/salary/summary'),
                     redirect: '',
                     meta: {
                         title: '薪资信息汇总',
@@ -205,8 +195,8 @@ export default {
                     redirect: '',
                     meta: {
                         title: '薪资具体调整', // 扣款 奖惩 个人所得
-                        sidebar: true,
-                        breadcrumb: true
+                        sidebar: false,
+                        breadcrumb: false
                     }
                 },
                 {
@@ -216,8 +206,8 @@ export default {
                     redirect: '',
                     meta: {
                         title: '薪资具体计税',
-                        sidebar: true,
-                        breadcrumb: true
+                        sidebar: false,
+                        breadcrumb: false
                     }
                 }
             ]
@@ -235,12 +225,12 @@ export default {
             },
             children: [
                 {
-                    path: 'settings',
+                    path: 'setting',
                     name: 'BasicDataSettings',
-                    // component: () => import('@/views/index'),
+                    component: () => import('@/views/human_resources/attendance/setting'),
                     redirect: '',
                     meta: {
-                        title: '基础数据设置',
+                        title: '考勤业务设置',
                         sidebar: true,
                         breadcrumb: true
                     }
@@ -252,8 +242,8 @@ export default {
                     redirect: '',
                     meta: {
                         title: '考勤业务处理',
-                        sidebar: true,
-                        breadcrumb: true
+                        sidebar: false,
+                        breadcrumb: false
                     }
                 },
                 {
@@ -263,8 +253,8 @@ export default {
                     redirect: '',
                     meta: {
                         title: '考勤记录统计',
-                        sidebar: true,
-                        breadcrumb: true
+                        sidebar: false,
+                        breadcrumb: false
                     }
                 }
             ]
@@ -284,7 +274,7 @@ export default {
                 {
                     path: 'overview',
                     name: 'TrainingInformationOverview',
-                    // component: () => import('@/views/index'),
+                    component: () => import('@/views/human_resources/training/overview'),
                     redirect: '',
                     meta: {
                         title: '培训详情总览',
@@ -299,8 +289,8 @@ export default {
                     redirect: '',
                     meta: {
                         title: '培训内容清单',
-                        sidebar: true,
-                        breadcrumb: true
+                        sidebar: false,
+                        breadcrumb: false
                     }
                 },
                 {
@@ -310,8 +300,8 @@ export default {
                     redirect: '',
                     meta: {
                         title: '培训结果统计',
-                        sidebar: true,
-                        breadcrumb: true
+                        sidebar: false,
+                        breadcrumb: false
                     }
                 }
             ]
@@ -319,8 +309,7 @@ export default {
         {
             path: 'performance',
             name: 'PerformanceManagement',
-            component: EmptyLayout,
-            // component: () => import('@/views/index'),
+            component: () => import('@/views/human_resources/performance/performance'),
             redirect: '',
             meta: {
                 title: '绩效管理',
@@ -331,8 +320,7 @@ export default {
         {
             path: 'background',
             name: 'BackgroundInvestigationManagement',
-            component: EmptyLayout,
-            // component: () => import('@/views/index'),
+            component: () => import('@/views/human_resources/background/background'),
             redirect: '',
             meta: {
                 title: '背调管理',
