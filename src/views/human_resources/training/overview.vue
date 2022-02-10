@@ -9,6 +9,7 @@
             </template>
         </page-header>
         <page-main title="企业员工培训">
+            此处连续管理页面的功能都是差不多的,但是由于对改功能模块的具体功用不熟悉,之后会继续完善
             <el-tabs tab-position="left">
                 <el-tab-pane label="企业内部职位组成表">
                     <el-table

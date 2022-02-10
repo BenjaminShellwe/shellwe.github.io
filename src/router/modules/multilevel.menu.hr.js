@@ -106,6 +106,17 @@ export default {
                                 sidebar: true,
                                 breadcrumb: true
                             }
+                        },
+                        {
+                            path: 'background',
+                            name: 'BackgroundInvestigationManagement',
+                            component: () => import('@/views/human_resources/background/background'),
+                            redirect: '',
+                            meta: {
+                                title: '背景调查管理',
+                                sidebar: true,
+                                breadcrumb: true
+                            }
                         }
                     ]
                 },
@@ -166,167 +177,168 @@ export default {
             ]
         },
         {
-            path: 'salary',
-            name: 'SalaryManagement',
+            path: 'employee',
+            name: 'EmployeeManagement',
             component: EmptyLayout,
-            // component: () => import('@/views/index'),
+            // redirect: '/multilevel_menu_basic/management/global_dic',
             redirect: '',
             meta: {
-                title: '薪资管理',
-                sidebar: true,
-                breadcrumb: true
+                title: '员工管理'
             },
             children: [
                 {
-                    path: 'summary',
-                    name: 'SalarySummary',
-                    component: () => import('@/views/human_resources/salary/summary'),
+                    path: 'training',
+                    name: 'TrainingManagement',
+                    component: EmptyLayout,
+                    // component: () => import('@/views/index'),
                     redirect: '',
                     meta: {
-                        title: '薪资信息汇总',
+                        title: '培训管理',
+                        sidebar: true,
+                        breadcrumb: true
+                    },
+                    children: [
+                        {
+                            path: 'overview',
+                            name: 'TrainingInformationOverview',
+                            component: () => import('@/views/human_resources/training/overview'),
+                            redirect: '',
+                            meta: {
+                                title: '培训详情总览',
+                                sidebar: true,
+                                breadcrumb: true
+                            }
+                        },
+                        {
+                            path: 'list',
+                            name: 'TrainingContentsList',
+                            // component: () => import('@/views/index'),
+                            redirect: '',
+                            meta: {
+                                title: '培训内容清单',
+                                sidebar: false,
+                                breadcrumb: false
+                            }
+                        },
+                        {
+                            path: 'results',
+                            name: 'TrainingResultsStatistics',
+                            // component: () => import('@/views/index'),
+                            redirect: '',
+                            meta: {
+                                title: '培训结果统计',
+                                sidebar: false,
+                                breadcrumb: false
+                            }
+                        }
+                    ]
+                },
+                {
+                    path: 'attendance',
+                    name: 'AttendanceManagement',
+                    component: EmptyLayout,
+                    // component: () => import('@/views/index'),
+                    redirect: '',
+                    meta: {
+                        title: '考勤管理',
+                        sidebar: true,
+                        breadcrumb: true
+                    },
+                    children: [
+                        {
+                            path: 'setting',
+                            name: 'BasicDataSettings',
+                            component: () => import('@/views/human_resources/attendance/setting'),
+                            redirect: '',
+                            meta: {
+                                title: '考勤业务设置',
+                                sidebar: true,
+                                breadcrumb: true
+                            }
+                        },
+                        {
+                            path: 'business',
+                            name: 'AttendanceBusinessProcessing',
+                            // component: () => import('@/views/index'),
+                            redirect: '',
+                            meta: {
+                                title: '考勤业务处理',
+                                sidebar: false,
+                                breadcrumb: false
+                            }
+                        },
+                        {
+                            path: 'record',
+                            name: 'AttendanceRecordStatistics',
+                            // component: () => import('@/views/index'),
+                            redirect: '',
+                            meta: {
+                                title: '考勤记录统计',
+                                sidebar: false,
+                                breadcrumb: false
+                            }
+                        }
+                    ]
+                },
+                {
+                    path: 'salary',
+                    name: 'SalaryManagement',
+                    component: EmptyLayout,
+                    // component: () => import('@/views/index'),
+                    redirect: '',
+                    meta: {
+                        title: '薪资管理',
+                        sidebar: true,
+                        breadcrumb: true
+                    },
+                    children: [
+                        {
+                            path: 'summary',
+                            name: 'SalarySummary',
+                            component: () => import('@/views/human_resources/salary/summary'),
+                            redirect: '',
+                            meta: {
+                                title: '薪资信息汇总',
+                                sidebar: true,
+                                breadcrumb: true
+                            }
+                        },
+                        {
+                            path: 'adjustment',
+                            name: 'SalaryAdjustment',
+                            // component: () => import('@/views/index'),
+                            redirect: '',
+                            meta: {
+                                title: '薪资具体调整', // 扣款 奖惩 个人所得
+                                sidebar: false,
+                                breadcrumb: false
+                            }
+                        },
+                        {
+                            path: 'tax',
+                            name: 'SalaryTaxCalculation',
+                            // component: () => import('@/views/index'),
+                            redirect: '',
+                            meta: {
+                                title: '薪资具体计税',
+                                sidebar: false,
+                                breadcrumb: false
+                            }
+                        }
+                    ]
+                },
+                {
+                    path: 'performance',
+                    name: 'PerformanceManagement',
+                    component: () => import('@/views/human_resources/performance/performance'),
+                    redirect: '',
+                    meta: {
+                        title: '绩效管理',
                         sidebar: true,
                         breadcrumb: true
                     }
-                },
-                {
-                    path: 'adjustment',
-                    name: 'SalaryAdjustment',
-                    // component: () => import('@/views/index'),
-                    redirect: '',
-                    meta: {
-                        title: '薪资具体调整', // 扣款 奖惩 个人所得
-                        sidebar: false,
-                        breadcrumb: false
-                    }
-                },
-                {
-                    path: 'tax',
-                    name: 'SalaryTaxCalculation',
-                    // component: () => import('@/views/index'),
-                    redirect: '',
-                    meta: {
-                        title: '薪资具体计税',
-                        sidebar: false,
-                        breadcrumb: false
-                    }
                 }
             ]
-        },
-        {
-            path: 'attendance',
-            name: 'AttendanceManagement',
-            component: EmptyLayout,
-            // component: () => import('@/views/index'),
-            redirect: '',
-            meta: {
-                title: '考勤管理',
-                sidebar: true,
-                breadcrumb: true
-            },
-            children: [
-                {
-                    path: 'setting',
-                    name: 'BasicDataSettings',
-                    component: () => import('@/views/human_resources/attendance/setting'),
-                    redirect: '',
-                    meta: {
-                        title: '考勤业务设置',
-                        sidebar: true,
-                        breadcrumb: true
-                    }
-                },
-                {
-                    path: 'business',
-                    name: 'AttendanceBusinessProcessing',
-                    // component: () => import('@/views/index'),
-                    redirect: '',
-                    meta: {
-                        title: '考勤业务处理',
-                        sidebar: false,
-                        breadcrumb: false
-                    }
-                },
-                {
-                    path: 'record',
-                    name: 'AttendanceRecordStatistics',
-                    // component: () => import('@/views/index'),
-                    redirect: '',
-                    meta: {
-                        title: '考勤记录统计',
-                        sidebar: false,
-                        breadcrumb: false
-                    }
-                }
-            ]
-        },
-        {
-            path: 'training',
-            name: 'TrainingManagement',
-            component: EmptyLayout,
-            // component: () => import('@/views/index'),
-            redirect: '',
-            meta: {
-                title: '培训管理',
-                sidebar: true,
-                breadcrumb: true
-            },
-            children: [
-                {
-                    path: 'overview',
-                    name: 'TrainingInformationOverview',
-                    component: () => import('@/views/human_resources/training/overview'),
-                    redirect: '',
-                    meta: {
-                        title: '培训详情总览',
-                        sidebar: true,
-                        breadcrumb: true
-                    }
-                },
-                {
-                    path: 'list',
-                    name: 'TrainingContentsList',
-                    // component: () => import('@/views/index'),
-                    redirect: '',
-                    meta: {
-                        title: '培训内容清单',
-                        sidebar: false,
-                        breadcrumb: false
-                    }
-                },
-                {
-                    path: 'results',
-                    name: 'TrainingResultsStatistics',
-                    // component: () => import('@/views/index'),
-                    redirect: '',
-                    meta: {
-                        title: '培训结果统计',
-                        sidebar: false,
-                        breadcrumb: false
-                    }
-                }
-            ]
-        },
-        {
-            path: 'performance',
-            name: 'PerformanceManagement',
-            component: () => import('@/views/human_resources/performance/performance'),
-            redirect: '',
-            meta: {
-                title: '绩效管理',
-                sidebar: true,
-                breadcrumb: true
-            }
-        },
-        {
-            path: 'background',
-            name: 'BackgroundInvestigationManagement',
-            component: () => import('@/views/human_resources/background/background'),
-            redirect: '',
-            meta: {
-                title: '背调管理',
-                sidebar: true,
-                breadcrumb: true
-            }
         }
     ]
 }

@@ -10,6 +10,7 @@
         </page-header>
         <page-main>
             单独设计
+            此处连续管理页面的功能都是差不多的,但是由于对改功能模块的具体功用不熟悉,之后会继续完善
         </page-main>
     </div>
 </template>
@@ -21,30 +22,7 @@ export default {
     components: {PageMain},
     data() {
         return {
-            search: '',
-            tableData:
-                [
-                    {
-                        id: '202102101712',
-                        salary: '7k',
-                        position: '主管'
-                    },
-                    {
-                        id: '202102101713',
-                        salary: '1.2w',
-                        position: '经理'
-                    },
-                    {
-                        id: '202102101714',
-                        salary: '4k',
-                        position: '教辅员'
-                    },
-                    {
-                        id: '2016-05-03',
-                        salary: '2w',
-                        position: '总负责'
-                    }
-                ]
+
         }
     },
     methods: {
