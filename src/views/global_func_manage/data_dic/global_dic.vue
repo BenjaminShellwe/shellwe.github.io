@@ -89,7 +89,7 @@
                 </el-select>
             </div>
         </page-main>
-        <page-main>
+        <page-main v-show="isShow">
             <template>
                 <el-table :key="key" v-loading="false" :data="data" style="width: 100%;">
                     <el-table-column v-for="items in formThead"
