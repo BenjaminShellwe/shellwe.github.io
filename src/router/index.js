@@ -68,7 +68,7 @@ const constantRoutes = [
 
 import MultilevelMenuHR from './modules/multilevel.menu.hr'
 import MultilevelMenuBasic from './modules/multilevel.menu.basic'
-import MultilevelMenuAdvanced from './modules/multilevel.menu.advanced'
+// import MultilevelMenuAdvanced from './modules/multilevel.menu.advanced'
 import ExTernalLinkExample from './modules/external.link.example'
 // 当 children 不为空的主导航只有一项时，则隐藏
 let asyncRoutes = [
@@ -80,7 +80,7 @@ let asyncRoutes = [
         children: [
             MultilevelMenuBasic,
             MultilevelMenuHR,
-            MultilevelMenuAdvanced,
+            // MultilevelMenuAdvanced,
             ExTernalLinkExample
         ]
     },

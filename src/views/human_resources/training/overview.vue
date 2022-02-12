@@ -4,7 +4,7 @@
             <template #content>
                 <div>
                     <div class="hover" @click="back">返回上一页&nbsp;&nbsp;</div>
-                    <div class="inLine">此页面设置控制企业薪资信息</div>
+                    <div class="inLine">此页面设置控制企业员工培训信息</div>
                 </div>
             </template>
         </page-header>

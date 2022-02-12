@@ -123,7 +123,7 @@ export default {
                 {
                     path: 'report',
                     name: 'StatisticalReport',
-                    component: EmptyLayout,
+                    component: () => import('@/views/human_resources/recruitment/report'),
                     redirect: '',
                     meta: {
                         title: '统计报表',
@@ -138,8 +138,8 @@ export default {
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
                                 title: '外库盘点报表',
-                                sidebar: true,
-                                breadcrumb: true
+                                sidebar: false,
+                                breadcrumb: false
                             }
                         },
                         {

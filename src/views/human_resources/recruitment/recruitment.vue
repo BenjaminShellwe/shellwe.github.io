@@ -12,7 +12,7 @@
             <el-row>
                 <el-col :span="12">
                     <div style="height: 500px;">
-                        <el-steps direction="vertical" :active="pageActiveOni" finish-status="success">
+                        <el-steps direction="vertical" :active="pageActiveUni" finish-status="success">
                             <el-button style="margin-bottom: 12px; width: 140px;" size="mini" @click="next(1)">下一步</el-button>
                             <el-step title="步骤 1" description="确定人员需求"></el-step>
                             <el-step title="步骤 2" description="指定招聘计划"></el-step>
@@ -49,7 +49,7 @@ export default {
     components: {PageMain},
     data() {
         return {
-            pageActiveOni: 0,
+            pageActiveUni: 0,
             pageActiveBin: 0
         }
     },
@@ -59,7 +59,7 @@ export default {
         },
         next(i) {
             if (i == 1) {
-                if (this.pageActiveOni++ > 2) this.pageActiveOni = 0
+                if (this.pageActiveUni++ > 2) this.pageActiveUni = 0
             }
             if (i == 2) {
                 if (this.pageActiveBin++ > 8) this.pageActiveBin = 0

@@ -10,13 +10,13 @@
         </page-header>
         <page-main title="简历投递表">
             <el-table
-                :data="pagePropsValueOni.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
+                :data="pagePropsValueUni.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
                 style="width: 100%;"
                 max-height="370"
                 border
             >
                 <el-table-column
-                    v-for="(item, key) in pageTableHeaderOni"
+                    v-for="(item, key) in pageTableHeaderUni"
                     :key="key"
                     :prop="key"
                     :label="item"
@@ -137,7 +137,7 @@ export default {
         return {
             pageDialogVisible: false,
             search: '',
-            pageTableHeaderOni: {
+            pageTableHeaderUni: {
                 id: '事务ID',
                 position: '申请职位',
                 positionStatus: '职位状态',
@@ -151,7 +151,7 @@ export default {
                 createdTime: '创建时间',
                 estimatedTime: '到期时间'
             },
-            pagePropsValueOni: [
+            pagePropsValueUni: [
                 {
                     id: '202202081948',
                     position: '开发工程师',

@@ -19,7 +19,7 @@
         </el-card>
         <page-main id="pageOni" title="即将空缺职位">
             <el-table
-                :data="pagePropsValueOni"
+                :data="pagePropsValueUni"
                 style="width: 100%;"
                 :row-class-name="tableRowClassName"
             >
@@ -218,7 +218,7 @@
                 </el-tab-pane>
                 <el-tab-pane label="离职审批">
                     <el-table
-                        :data="pagePropsValueOni"
+                        :data="pagePropsValueUni"
                         style="width: 100%;"
                         border
                     >
@@ -409,12 +409,12 @@
                         type="error">
                     </el-alert>
                     <el-table
-                        :data="pagePropsValueOni.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
+                        :data="pagePropsValueUni.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
                         style="width: 100%;"
                         border
                     >
                         <el-table-column
-                            v-for="(item, index) in pageTableHeaderOni"
+                            v-for="(item, index) in pageTableHeaderUni"
                             :key="index"
                             :prop="index"
                             :label="item"
@@ -560,7 +560,7 @@ export default {
                     { required: false }
                 ]
             },
-            pageTableHeaderOni: {
+            pageTableHeaderUni: {
                 id: '事务ID',
                 name: '账户姓名',
                 sex: '用户性别',
@@ -586,7 +586,7 @@ export default {
                 createdTime: '创建时间',
                 estimatedTime: '到期时间'
             },
-            pagePropsValueOni: [
+            pagePropsValueUni: [
                 {
                     id: '202202081942',
                     name: 'Sebastian',
@@ -634,7 +634,7 @@ export default {
                     phoneD: '17600000000',
                     manager: 'shellwe',
                     phoneM: '17600000000',
-                    departmentStatus: 'full(已达部门标准人数)',
+                    departmentStatus: 'sufficiency(已达部门标准人数)',
                     description: '梅赛德斯',
                     createdTime: '2022/02/08',
                     estimatedTime: '2022/03/08'
