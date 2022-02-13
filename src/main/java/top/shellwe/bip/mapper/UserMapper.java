@@ -1,4 +1,4 @@
-package top.shellwe.bip.Mapper;
+package top.shellwe.bip.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

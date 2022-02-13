@@ -1,7 +1,7 @@
-package top.shellwe.bip.Controller;
+package top.shellwe.bip.controller;
 
-import top.shellwe.bip.Emtity.User;
-import top.shellwe.bip.Mapper.UserMapper;
+import top.shellwe.bip.entity.User;
+import top.shellwe.bip.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -63,17 +63,17 @@ public class UserController {
         if (userMapper.selectUserName(userName) == null) {
 //            return "用户不存在";
             result = 0;
-            System.out.println("0用户 "+ userName +" 不存在");
+            System.out.println("0 用户 "+ userName +" 不存在");
             return result;
             //用户存在，但密码输入错误
         }else if(!userMapper.selectUserPassword(userName).equals(userPassword) ){
-            System.out.println("1账号或密码输入错误");
+            System.out.println("1 账号或密码输入错误");
             result = 1;
             return result;
 //            return "账号或密码输入错误";
         }else if(userMapper.selectUserPassword(userName).equals(userPassword)&&userMapper.selectUserName(userName).equals(userName)) {
             result = 2;
-            System.out.println("2成功登录");
+            System.out.println("2 成功登录");
 //            return "成功登录";
             return result;
         }
