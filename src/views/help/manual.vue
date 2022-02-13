@@ -31,7 +31,7 @@ export default {
             history.go(-1)
         },
         beenClick() {
-            router.push({path: '/multilevel_menu_basic/help/index'})
+            router.push({path: '/help/index'})
         }
     }
 }

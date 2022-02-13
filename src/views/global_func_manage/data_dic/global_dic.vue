@@ -25,93 +25,100 @@
                     inactive-text="拒绝"
                 />
             </span><br>
+            <el-row>
+                <el-col :span="5">
+                    <div class="inLine">
+                        <span slot="label">
+                            <el-tooltip content="定义字典的名称 必填" placement="top">
+                                <i class="el-icon-warning-outline" style="color: red;" />
+                            </el-tooltip>
+                        </span>
+                        模板名称&nbsp;
+                        <div class="inLine">
+                            <el-input
+                                v-model="pageQueryValue.typeName"
+                                type="text"
+                                size="small"
+                                placeholder="请输入模板名称"
+                                style="display: inline;"
+                                maxlength="10"
+                                show-word-limit
+                            />
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="inLine">
+                        <span slot="label">
+                            <el-tooltip content="提供模板数据说明" placement="top">
+                                <i class="el-icon-question" />
+                            </el-tooltip>
+                        </span>
+                        模板说明&nbsp;
+                        <div class="inLine">
+                            <el-input
+                                v-model="description"
+                                type="text"
+                                size="small"
+                                placeholder="请输入模板说明"
+                                style="display: inline;"
+                                clearable
+                            />
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="5" style="margin-top: 15px;">
+                    <div>
+                        <span slot="label">
+                            <el-tooltip content="定义字典的状态 必选 审核为工作人员使用" placement="top">
+                                <i class="el-icon-warning-outline" style="color: red;" />
+                            </el-tooltip>
+                        </span>
+                        模板状态&nbsp;
+                        <el-select v-model="valueState" placeholder="请选择">
+                            <el-option
+                                v-for="item in options"
+                                :key="item.valueState"
+                                :label="item.label"
+                                :value="item.valueState"
+                                :disabled="item.disabled"
+                                size="small"
+                            />
+                        </el-select>
+                    </div>
+                </el-col>
+                <el-col :span="6" style="margin-top: 20px; margin-left: 10px;">
+                    <el-button type="primary" icon="el-icon-search" size="mini" @click="handleButtonQuery">搜索</el-button>
+                    <el-tooltip content="创建新字典数据" placement="top">
+                        <el-button type="primary" icon="el-icon-document-add" size="mini" @click="dialogVisible = true">创建</el-button>
+                    </el-tooltip>
+                </el-col>
+            </el-row>
 
-            <div class="inLine">
-                <span slot="label">
-                    <el-tooltip content="定义字典的名称 必填" placement="top">
-                        <i class="el-icon-warning-outline" style="color: red;" />
-                    </el-tooltip>
-                </span>
-                模板名称&nbsp;
-                <div class="inLine">
-                    <el-input
-                        v-model="input1"
-                        type="text"
-                        size="small"
-                        placeholder="请输入模板名称"
-                        style="display: inline;"
-                        maxlength="10"
-                        show-word-limit
-                    />
-                </div>
-            </div>
-            &nbsp;&nbsp;
-            <div class="inLine">
-                <span slot="label">
-                    <el-tooltip content="提供模板数据说明" placement="top">
-                        <i class="el-icon-question" />
-                    </el-tooltip>
-                </span>
-                模板说明&nbsp;
-                <div class="inLine">
-                    <el-input
-                        v-model="input2"
-                        type="text"
-                        size="small"
-                        placeholder="请输入模板说明"
-                        style="display: inline;"
-                        clearable
-                    />
-                </div>
-            </div>
-            &nbsp;&nbsp;
-            <el-button type="primary" icon="el-icon-search" @click="dialogVisible = true">搜索</el-button>
-            &nbsp;&nbsp;&nbsp;
-            <el-tooltip content="创建新字典数据" placement="top">
-                <el-button type="primary" icon="el-icon-document-add" @click="dialogVisible = true">创建</el-button>
-            </el-tooltip>
             <br>
-            <div>
-                <span slot="label">
-                    <el-tooltip content="定义字典的状态 必选 审核为工作人员使用" placement="top">
-                        <i class="el-icon-warning-outline" style="color: red;" />
-                    </el-tooltip>
-                </span>
-                模板状态&nbsp;
-                <el-select v-model="valueState" placeholder="请选择">
-                    <el-option
-                        v-for="item in options"
-                        :key="item.valueState"
-                        :label="item.label"
-                        :value="item.valueState"
-                        :disabled="item.disabled"
-                    />
-                </el-select>
-            </div>
         </page-main>
         <page-main v-show="isShow">
             <template>
-                <el-table :key="key" v-loading="false" :data="data" style="width: 100%;">
-                    <el-table-column v-for="items in formThead"
-                                     :key="items.prop"
-                                     :label="items.label"
-                                     :width="items.width"
-                                     show-overflow-tooltip
+                <el-table :key="key" v-loading="false" :data="data" style="width: 100%;" border>
+                    <el-table-column v-for="(value, index) in pageFormHead"
+                                     :key="index"
+                                     :label="value"
+                                     :width="value.width"
                     >
                         <template slot-scope="scope">
-                            {{ scope.row[items.prop] }}
+                            {{ scope.row[value] }}
                         </template>
                     </el-table-column>
                     <el-table-column
                         fixed="right"
                         label="操作"
-                        width="290"
+                        width="200"
                     >
-                        <template slot-scope="scope">
-                            <el-button type="primary" size="small" @click="handleClick(scope.row)">查看</el-button>
-                            <el-button type="primary" size="small" @click="dialogVisible = true">编辑</el-button>
-                            <el-button type="danger" size="small" @click.native.prevent="dialogVisible = true">移除</el-button>
-                            <!--                            <el-button type="danger" size="small" @click.native.prevent="deleteRow(scope.$index, data)">移除</el-button>-->
+                        <template>
+                            <el-button-group>
+                                <el-button type="primary" size="mini" @click="dialogVisible = true">编辑</el-button>
+                                <el-button type="danger" size="mini" @click.native.prevent="dialogVisible = true">移除</el-button>
+                            </el-button-group>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -133,7 +140,8 @@
 
 <script>
 import PageMain from '@/components/PageMain'
-const fields = [
+import axios from 'axios'
+let fields = [
     {label: '日期', prop: 'date'},
     {label: '模板名称', prop: 'model_name'},
     {label: '模板说明', prop: 'model_explain'},
@@ -144,11 +152,16 @@ export default {
     components: {PageMain},
     data() {
         return {
+            pageFormHead: [],
             dialogVisible: false,
             isShow: true,
             value1: true,
-            input1: '',
-            input2: '',
+            description: '',
+            pageList: [],
+            pageQueryValue: {
+                typeName: '',
+                valueStatus: ''
+            },
             valueState: '',
             options: [{
                 valueState: 'options1',
@@ -181,10 +194,13 @@ export default {
             this.formThead = fields.map(function(value) {
                 const arr = valArr.map(x => x[value.prop])  // 获取每一列的所有数据
                 arr.push(value.label)  // 把每列的表头也加进去算
-                value.width = _this.getMaxLength(arr) + 20 // 每列内容最大的宽度 + 表格的内间距(依据实际情况而定)
+                value.width = _this.getMaxLength(arr) + 5 // 每列内容最大的宽度 + 表格的内间距(依据实际情况而定)
                 return value
             })
         }
+    },
+    mounted() {
+        this.getUser()
     },
     methods: {
         changeShow: function() {
@@ -222,6 +238,60 @@ export default {
         },
         deleteRow(index, rows) {
             rows.splice(index, 1)
+        },
+        // 1. 定义getUserList方法 获取后台服务器数据
+        async getUser() {
+            // 新增操作请求的类型: post  接收时需要使用JSON方式处理
+            let {
+                data: result
+            } = await axios.get('/queryAll')
+            // Ajax调用之后, 将请求结果赋值给data属性
+            let keys = []
+            for (let property in result.data[0]) {
+                keys.push(property)
+            }
+            // console.log(keys)
+            this.pageFormHead = keys
+            this.data = result.data
+            // idea about getting data
+            // let values = function(object) {
+            //     let values = []
+            //     for (let property in object)
+            //         values.push(object[property])
+            //     return values
+            // }
+            //
+            // // 写成标准的方法(数组是object的一种)：
+            // function getObjectKeys(object) {
+            //     let keys = []
+            //     for (let property in object)
+            //         keys.push(property)
+            //     return keys
+            // }
+            //
+            // function getObjectValues(object) {
+            //     let values = []
+            //     for (let property in object)
+            //         values.push(object[property])
+            //     return values
+            // }
+            // console.log(fields[0]['label'])
+            // console.log(getObjectKeys(result.data[0]))
+            // console.log(getObjectValues(result.data[0]))
+        },
+        async handleButtonQuery() {
+            this.pageQueryValue.valueStatus = this.options.label
+            var data = this.pageQueryValue
+            axios({
+                method: 'post',
+                url: '/queryNameAndStatus',
+                data: data
+            }).then(function(response) {
+                console.log(response)
+            }).catch(function(error) {
+                console.log(error)
+            })
+
         }
     }
 }

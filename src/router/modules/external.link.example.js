@@ -2,10 +2,10 @@ import Layout from '@/layout'
 // import EmptyLayout from '@/layout/empty'
 
 export default {
-    path: '/link',
+    path: '/help',
     component: Layout,
     name: 'externalLinkExample',
-    redirect: '/multilevel_menu_basic/help/index',
+    redirect: '/help/index',
     meta: {
         title: '支援帮助',
         icon: 'sidebar-external-link'
