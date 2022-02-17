@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
-const echarts = require('echarts')
 // import echarts from 'echarts'
+import * as echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
 import moment from 'moment'

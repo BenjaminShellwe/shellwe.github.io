@@ -100,6 +100,9 @@
         <page-main v-show="isShow">
             <template>
                 <el-table :key="key" v-loading="false" :data="data" style="width: 100%;" border>
+                    <template slot="empty">
+                        <span>未找到合适记录</span>
+                    </template>
                     <el-table-column v-for="(value, index) in pageFormHead"
                                      :key="index"
                                      :label="value"
@@ -125,14 +128,63 @@
             </template>
         </page-main>
         <el-dialog
-            title="来自shellwe的警告"
+            title="创建一条新的字典规则"
             :visible.sync="dialogVisible"
-            width="30%"
+            width="80%"
         >
-            <span>开发中 此操作暂时拒绝</span>
+            <el-form :inline="true" :model="pageFormList">
+                <el-row>
+                    <el-col :span="6">
+                        <el-tooltip class="item" effect="dark" content="如果是组模板规制请在结尾添加_Type" placement="top">
+                            <el-form-item label="类型代码/typeCode">
+                                <el-input v-model="pageFormList.typeCode" placeholder="英文驼峰输入" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-tooltip class="item" effect="dark" content="组模板规则请用相同模板名称" placement="top">
+                            <el-form-item label="模板名称/typeName">
+                                <el-input v-model="pageFormList.typeName" placeholder="四字中文" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-tooltip class="item" effect="dark" content="组模板规则内不同名称相同模板" placement="top">
+                            <el-form-item label="显示名称/valueName">
+                                <el-input v-model="pageFormList.valueName" placeholder="四字中文" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="模板状态/valueStatues">
+                            <el-select v-model="pageFormList.valueStatues" placeholder="状态选择" class="pageInputCSS" size="mini">
+                                <el-option label="有效" value="efficient" />
+                                <el-option label="失效" value="invalid" />
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="6">
+                        <el-tooltip class="item" effect="dark" content="模板创建说明" placement="top">
+                            <el-form-item label="模板说明/description">
+                                <el-input v-model="pageFormList.description" placeholder="中文" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-tooltip class="item" effect="dark" content="前缀只有一个大写字母" placement="top">
+                            <el-form-item label="前缀/prefix">
+                                <el-input v-model="pageFormList.prefix" placeholder="默认是G" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <el-row />
             <span slot="footer" class="dialog-footer">
                 <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
-                <el-button type="primary" @click="dialogVisible = false">明 白</el-button>
+                <el-button type="primary" @click="handleButtonCreate">创 建</el-button>
             </span>
         </el-dialog>
     </div>
@@ -157,20 +209,27 @@ export default {
             isShow: true,
             value1: true,
             description: '',
-            pageList: [],
-            pageQueryValue: {
+            pageFormList: {
+                prefix: '',
+                typeCode: '',
                 typeName: '',
-                valueStatus: ''
+                valueName: '',
+                valueStatues: '',
+                description: '',
+                uniqueID: ''
+            },
+            pageQueryValue: {
+                typeName: ''
             },
             valueState: '',
             options: [{
-                valueState: 'options1',
+                valueState: 'efficient',
                 label: '有效'
             }, {
-                valueState: 'options2',
+                valueState: 'invalid',
                 label: '无效'
             }, {
-                valueState: 'options3',
+                valueState: 'verifying',
                 label: '审核',
                 disabled: true
             }],
@@ -253,7 +312,7 @@ export default {
             // console.log(keys)
             this.pageFormHead = keys
             this.data = result.data
-            // idea about getting data
+            // <<idea about getting data>>
             // let values = function(object) {
             //     let values = []
             //     for (let property in object)
@@ -280,18 +339,39 @@ export default {
             // console.log(getObjectValues(result.data[0]))
         },
         async handleButtonQuery() {
-            this.pageQueryValue.valueStatus = this.options.label
-            var data = this.pageQueryValue
+            // console.log(this.pageQueryValue)
+            const that = this
             axios({
                 method: 'post',
-                url: '/queryNameAndStatus',
-                data: data
+                url: '/queryTypeName',
+                data: this.pageQueryValue
+            }).then(function(response) {
+                let keys = []
+                if (response.data.data[0] === '') {
+                    that.data = null
+                } else {
+                    for (let property in response.data.data[0]) {
+                        keys.push(property)
+                    }
+                    that.pageFormHead = keys
+                    that.data = response.data.data
+                }
+
+            }).catch(function(error) {
+                console.log(error)
+            })
+        },
+        handleButtonCreate() {
+            console.log(this.pageFormList.valueStatues)
+            axios({
+                method: 'post',
+                url: '/addGlobalDic',
+                data: this.pageFormList
             }).then(function(response) {
                 console.log(response)
             }).catch(function(error) {
                 console.log(error)
             })
-
         }
     }
 }
@@ -302,5 +382,8 @@ export default {
 }
 .inLine {
     display: inline-block;
+}
+.pageInputCSS {
+    width: 150px;
 }
 </style>

@@ -25,13 +25,10 @@
                     <h2>招聘选拔</h2>
                     <el-card>
                         <el-row>
-                            <el-col :span="11">
+                            <el-col :span="13">
                                 <div class="Echarts">
                                     <div id="chartsUni" style="width: 500px; height: 230px;" />
                                 </div>
-                            </el-col>
-                            <el-col :span="2">
-
                             </el-col>
                             <el-col :span="11">
                                 <div class="Echarts">
@@ -373,11 +370,11 @@ export default {
                 for (let i = 0; i < data.length; ++i) {
                     if (Math.random() > 0.9) {
                         data[i] += Math.round(Math.random() * 2.5)
-                        console.log('data i = ' + data[i])
+                        // console.log('data i = ' + data[i])
                     }
                     if (Math.random() == 0.9) {
                         data[i] += Math.round(Math.random() * 0.5)
-                        console.log('data i = ' + data[i])
+                        // console.log('data i = ' + data[i])
                     }
                     // else {
                     //     console.log('break' + i)
