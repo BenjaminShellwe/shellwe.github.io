@@ -8,8 +8,8 @@ export default {
     meta: {
         title: '权限验证',
         icon: 'sidebar-permission',
-        sidebar: true,
-        breadcrumb: true
+        sidebar: false,
+        breadcrumb: false
     },
     children: [
         {
@@ -19,8 +19,8 @@ export default {
             meta: {
                 title: '权限验证',
                 auth: ['permission.browse'],
-                sidebar: true,
-                breadcrumb: true,
+                sidebar: false,
+                breadcrumb: false,
                 activeMenu: '/permission_example'
             }
         }

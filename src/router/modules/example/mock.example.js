@@ -9,8 +9,8 @@ export default {
         title: 'Mock',
         icon: 'sidebar-mock',
         badge: 'NEW',
-        sidebar: true,
-        breadcrumb: true
+        sidebar: false,
+        breadcrumb: false
     },
     children: [
         {
@@ -19,8 +19,8 @@ export default {
             component: () => import(/* webpackChunkName: 'mock_example' */ '@/views/example/mock_example'),
             meta: {
                 title: 'Mock',
-                sidebar: true,
-                breadcrumb: true,
+                sidebar: false,
+                breadcrumb: false,
                 activeMenu: '/mock_example'
             }
         }

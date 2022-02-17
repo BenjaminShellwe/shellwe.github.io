@@ -13,7 +13,9 @@ export default {
     name: 'breadcrumbExample',
     meta: {
         title: '测试功能',
-        icon: 'test-tube'
+        icon: 'test-tube',
+        sidebar: false,
+        breadcrumb: false
     },
     children: [
         {

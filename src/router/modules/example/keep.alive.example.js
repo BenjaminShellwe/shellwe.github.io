@@ -8,8 +8,8 @@ export default {
     meta: {
         title: '页面缓存',
         icon: 'sidebar-keep-alive',
-        sidebar: true,
-        breadcrumb: true
+        sidebar: false,
+        breadcrumb: false
     },
     children: [
         {

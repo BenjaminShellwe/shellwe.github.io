@@ -8,8 +8,8 @@ export default {
     meta: {
         title: '基础组件（部分）',
         icon: 'sidebar-component',
-        sidebar: true,
-        breadcrumb: true
+        sidebar: false,
+        breadcrumb: false
     },
     children: [
         {

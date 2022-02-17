@@ -27,7 +27,6 @@
                         </el-table>
                     </div>
                     <br>
-                    <!--                    <VEcharts />-->
                     <br>
                     <div class="Echarts">
                         <div id="chartsUni" style="width: 500px; height: 450px;" />
@@ -76,18 +75,6 @@
                 <page-main>
                     <VCalendar />
                 </page-main>
-
-                <!--                <page-main title="卡片2 题目" style="margin: 0;">-->
-                <!--                    <div class="question">-->
-                <!--                        <ol class="answer">-->
-                <!--                            <li><span>次标题1</span>内容</li>-->
-                <!--                            <li><span>次标题2</span></li>-->
-                <!--                            <li><span>次标题3</span></li>-->
-                <!--                            <li><span>次标题4</span></li>-->
-                <!--                            <li><span>次标题5</span></li>-->
-                <!--                        </ol>-->
-                <!--                    </div>-->
-                <!--                </page-main>-->
             </el-col>
         </el-row>
     </div>
@@ -142,7 +129,7 @@ export default {
                 } if (val == 'message') {
                     router.push({path: '/multilevel_menu_advanced/message'})
                 } if (val == 'help') {
-                    router.push({path: '/multilevel_menu_basic/help/index'})
+                    router.push({path: '/help/index'})
                 } else {
                     console.log('Receiving an error!')
                 }

@@ -12,7 +12,7 @@
             <el-tabs tab-position="left">
                 <el-tab-pane label="团队内部绩效考核">
                     <el-main>
-                        <el-card calss="pageCard" shadow="hover">
+                        <el-card style="margin-left: 10px; margin-right: 10px;" shadow="hover">
                             参与本次考核 () 人 全员实记 ( ) 人 <br>
                         </el-card>
                         <el-card class="pageCard" shadow="hover">
@@ -117,45 +117,6 @@
                         <el-table-column
                             label="绩效总览"
                             prop="performance"
-                        />
-                        <el-table-column
-                            align="right"
-                        >
-                            <template slot="header">
-                                <el-input
-                                    v-model="search"
-                                    size="mini"
-                                    placeholder="输入关键字搜索"
-                                />
-                            </template>
-                            <template>
-                                <el-button
-                                    size="mini"
-                                >
-                                    Edit
-                                </el-button>
-                                <el-button
-                                    size="mini"
-                                    type="danger"
-                                >
-                                    Delete
-                                </el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="企业部绩表">
-                    <el-table
-                        :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-                        style="width: 100%;"
-                    >
-                        <el-table-column
-                            label="事务ID"
-                            prop="id"
-                        />
-                        <el-table-column
-                            label="工资"
-                            prop="salary"
                         />
                         <el-table-column
                             align="right"
