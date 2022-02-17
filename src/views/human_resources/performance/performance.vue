@@ -12,7 +12,7 @@
             <el-tabs tab-position="left">
                 <el-tab-pane label="团队内部绩效考核">
                     <el-card calss="pageCard" shadow="hover">
-                        参与本次考核 () 人 全员实记 () 人 <br>
+                        参与本次考核 () 人 全员实记 ( ) 人 <br>
                     </el-card>
                     <el-card class="pageCard" shadow="hover">
                         <el-row class="Echarts">
