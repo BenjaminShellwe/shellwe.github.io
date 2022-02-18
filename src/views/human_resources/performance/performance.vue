@@ -23,21 +23,21 @@
                                 <el-col :span="10">
                                     <el-table
                                         :data="tableData"
-                                        style="width: 100%;">
+                                        style="width: 100%;"
+                                    >
                                         <el-table-column
                                             prop="department"
                                             label="部门"
-                                        >
-                                        </el-table-column>
+                                        />
                                         <el-table-column
                                             prop="proportion"
                                             label="占比"
-                                        >
-                                        </el-table-column>
+                                        />
+
                                         <el-table-column
                                             prop="completion"
-                                            label="完成度">
-                                        </el-table-column>
+                                            label="完成度"
+                                        />
                                     </el-table>
                                 </el-col>
                             </el-row>
@@ -79,26 +79,24 @@
                                         :data="tableData"
                                         border
                                         height="248"
-                                        style="width: 100%;">
+                                        style="width: 100%;"
+                                    >
                                         <el-table-column
                                             prop="name"
                                             label="员工姓名"
-                                        >
-                                        </el-table-column>
+                                        />
                                         <el-table-column
                                             prop="department"
                                             label="所属部门"
-                                        >
-                                        </el-table-column>
+                                        />
                                         <el-table-column
                                             prop="Q2"
                                             label="Q2"
-                                        >
-                                        </el-table-column>
+                                        />
                                         <el-table-column
                                             prop="rules"
-                                            label="规则">
-                                        </el-table-column>
+                                            label="规则"
+                                        />
                                     </el-table>
                                 </el-card>
                             </el-col>

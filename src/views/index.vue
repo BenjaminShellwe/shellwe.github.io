@@ -11,26 +11,42 @@
             <el-col :lg="8">
                 <page-main title="基本信息" style="margin: 0 0 0 0;">
                     <div class="fa-info">
-                        <h1>Welcome!! {{ $store.state.user.account }}</h1>
+                        <h1>Welcome!! {{ $store.state.user.account }} {{ $store.state.user.id }}</h1>
                         <h4>Login time {{ timeNow() }} <br> There will be some welcome message</h4>
-                        <el-table :data="diff" row-key="prop" size="mini" border stripe>
-                            <el-table-column label="个人信息" align="center">
-                                <template slot-scope="scope">
-                                    <div v-for="(item, index) in scope.row.basic" :key="index">{{ item }}</div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="职位信息" align="center">
-                                <template slot-scope="scope">
-                                    <div v-for="(item, index) in scope.row.pro" :key="index">{{ item }}</div>
-                                </template>
-                            </el-table-column>
-                        </el-table>
+                        <el-tabs type="border-card">
+                            <el-tab-pane label="个人信息">
+                                <el-descriptions class="margin-top" title="个人基本信息" :column="1" size="mini" direction="horizontal" border>
+                                    <el-descriptions-item label="账户名称">{{ personal.nickName }}</el-descriptions-item>
+                                    <el-descriptions-item label="性别">{{ personal.sex }}</el-descriptions-item>
+                                    <el-descriptions-item label="手机号码">{{ personal.phone }}</el-descriptions-item>
+                                    <el-descriptions-item label="职业状况">{{ personal.occupationStatus }}</el-descriptions-item>
+                                    <el-descriptions-item label="所属企业">{{ personal.enterprise }}</el-descriptions-item>
+                                    <el-descriptions-item label="注册时间">{{ personal.createTime }}</el-descriptions-item>
+                                    <el-descriptions-item label="居住地">{{ personal.habitation }}</el-descriptions-item>
+                                    <el-descriptions-item label="备注">{{ personal.remarks }}</el-descriptions-item>
+                                    <el-descriptions-item label="联系地址">{{ personal.address }}</el-descriptions-item>
+                                </el-descriptions>
+                            </el-tab-pane>
+                            <el-tab-pane label="工作信息">
+                                <el-descriptions class="margin-top" title="职位基本信息" :column="1" size="mini" direction="horizontal" border>
+                                    <el-descriptions-item label="真实姓名">{{ enterprise.realName }}</el-descriptions-item>
+                                    <el-descriptions-item label="工作号码"><el-tag size="small">{{ enterprise.phone }}</el-tag></el-descriptions-item>
+                                    <el-descriptions-item label="所属企业">{{ enterprise.enterprise }}</el-descriptions-item>
+                                    <el-descriptions-item label="职位">
+                                        <el-tag size="small">{{ enterprise.position }}</el-tag>
+                                    </el-descriptions-item>
+                                    <el-descriptions-item label="账户状态">{{ enterprise.status }}</el-descriptions-item>
+                                </el-descriptions>
+                            </el-tab-pane>
+                            <el-tab-pane label="信息图表">
+                                <div class="Echarts">
+                                    <div id="chartsUni" style="width: 450px; height: 450px;" />
+                                </div>
+                            </el-tab-pane>
+                        </el-tabs>
                     </div>
                     <br>
                     <br>
-                    <div class="Echarts">
-                        <div id="chartsUni" style="width: 500px; height: 450px;" />
-                    </div>
                 </page-main>
             </el-col>
             <el-col :lg="16">
@@ -83,13 +99,15 @@
 <script>
 import router from '@/router'
 import PageMain from '@/components/PageMain'
+import axios from 'axios'
 export default {
     name: 'IndexPage',
     components: {PageMain},
     data() {
         return {
+            key: 1,
             currentRole: 'dashboard',
-
+            pageQueryValue: this.$store.state.user.id,
             tips: {
                 information: 'Click to refresh',
                 dictionary: 'Set your personal data dictionary',
@@ -101,15 +119,39 @@ export default {
             location: {
                 origin: location.origin
             },
-            diff: [{
-                basic: [
-                    'context'
-                ],
-                pro: [
-                    'context'
-                ]
-            }]
+            pageValue: {
+
+            },
+            enterprise: {
+                id: '',
+                realName: '',
+                enterprise: '',
+                department: '',
+                position: '',
+                status: '',
+                phone: ''
+            },
+            personal: {
+                id: '',
+                realName: '',
+                nickName: '',
+                phone: '',
+                sex: '',
+                occupationStatus: '',
+                enterprise: '',
+                createTime: '',
+                birth: '',
+                habitation: '',
+                address: '',
+                remarks: ''
+
+            },
+            pageTableHeaderBasic: {},
+            pageTableHeaderEnterprise: [{}]
         }
+    },
+    created() {
+        this.handleGetInfo()
     },
     mounted() {
         this.echartsUni()
@@ -150,11 +192,60 @@ export default {
             const m = new Date().getMinutes()
             return h + ':' + m
         },
+        handleGetInfo() {
+            const that = this
+            axios({
+                method: 'post',
+                url: '/queryInfo/enterprise',
+                data: {
+                    id: this.pageQueryValue
+                }
+            }).then(function(response) {
+                let keys = []
+                if (response.data.data[0] === '') {
+                    that.enterprise = null
+                } else {
+                    for (let property in response.data.data[0]) {
+                        keys.push(property)
+                    }
+                    that.pageTableHeaderEnterprise = keys
+                    console.log(that.pageTableHeaderEnterprise)
+                    that.enterprise = response.data.data[0]
+                    console.log(that.enterprise)
+                }
+            }).catch(function(error) {
+                console.log(error)
+            })
+            axios({
+                method: 'post',
+                url: '/queryInfo/personal',
+                data: {
+                    id: this.pageQueryValue
+                }
+            }).then(function(response) {
+                let keys = []
+                if (response.data.data[0] === '') {
+                    that.personal = null
+                } else {
+                    for (let property in response.data.data[0]) {
+                        keys.push(property)
+                    }
+                    that.pageTableHeaderEnterprise = keys
+                    console.log(that.pageTableHeaderEnterprise)
+                    that.personal = response.data.data[0]
+                    console.log(that.personal)
+                }
+            }).catch(function(error) {
+                console.log(error)
+            })
+        },
         echartsUni() {
             var chartUni = this.$echarts.init(document.getElementById('chartsUni'))
             // 配置图表
             var option = {
-                tooltip: {},
+                tooltip: {
+                    trigger: 'item'
+                },
                 angleAxis: {
                     type: 'category'
                 },
@@ -162,6 +253,7 @@ export default {
                 polar: {},
                 series: [
                     {
+                        radius: ['25%', '50%'],
                         type: 'pie',
                         color: [
                             '#d20000',
@@ -209,6 +301,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pageTable {
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+}
+.pageTable td,
+.pageTable th {
+    border: 1px solid #cad9ea;
+    color: #666;
+    height: 60px;
+}
 .fa-info {
     padding: 10px 0 0;
     text-align: center;

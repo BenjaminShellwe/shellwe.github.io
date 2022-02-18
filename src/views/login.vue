@@ -70,6 +70,7 @@ export default {
             form: {
                 account: localStorage.login_account || '',
                 password: '',
+                id: '',
                 remember: !!localStorage.login_account
             },
             rules: {
@@ -103,6 +104,7 @@ export default {
         },
         handleLogin() {
             this.pageButtonLoading = true
+            const pattern = /^(\d{6})|(\d{8})$/g
             axios.post('/user/selectUserName', {
                 userName: this.form.account,
                 userPassword: this.form.password
@@ -115,11 +117,12 @@ export default {
                     console.log('1data.data= ' + data.data)
                     alert('登录失败，账号或密码错误')
                     this.pageButtonLoading = false
-                } else if (data.data == '2') {
+                } else if (pattern.test(data.data)) {
                     // 当前窗体跳转
                     this.$refs.form.validate(valid => {
                         if (valid) {
                             this.loading = true
+                            this.form.id = data.data
                             this.$store.dispatch('user/login', this.form).then(() => {
                                 this.loading = false
                                 console.log('处理中')

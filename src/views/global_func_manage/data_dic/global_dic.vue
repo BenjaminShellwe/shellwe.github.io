@@ -90,7 +90,10 @@
                 <el-col :span="6" style="margin-top: 20px; margin-left: 10px;">
                     <el-button type="primary" icon="el-icon-search" size="mini" @click="handleButtonQuery">搜索</el-button>
                     <el-tooltip content="创建新字典数据" placement="top">
-                        <el-button type="primary" icon="el-icon-document-add" size="mini" @click="dialogVisible = true">创建</el-button>
+                        <el-button type="primary" icon="el-icon-document-add" size="mini" @click="pageDialogVisible = true">创建</el-button>
+                    </el-tooltip>
+                    <el-tooltip content="刷新字典数据" placement="top">
+                        <el-button type="primary" icon="el-icon-refresh" size="mini" @click="getUser">刷新</el-button>
                     </el-tooltip>
                 </el-col>
             </el-row>
@@ -99,7 +102,7 @@
         </page-main>
         <page-main v-show="isShow">
             <template>
-                <el-table :key="key" v-loading="false" :data="data" style="width: 100%;" border>
+                <el-table :key="key" v-loading="false" :data="data" style="width: 100%;" border @cell-mouse-enter="getDetails">
                     <template slot="empty">
                         <span>未找到合适记录</span>
                     </template>
@@ -119,8 +122,8 @@
                     >
                         <template>
                             <el-button-group>
-                                <el-button type="primary" size="mini" @click="dialogVisible = true">编辑</el-button>
-                                <el-button type="danger" size="mini" @click.native.prevent="dialogVisible = true">移除</el-button>
+                                <el-button type="primary" size="mini" @click="handleButtonEdit">编辑</el-button>
+                                <el-button type="danger" size="mini" @click="handleButtonDelete">移除</el-button>
                             </el-button-group>
                         </template>
                     </el-table-column>
@@ -129,35 +132,35 @@
         </page-main>
         <el-dialog
             title="创建一条新的字典规则"
-            :visible.sync="dialogVisible"
-            width="80%"
+            :visible.sync="pageDialogVisible"
+            width="50%"
         >
             <el-form :inline="true" :model="pageFormList">
                 <el-row>
-                    <el-col :span="6">
+                    <el-col :span="12">
                         <el-tooltip class="item" effect="dark" content="如果是组模板规制请在结尾添加_Type" placement="top">
                             <el-form-item label="类型代码/typeCode">
                                 <el-input v-model="pageFormList.typeCode" placeholder="英文驼峰输入" class="pageInputCSS" size="mini" />
                             </el-form-item>
                         </el-tooltip>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col :span="12">
                         <el-tooltip class="item" effect="dark" content="组模板规则请用相同模板名称" placement="top">
                             <el-form-item label="模板名称/typeName">
                                 <el-input v-model="pageFormList.typeName" placeholder="四字中文" class="pageInputCSS" size="mini" />
                             </el-form-item>
                         </el-tooltip>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col :span="12">
                         <el-tooltip class="item" effect="dark" content="组模板规则内不同名称相同模板" placement="top">
                             <el-form-item label="显示名称/valueName">
                                 <el-input v-model="pageFormList.valueName" placeholder="四字中文" class="pageInputCSS" size="mini" />
                             </el-form-item>
                         </el-tooltip>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col :span="12">
                         <el-form-item label="模板状态/valueStatues">
-                            <el-select v-model="pageFormList.valueStatues" placeholder="状态选择" class="pageInputCSS" size="mini">
+                            <el-select v-model="pageFormList.valueStatus" placeholder="状态选择" class="pageInputCSS" size="mini">
                                 <el-option label="有效" value="efficient" />
                                 <el-option label="失效" value="invalid" />
                             </el-select>
@@ -165,17 +168,32 @@
                     </el-col>
                 </el-row>
                 <el-row>
-                    <el-col :span="6">
-                        <el-tooltip class="item" effect="dark" content="模板创建说明" placement="top">
-                            <el-form-item label="模板说明/description">
-                                <el-input v-model="pageFormList.description" placeholder="中文" class="pageInputCSS" size="mini" />
+                    <el-col :span="12">
+                        <el-tooltip class="item" effect="dark" content="前缀只有一个大写字母" placement="top">
+                            <el-form-item label="前缀编码/prefix">
+                                <el-input v-model="pageFormList.prefix" placeholder="默认是G" class="pageInputCSS" size="mini" />
                             </el-form-item>
                         </el-tooltip>
                     </el-col>
-                    <el-col :span="6">
-                        <el-tooltip class="item" effect="dark" content="前缀只有一个大写字母" placement="top">
-                            <el-form-item label="前缀/prefix">
-                                <el-input v-model="pageFormList.prefix" placeholder="默认是G" class="pageInputCSS" size="mini" />
+                    <el-col :span="12">
+                        <el-tooltip class="item" effect="dark" content="必须四位数字,且以数字大于1开头" placement="top">
+                            <el-form-item label="UID/uniqueID">
+                                <el-input v-model="pageFormList.uniqueID" placeholder="0-1999为系统默认" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="模板种类/type">
+                            <el-select v-model="pageFormList.type" placeholder="种类选择" class="pageInputCSS" size="mini">
+                                <el-option label="单一" value="single" />
+                                <el-option label="模组" value="group" />
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-tooltip class="item" effect="dark" content="模板创建说明" placement="top">
+                            <el-form-item label="模板说明/description">
+                                <el-input v-model="pageFormList.description" placeholder="中文" style="width: 200px;" size="mini" />
                             </el-form-item>
                         </el-tooltip>
                     </el-col>
@@ -185,6 +203,81 @@
             <span slot="footer" class="dialog-footer">
                 <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
                 <el-button type="primary" @click="handleButtonCreate">创 建</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog
+            title="编辑一条字典规则"
+            :visible.sync="pageDialogVisibleUni"
+            width="50%"
+        >
+            <el-form :inline="true" :model="pageFormList">
+                <el-row>
+                    <el-col :span="12">
+                        <el-tooltip class="item" effect="dark" content="如果是组模板规制请在结尾添加_Type" placement="top">
+                            <el-form-item label="类型代码/typeCode">
+                                <el-input v-model="pageFormList.typeCode" :placeholder="pageFormList.typeCode" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-tooltip class="item" effect="dark" content="组模板规则请用相同模板名称" placement="top">
+                            <el-form-item label="模板名称/typeName">
+                                <el-input v-model="pageFormList.typeName" :placeholder="pageFormList.typeName" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-tooltip class="item" effect="dark" content="组模板规则内不同名称相同模板" placement="top">
+                            <el-form-item label="显示名称/valueName">
+                                <el-input v-model="pageFormList.valueName" :placeholder="pageFormList.valueName" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="模板状态/valueStatues">
+                            <el-select v-model="pageFormList.valueStatus" placeholder="请重新选择" class="pageInputCSS" size="mini">
+                                <el-option label="有效" value="efficient" />
+                                <el-option label="失效" value="invalid" />
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="12">
+                        <el-tooltip class="item" effect="dark" content="前缀不可改变" placement="top">
+                            <el-form-item label="前缀编码/prefix">
+                                <el-input v-model="pageFormList.prefix" placeholder="pageFormList.prefix" class="pageInputCSS" size="mini" disabled />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-tooltip class="item" effect="dark" content="必须四位数字,且以数字大于1开头" placement="top">
+                            <el-form-item label="UID/uniqueID">
+                                <el-input v-model="pageFormList.uniqueID" :placeholder="pageFormList.uniqueID" class="pageInputCSS" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="模板种类/type">
+                            <el-select v-model="pageFormList.type" placeholder="请重新选择" class="pageInputCSS" size="mini">
+                                <el-option label="单一" value="single" />
+                                <el-option label="模组" value="group" />
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-tooltip class="item" effect="dark" content="模板创建说明" placement="top">
+                            <el-form-item label="模板说明/description">
+                                <el-input v-model="pageFormList.description" placeholder="请重新描述" style="width: 200px;" size="mini" />
+                            </el-form-item>
+                        </el-tooltip>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <el-row />
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="pageDialogVisibleUni = false">取 消</el-button>
+                <el-button type="primary" @click="handleButtonEdit()">修 改</el-button>
             </span>
         </el-dialog>
     </div>
@@ -205,18 +298,21 @@ export default {
     data() {
         return {
             pageFormHead: [],
-            dialogVisible: false,
+            pageDialogVisible: false,
+            pageDialogVisibleUni: false,
             isShow: true,
             value1: true,
             description: '',
+            pageRowValue: {},
             pageFormList: {
                 prefix: '',
                 typeCode: '',
                 typeName: '',
                 valueName: '',
-                valueStatues: '',
+                valueStatus: '',
                 description: '',
-                uniqueID: ''
+                uniqueID: '',
+                type: ''
             },
             pageQueryValue: {
                 typeName: ''
@@ -312,7 +408,7 @@ export default {
             // console.log(keys)
             this.pageFormHead = keys
             this.data = result.data
-            // <<idea about getting data>>
+            // <<数据获取思路>>
             // let values = function(object) {
             //     let values = []
             //     for (let property in object)
@@ -356,21 +452,94 @@ export default {
                     that.pageFormHead = keys
                     that.data = response.data.data
                 }
-
             }).catch(function(error) {
                 console.log(error)
             })
         },
         handleButtonCreate() {
-            console.log(this.pageFormList.valueStatues)
+            const that = this
+            console.log(this.pageFormList.valueStatus)
             axios({
                 method: 'post',
                 url: '/addGlobalDic',
                 data: this.pageFormList
             }).then(function(response) {
+                that.pageDialogVisible = false
+                that.handleSuccess(response.data.msg)
                 console.log(response)
             }).catch(function(error) {
                 console.log(error)
+            })
+        },
+        getDetails(row) {
+            this.pageRowValue = row
+            // console.log(this.pageRowValue)
+        },
+        handleButtonEdit() {
+            let t = this.pageRowValue.id
+            console.log(t)
+            const that = this
+            axios({
+                method: 'post',
+                url: '/queryId',
+                data: {
+                    id: this.pageRowValue.id
+                }
+            }).then(function(response) {
+                if (response.data.code === 4033) {
+                    that.$notify({
+                        title: '操作被拒绝',
+                        message: response.data.msg,
+                        type: 'error',
+                        duration: 6500
+                    })
+                }
+                if (response.data.code === 200) {
+                    that.pageFormList = that.pageRowValue
+                    console.log(that.pageFormList)
+                    that.pageDialogVisibleUni = true
+                }
+
+            }).catch(function(error) {
+                console.log(error)
+            })
+        },
+        handleButtonDelete() {
+            const that = this
+            axios({
+                method: 'post',
+                url: '/deleteId',
+                data: {
+                    id: this.pageRowValue.id
+                }
+            }).then(function(response) {
+                if (response.data.code === 4033) {
+                    that.$notify({
+                        title: '操作被拒绝',
+                        message: response.data.msg,
+                        type: 'error',
+                        duration: 6500
+                    })
+                }
+                if (response.data.code === 200) {
+                    that.$notify({
+                        title: '操作被执行',
+                        message: response.data.msg,
+                        type: 'success',
+                        duration: 6500
+                    })
+                    that.getUser()
+                }
+            }).catch(function(error) {
+                console.log(error)
+            })
+        },
+        handleSuccess(msg) {
+            this.$notify({
+                title: '操作成功',
+                message: msg,
+                type: 'success',
+                duration: 6500
             })
         }
     }
@@ -386,4 +555,5 @@ export default {
 .pageInputCSS {
     width: 150px;
 }
+
 </style>

@@ -11,7 +11,7 @@
         <page-main title="薪资信息总览">
             <el-card>
                 <el-descriptions class="margin-top" title="基本工资结构组成情况" :column="2" size="medium" border>
-                    <el-descriptions-item >
+                    <el-descriptions-item>
                         <template slot="label">
                             基础工资
                         </template>

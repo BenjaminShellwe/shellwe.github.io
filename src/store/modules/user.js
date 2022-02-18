@@ -4,6 +4,7 @@ const state = {
     account: localStorage.account || '',
     token: localStorage.token || '',
     failure_time: localStorage.failure_time || '',
+    id: localStorage.id || '',
     permissions: []
 }
 
@@ -58,17 +59,21 @@ const mutations = {
         localStorage.setItem('account', data.account)
         localStorage.setItem('token', data.token)
         localStorage.setItem('failure_time', data.failure_time)
+        localStorage.setItem('id', data.id)
         state.account = data.account
         state.token = data.token
         state.failure_time = data.failure_time
+        state.id = data.id
     },
     removeUserData(state) {
         localStorage.removeItem('account')
         localStorage.removeItem('token')
         localStorage.removeItem('failure_time')
+        localStorage.removeItem('id')
         state.account = ''
         state.token = ''
         state.failure_time = ''
+        state.id = ''
     },
     setPermissions(state, permissions) {
         state.permissions = permissions

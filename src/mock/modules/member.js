@@ -9,6 +9,7 @@ module.exports = [
                 data: {
                     account: option.body.account,
                     token: '@string',
+                    id: option.body.id,
                     failure_time: Date.parse(new Date()) / 1000 + 24 * 60 * 60
                 }
             }
