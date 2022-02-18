@@ -13,8 +13,8 @@ public interface UserMapper {
     @Select("select userPassword from user where userName = #{'userName'}")
     public String selectUserPassword(String userName);
 
-    @Select("select userPassword, userPassword from user where userName = #{'userName'} AND userPassword = #{'userPassword'}")
-    public String check(String userName,String userPassword);
+    @Select("select id from user where userName = #{'userName'}")
+    public int check(String userName);
 
     @Insert("insert into user(userName, userPassword) values(#{'userName'}, #{'userPassword'})")
     public void addUser(String userName, String userPassword);

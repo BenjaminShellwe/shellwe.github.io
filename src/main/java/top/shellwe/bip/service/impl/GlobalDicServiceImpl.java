@@ -21,8 +21,9 @@ public class GlobalDicServiceImpl implements GlobalDicService {
     }
 
     @Override
-    public Result getByTypeNameAndValueStatus(String typeName, String valueStatus) {
-        List<Dictionary> list = globalDicRepository.getByTypeNameAndValueStatus(typeName, valueStatus);
+    public Result getByTypeName(String data) {
+        List<Dictionary> list = globalDicRepository.getByTypeName(data);
         return new Result(list);
     }
+
 }

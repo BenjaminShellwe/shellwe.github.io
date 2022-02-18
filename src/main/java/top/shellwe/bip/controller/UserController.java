@@ -72,8 +72,9 @@ public class UserController {
             return result;
 //            return "账号或密码输入错误";
         }else if(userMapper.selectUserPassword(userName).equals(userPassword)&&userMapper.selectUserName(userName).equals(userName)) {
-            result = 2;
+            result = userMapper.check(userName);
             System.out.println("2 成功登录");
+            userMapper.check(userName);
 //            return "成功登录";
             return result;
         }

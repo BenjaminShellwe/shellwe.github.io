@@ -17,6 +17,8 @@ public class Dictionary {
     private String valueName;
     private String valueStatus;
     private String description;
+    private String editable;
+    private String type;
 
     public String getPrefix() {
         return prefix;
@@ -90,13 +92,30 @@ public class Dictionary {
         this.description = description;
     }
 
+    public String getEditable() {
+        return editable;
+    }
+
+    public void setEditable(String editable) {
+        this.editable = editable;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "User{" + "prefix = " + prefix + ", id = " + id +
                      ", uniqueID = " + uniqueID + ", typeCode = " + typeCode +
                      ", typeName=" + typeName + ", valueID = " + valueID +
                      ", valueName = " + valueName + ", valueStatus = " + valueStatus +
-                     ", description = " + description +
+                     ", description = " + description + ", editable = " + editable +
+                     ", type = " + type +
                 '}';
     }
 }

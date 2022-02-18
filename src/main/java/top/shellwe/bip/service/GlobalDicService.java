@@ -4,5 +4,5 @@ import top.shellwe.bip.util.Result;
 
 public interface GlobalDicService {
     Result queryAll();
-    Result getByTypeNameAndValueStatus(String typeName, String valueStatus);
+    Result getByTypeName(String data);
 }
