@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         const validatePassword = (rule, value, callback) => {
@@ -35,6 +37,10 @@ export default {
             }
         }
         return {
+            pageGetValue: {
+                id: this.$store.state.user.id,
+                userName: this.$store.state.user.account
+            },
             form: {
                 password: '',
                 newpassword: '',
@@ -57,17 +63,41 @@ export default {
     },
     methods: {
         onSubmit() {
+            const that = this
             this.$refs['form'].validate(valid => {
                 if (valid) {
-                    this.$store.dispatch('user/editPassword', this.form).then(() => {
-                        this.$message({
-                            type: 'success',
-                            message: '修改成功，请重新登录'
-                        })
-                        this.$store.dispatch('user/logout').then(() => {
-                            this.$router.push('/login')
-                        })
-                    }).catch(() => {})
+                    axios({
+                        method: 'post',
+                        url: '/user/update',
+                        data: {
+                            id: this.$store.state.user.id,
+                            userName: this.$store.state.user.account,
+                            psw: this.form.newpassword
+                        }
+                    }).then(function(response) {
+                        if (response.data.code === 200) {
+                            that.$message({
+                                type: '操作成功',
+                                message: '修改成功，请重新登录'
+                            })
+                            that.$store.dispatch('user/logout').then(() => {
+                                this.$router.push('/login')
+                            })
+                        } else {
+                            that.$notify.error({
+                                title: '操作失败',
+                                message: response.data.msg + ' 错误码: ' + response.data.code,
+                                duration: 6500
+                            })
+                        }
+
+                    }).catch(function(error) {
+                        console.log(error)
+                    })
+                    // this.$store.dispatch('user/editPassword', this.form).then(() => {
+                    //     // const that = this
+                    //
+                    // }).catch(() => {})
                 }
             })
         }

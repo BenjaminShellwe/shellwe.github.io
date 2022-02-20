@@ -7,7 +7,7 @@
                 </div>
                 &nbsp;
                 <div class="inLine">
-                    此页为个人账户的基本设置 *本页面目前数据为固定数据,并没有接入数据库
+                    此页为个人账户的基本设置
                 </div>
             </template>
         </page-header>
@@ -23,10 +23,10 @@
                                         <div slot="header">
                                             <el-row>
                                                 <el-col :span="13">
-                                                    <span>个人中心</span>
+                                                    <span>个人中心 图片处理正在修复</span>
                                                 </el-col>
                                                 <el-col :span="11">
-                                                    <image-upload :url.sync="form.headimg" action="http://scrm.1daas.com/api/upload/upload" name="image" :data="{'token':'TKD628431923530324'}" notip class="headimg-upload" @onSuccess="handleSuccess" />
+                                                    <image-upload :url.sync="pageDataFormUni.headimg" action="http://scrm.1daas.com/api/upload/upload" name="image" :data="{'token':'TKD628431923530324'}" notip class="headimg-upload" @onSuccess="handleSuccess" />
                                                 </el-col>
                                             </el-row>
                                         </div>
@@ -35,53 +35,55 @@
                                         </div>
                                         <div>
                                             <span>
-                                                注册时间：2022/01/13 22:08:33
+                                                注册时间：{{ pageDataForm.createTime }}
                                             </span>
                                         </div>
                                         <el-divider />
                                         <div>
-                                            <div>手机号码:  <div style="float: right; padding-right: 20px;">{{ dataForm.phone }}</div></div>
+                                            <div>手机号码:  <div style="float: right; padding-right: 20px;">{{ pageDataForm.phone }}</div></div>
                                         </div>
                                         <div>
-                                            <div>所属企业:  <div style="float: right; padding-right: 20px;">TernaryProjectTeam</div></div>
+                                            <div>所属企业:  <div style="float: right; padding-right: 20px;">{{ pageDataForm.enterprise }}</div></div>
                                         </div>
                                         <div>
-                                            <div>首页链接:  <div style="float: right; padding-right: 20px;">{{ dataForm.homeUrl }}</div></div>
+                                            <div>首页链接:  <div style="float: right; padding-right: 20px;">{{ pageDataForm.homeUrl }}</div></div>
                                         </div>
                                     </el-card>
                                 </div>
                             </el-col>
                             <el-col :span="16">
                                 <div>
-                                    <el-card>
+                                    <el-card shadow="hover">
                                         <div slot="header">
                                             <span>基本资料</span>
                                             <el-button v-show="editable" type="primary" size="mini" @click="changeEditable(1)">编辑</el-button>
                                             <el-button v-show="done" type="success" size="mini" @click="changeEditable(0)">完成</el-button>
                                         </div>
                                         <div>
-                                            <el-form v-model="dataForm" label-width="100px" size="small" label-position="right">
+                                            <el-form v-model="pageDataForm" label-width="100px" size="small" label-position="right">
                                                 <div>
-                                                    <el-form-item label="真实姓名" prop="nickName" class="inLine">
-                                                        <el-input v-model="dataForm.realName" :disabled="editable" placeholder="请输入姓名" auto-complete="off" />
+                                                    <el-form-item label="真实姓名" prop="realName" class="inLine">
+                                                        <el-input v-model="pageDataForm.realName" :disabled="editable" :placeholder="pageDataForm.realName" auto-complete="off" />
+                                                    </el-form-item>
+                                                    <el-form-item label="账户名称" prop="nickName" class="inLine">
+                                                        <el-input v-model="pageDataForm.nickName" :disabled="editable" :placeholder="pageDataForm.nickName" auto-complete="off" />
                                                     </el-form-item>
                                                     <el-form-item label="手机号码" prop="phone" class="inLine">
-                                                        <el-input v-model="dataForm.phone" :disabled="editable" placeholder="请输入号码" auto-complete="off" />
+                                                        <el-tooltip content="绑定手机号码请于安全设置中修改" placement="top" effect="light">
+                                                            <el-input v-model="pageDataForm.phone" disabled :placeholder="pageDataForm.phone" auto-complete="off" />
+                                                        </el-tooltip>
                                                     </el-form-item>
                                                     <el-form-item label="首页链接" prop="homeUrl" class="inLine">
-                                                        <el-input v-model="dataForm.homeUrl" :disabled="editable" placeholder="请输入链接" maxlength="18" />
-                                                    </el-form-item>
-                                                    <el-form-item label="用户昵称" prop="nickName" class="inLine">
-                                                        <el-input v-model="dataForm.nickName" :disabled="editable" placeholder="请输入昵称" auto-complete="off" />
+                                                        <el-input v-model="pageDataForm.homeUrl" :disabled="editable" :placeholder="pageDataForm.homeUrl" maxlength="18" />
                                                     </el-form-item>
                                                     <el-form-item label="QQ" class="inLine">
-                                                        <el-input v-model="dataForm.qq" placeholder="请输入QQ" />
+                                                        <el-input v-model="pageDataForm.qq" :disabled="editable" :placeholder="pageDataForm.qq" />
                                                     </el-form-item>
                                                     <el-form-item label="微信" class="inLine">
-                                                        <el-input v-model="dataForm.wechat" placeholder="请输入微信" />
+                                                        <el-input v-model="pageDataForm.wechat" :disabled="editable" :placeholder="pageDataForm.wechat" />
                                                     </el-form-item>
                                                     <el-form-item label="用户性别" prop="phone" class="inLine" style="width: 293px;">
-                                                        <el-select v-model="value" placeholder="未选择" style="width: 100%;">
+                                                        <el-select v-model="value" :placeholder="pageDataForm.sex" :disabled="editable" style="width: 100%;">
                                                             <el-option
                                                                 v-for="item in options"
                                                                 :key="item.value"
@@ -91,7 +93,7 @@
                                                         </el-select>
                                                     </el-form-item>
                                                     <el-form-item label="所属公司" prop="homeUrl" class="inLine">
-                                                        <el-input v-model="dataForm.company" :disabled="editable" placeholder="请输入公司" maxlength="18" />
+                                                        <el-input v-model="pageDataForm.enterprise" :disabled="editable" :placeholder="pageDataForm.enterprise" maxlength="18" />
                                                     </el-form-item>
                                                 </div>
                                             </el-form>
@@ -99,17 +101,19 @@
                                     </el-card>
                                 </div>
                                 <div>
-                                    <el-card class="box-card">
+                                    <el-card class="box-card" style="margin-top: 5px;">
                                         <div>
                                             <el-tooltip content="表内信息从数据库获取,无法直接手动修改" placement="bottom" effect="light">
                                                 <el-descriptions title="职位信息" direction="vertical" :column="4" border>
-                                                    <el-descriptions-item label="用户名">吴俊威(shellwe)</el-descriptions-item>
-                                                    <el-descriptions-item label="手机号">17600000000</el-descriptions-item>
-                                                    <el-descriptions-item label="职位" :span="2">HR-admin项目负责人</el-descriptions-item>
-                                                    <el-descriptions-item label="备注">
-                                                        <el-tag size="small">HR-admin项目总负责人 TernaryProjectTeam负责人</el-tag>
+                                                    <el-descriptions-item label="账户ID">{{ pageDataFormUni.userID }}</el-descriptions-item>
+                                                    <el-descriptions-item label="真实姓名">{{ pageDataFormUni.realName }}</el-descriptions-item>
+                                                    <el-descriptions-item label="状态">
+                                                        <el-tag size="small">{{ pageDataFormUni.status }}</el-tag>
                                                     </el-descriptions-item>
-                                                    <el-descriptions-item label="联系地址">广东省湛江市霞山区东新街道***</el-descriptions-item>
+                                                    <el-descriptions-item label="归属企业">{{ pageDataFormUni.enterpriseName }}</el-descriptions-item>
+                                                    <el-descriptions-item label="所属部门">{{ pageDataFormUni.department }}</el-descriptions-item>
+                                                    <el-descriptions-item label="所属职位">{{ pageDataFormUni.position }}</el-descriptions-item>
+                                                    <el-descriptions-item label="联系电话">{{ pageDataFormUni.phone }}</el-descriptions-item>
                                                 </el-descriptions>
                                             </el-tooltip>
                                         </div>
@@ -169,6 +173,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'PersonalSetting',
     beforeRouteLeave(to, from, next) {
@@ -180,30 +186,36 @@ export default {
     props: {},
     data() {
         return {
-            form: {
-                headimg: '',
-                mobile: '',
-                name: '',
-                qq: '',
-                wechat: ''
-            },
-            dataForm: {
+            pageQueryValue: this.$store.state.user.id,
+            pageDataForm: {
                 realName: 'Benjamin Thomas Shellwe',
                 nickName: 'shellwe',
                 phone: '176***2321',
                 homeUrl: 'http://shellwe.top',
-                company: 'TernaryProjectTeam',
+                enterprise: 'TernaryProjectTeam',
                 qq: '774****22',
-                wechat: '176***2321'
+                wechat: '176***2321',
+                remarks: '',
+                sex: ''
+            },
+            pageDataFormUni: {
+                userID: '',
+                realName: '',
+                enterpriseName: '',
+                department: '',
+                phone: '',
+                position: '',
+                status: '',
+                headimg: ''
             },
             options: [{
-                value: '选项1',
+                value: 'Male',
                 label: '男'
             }, {
-                value: '选项2',
+                value: 'Female',
                 label: '女'
             }, {
-                value: '选项3',
+                value: 'Unset',
                 label: '未设置'
             }],
             value: '',
@@ -212,15 +224,19 @@ export default {
             editable: true
         }
     },
-    created() {},
-    mounted() {},
+    created() {
+        this.handleQueryValue()
+    },
+    mounted() {
+
+    },
     methods: {
         back() {
             history.go(-1)
         },
         handleSuccess(res) {
             if (res.error == '') {
-                this.form.headimg = res.data.path
+                this.pageDataFormUni.headimg = res.data.path
             } else {
                 this.$message.warning(res.error)
             }
@@ -239,6 +255,35 @@ export default {
                 this.done = !this.done
                 this.editable = !this.editable
             }
+        },
+        handleQueryValue() {
+            const that = this
+            axios({
+                method: 'post',
+                url: '/queryInfo/personal',
+                data: {
+                    userID: this.pageQueryValue
+                }
+            }).then(function(response) {
+                // console.log(response)
+                that.pageDataForm = response.data.data[0]
+                // console.log(that.pageDataForm)
+            }).catch(function(error) {
+                console.log(error)
+            })
+            axios({
+                method: 'post',
+                url: '/queryInfo/enterprise',
+                data: {
+                    userID: this.pageQueryValue
+                }
+            }).then(function(response) {
+                // console.log(response)
+                that.pageDataFormUni = response.data.data[0]
+                // console.log(that.pageDataFormUni)
+            }).catch(function(error) {
+                console.log(error)
+            })
         }
     }
 }

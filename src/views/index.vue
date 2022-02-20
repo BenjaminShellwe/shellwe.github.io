@@ -31,7 +31,7 @@
                                 <el-descriptions class="margin-top" title="职位基本信息" :column="1" size="mini" direction="horizontal" border>
                                     <el-descriptions-item label="真实姓名">{{ enterprise.realName }}</el-descriptions-item>
                                     <el-descriptions-item label="工作号码"><el-tag size="small">{{ enterprise.phone }}</el-tag></el-descriptions-item>
-                                    <el-descriptions-item label="所属企业">{{ enterprise.enterprise }}</el-descriptions-item>
+                                    <el-descriptions-item label="所属企业">{{ enterprise.enterpriseName }}</el-descriptions-item>
                                     <el-descriptions-item label="职位">
                                         <el-tag size="small">{{ enterprise.position }}</el-tag>
                                     </el-descriptions-item>
@@ -125,7 +125,7 @@ export default {
             enterprise: {
                 id: '',
                 realName: '',
-                enterprise: '',
+                enterpriseName: '',
                 department: '',
                 position: '',
                 status: '',
@@ -198,7 +198,7 @@ export default {
                 method: 'post',
                 url: '/queryInfo/enterprise',
                 data: {
-                    id: this.pageQueryValue
+                    userID: this.pageQueryValue
                 }
             }).then(function(response) {
                 let keys = []
@@ -220,7 +220,7 @@ export default {
                 method: 'post',
                 url: '/queryInfo/personal',
                 data: {
-                    id: this.pageQueryValue
+                    userID: this.pageQueryValue
                 }
             }).then(function(response) {
                 let keys = []

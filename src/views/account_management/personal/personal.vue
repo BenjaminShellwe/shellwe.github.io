@@ -30,13 +30,13 @@
                                 </div>
                                 <el-divider />
                                 <div class="personal-relation">
-                                    <div class="relation-item">手机号码:  <div style="float: right; padding-right: 20px;">{{ dataForm.phone }}</div></div>
+                                    <div class="relation-item">手机号码:  <div style="float: right; padding-right: 20px;">{{ pageDataForm.phone }}</div></div>
                                 </div>
                                 <div class="personal-relation">
                                     <div class="relation-item">所属企业:  <div style="float: right; padding-right: 20px;">TernaryProjectTeam</div></div>
                                 </div>
                                 <div class="personal-relation">
-                                    <div class="relation-item">首页链接:  <div style="float: right; padding-right: 20px;">{{ dataForm.homeUrl }}</div></div>
+                                    <div class="relation-item">首页链接:  <div style="float: right; padding-right: 20px;">{{ pageDataForm.homeUrl }}</div></div>
                                 </div>
                             </el-card>
                         </div>
@@ -50,24 +50,24 @@
                                     <el-button v-show="done" type="success" size="mini" class="button" @click="changeEditable(0)">完成</el-button>
                                 </div>
                                 <div>
-                                    <el-form v-model="dataFrom" label-width="100px" size="small" label-position="right">
+                                    <el-form v-model="dataForm" label-width="100px" size="small" label-position="right">
                                         <div>
                                             <el-form-item label="真实姓名" prop="nickName" class="inLine">
-                                                <el-input v-model="dataForm.realName" :disabled="editable" placeholder="请输入姓名" auto-complete="off" />
+                                                <el-input v-model="pageDataForm.realName" :disabled="editable" :placeholder="pageDataForm.realName" auto-complete="off" />
                                             </el-form-item>
                                             <el-form-item label="手机号码" prop="phone" class="inLine">
-                                                <el-input v-model="dataForm.phone" :disabled="editable" placeholder="请输入号码" auto-complete="off" />
+                                                <el-input v-model="pageDataForm.phone" :disabled="editable" :placeholder="pageDataForm.phone" auto-complete="off" />
                                             </el-form-item>
                                             <el-form-item label="首页链接" prop="homeUrl" class="inLine">
-                                                <el-input v-model="dataForm.homeUrl" :disabled="editable" placeholder="请输入链接" maxlength="18" />
+                                                <el-input v-model="pageDataForm.homeUrl" :disabled="editable" :placeholder="pageDataForm.homeUrl" maxlength="18" />
                                             </el-form-item>
                                         </div>
                                         <div>
                                             <el-form-item label="用户昵称" prop="nickName" class="inLine">
-                                                <el-input v-model="dataForm.nickName" :disabled="editable" placeholder="请输入昵称" auto-complete="off" />
+                                                <el-input v-model="pageDataForm.nickName" :disabled="editable" :placeholder="pageDataForm.nickName" auto-complete="off" />
                                             </el-form-item>
                                             <el-form-item label="用户性别" prop="phone" class="inLine" style="width: 293px;">
-                                                <el-select v-model="value" placeholder="未选择" style="width: 100%;">
+                                                <el-select v-model="value" :placeholder="value" style="width: 100%;">
                                                     <el-option
                                                         v-for="item in options"
                                                         :key="item.value"
@@ -77,7 +77,7 @@
                                                 </el-select>
                                             </el-form-item>
                                             <el-form-item label="所属公司" prop="homeUrl" class="inLine">
-                                                <el-input v-model="dataForm.company" :disabled="editable" placeholder="请输入公司" maxlength="18" />
+                                                <el-input v-model="pageDataForm.company" :disabled="editable" :placeholder="pageDataForm.company" maxlength="18" />
                                             </el-form-item>
                                         </div>
                                     </el-form>
@@ -98,7 +98,6 @@
                         </div>
                     </el-col>
                 </el-row>
-
             </div>
         </page-main>
         <el-dialog
@@ -123,12 +122,12 @@ export default {
     components: {PageMain, PageHeader},
     data() {
         return {
-            dataForm: {
-                realName: 'Benjamin Thomas Shellwe',
-                nickName: 'shellwe',
-                phone: '176***2321',
-                homeUrl: 'http://shellwe.top',
-                company: 'TernaryProjectTeam'
+            pageDataForm: {
+                realName: '',
+                nickName: '',
+                phone: '',
+                homeUrl: '',
+                company: ''
             },
             options: [{
                 value: '选项1',

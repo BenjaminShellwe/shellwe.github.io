@@ -135,73 +135,54 @@
             :visible.sync="pageDialogVisible"
             width="50%"
         >
-            <el-form :inline="true" :model="pageFormList">
-                <el-row>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="如果是组模板规制请在结尾添加_Type" placement="top">
-                            <el-form-item label="类型代码/typeCode">
-                                <el-input v-model="pageFormList.typeCode" placeholder="英文驼峰输入" class="pageInputCSS" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="组模板规则请用相同模板名称" placement="top">
-                            <el-form-item label="模板名称/typeName">
-                                <el-input v-model="pageFormList.typeName" placeholder="四字中文" class="pageInputCSS" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="组模板规则内不同名称相同模板" placement="top">
-                            <el-form-item label="显示名称/valueName">
-                                <el-input v-model="pageFormList.valueName" placeholder="四字中文" class="pageInputCSS" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="模板状态/valueStatues">
-                            <el-select v-model="pageFormList.valueStatus" placeholder="状态选择" class="pageInputCSS" size="mini">
-                                <el-option label="有效" value="efficient" />
-                                <el-option label="失效" value="invalid" />
-                            </el-select>
+            <el-form :inline="true" :model="pageFormList" label-width="200px" label-position="right" size="mini">
+                <div>
+                    <el-tooltip class="item" effect="dark" content="如果是组模板规制请在结尾添加_Type" placement="top">
+                        <el-form-item label="类型代码/typeCode">
+                            <el-input v-model="pageFormList.typeCode" placeholder="英文驼峰输入" />
                         </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="前缀只有一个大写字母" placement="top">
-                            <el-form-item label="前缀编码/prefix">
-                                <el-input v-model="pageFormList.prefix" placeholder="默认是G" class="pageInputCSS" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="必须四位数字,且以数字大于1开头" placement="top">
-                            <el-form-item label="UID/uniqueID">
-                                <el-input v-model="pageFormList.uniqueID" placeholder="0-1999为系统默认" class="pageInputCSS" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="模板种类/type">
-                            <el-select v-model="pageFormList.type" placeholder="种类选择" class="pageInputCSS" size="mini">
-                                <el-option label="单一" value="single" />
-                                <el-option label="模组" value="group" />
-                            </el-select>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="组模板规则请用相同模板名称" placement="top">
+                        <el-form-item label="模板名称/typeName">
+                            <el-input v-model="pageFormList.typeName" placeholder="四字中文" />
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="模板创建说明" placement="top">
-                            <el-form-item label="模板说明/description">
-                                <el-input v-model="pageFormList.description" placeholder="中文" style="width: 200px;" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                </el-row>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="组模板规则内不同名称相同模板" placement="top">
+                        <el-form-item label="显示名称/valueName">
+                            <el-input v-model="pageFormList.valueName" placeholder="四字中文" />
+                        </el-form-item>
+                    </el-tooltip>
+                    <el-form-item label="模板状态/valueStatues">
+                        <el-select v-model="pageFormList.valueStatus" placeholder="状态选择" style="width: 180px;">
+                            <el-option label="有效" value="efficient" />
+                            <el-option label="失效" value="invalid" />
+                        </el-select>
+                    </el-form-item>
+                    <el-tooltip class="item" effect="dark" content="前缀只有一个大写字母" placement="top">
+                        <el-form-item label="前缀编码/prefix">
+                            <el-input v-model="pageFormList.prefix" placeholder="默认是G" />
+                        </el-form-item>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="必须四位数字,且以数字大于1开头" placement="top">
+                        <el-form-item label="UID/uniqueID">
+                            <el-input v-model="pageFormList.uniqueID" placeholder="0-1999为系统默认" />
+                        </el-form-item>
+                    </el-tooltip>
+                    <el-form-item label="模板种类/type">
+                        <el-select v-model="pageFormList.type" placeholder="种类选择" style="width: 180px;">
+                            <el-option label="单一" value="single" />
+                            <el-option label="模组" value="group" />
+                        </el-select>
+                    </el-form-item>
+                    <el-tooltip class="item" effect="dark" content="模板创建说明" placement="top">
+                        <el-form-item label="模板说明/description">
+                            <el-input v-model="pageFormList.description" placeholder="中文" />
+                        </el-form-item>
+                    </el-tooltip>
+                </div>
             </el-form>
-            <el-row />
             <span slot="footer" class="dialog-footer">
-                <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
+                <el-button @click="pageDialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="handleButtonCreate">创 建</el-button>
             </span>
         </el-dialog>
@@ -210,69 +191,51 @@
             :visible.sync="pageDialogVisibleUni"
             width="50%"
         >
-            <el-form :inline="true" :model="pageFormList">
-                <el-row>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="如果是组模板规制请在结尾添加_Type" placement="top">
-                            <el-form-item label="类型代码/typeCode">
-                                <el-input v-model="pageFormList.typeCode" :placeholder="pageFormList.typeCode" class="pageInputCSS" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="组模板规则请用相同模板名称" placement="top">
-                            <el-form-item label="模板名称/typeName">
-                                <el-input v-model="pageFormList.typeName" :placeholder="pageFormList.typeName" class="pageInputCSS" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="组模板规则内不同名称相同模板" placement="top">
-                            <el-form-item label="显示名称/valueName">
-                                <el-input v-model="pageFormList.valueName" :placeholder="pageFormList.valueName" class="pageInputCSS" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="模板状态/valueStatues">
-                            <el-select v-model="pageFormList.valueStatus" placeholder="请重新选择" class="pageInputCSS" size="mini">
-                                <el-option label="有效" value="efficient" />
-                                <el-option label="失效" value="invalid" />
-                            </el-select>
+            <el-form :inline="true" :model="pageFormList" label-width="200px" label-position="right" size="mini">
+                <div>
+                    <el-tooltip class="item" effect="dark" content="如果是组模板规制请在结尾添加_Type" placement="top">
+                        <el-form-item label="类型代码/typeCode">
+                            <el-input v-model="pageFormList.typeCode" :placeholder="pageFormList.typeCode" />
                         </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="前缀不可改变" placement="top">
-                            <el-form-item label="前缀编码/prefix">
-                                <el-input v-model="pageFormList.prefix" placeholder="pageFormList.prefix" class="pageInputCSS" size="mini" disabled />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="必须四位数字,且以数字大于1开头" placement="top">
-                            <el-form-item label="UID/uniqueID">
-                                <el-input v-model="pageFormList.uniqueID" :placeholder="pageFormList.uniqueID" class="pageInputCSS" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="模板种类/type">
-                            <el-select v-model="pageFormList.type" placeholder="请重新选择" class="pageInputCSS" size="mini">
-                                <el-option label="单一" value="single" />
-                                <el-option label="模组" value="group" />
-                            </el-select>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="组模板规则请用相同模板名称" placement="top">
+                        <el-form-item label="模板名称/typeName">
+                            <el-input v-model="pageFormList.typeName" :placeholder="pageFormList.typeName" />
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-tooltip class="item" effect="dark" content="模板创建说明" placement="top">
-                            <el-form-item label="模板说明/description">
-                                <el-input v-model="pageFormList.description" placeholder="请重新描述" style="width: 200px;" size="mini" />
-                            </el-form-item>
-                        </el-tooltip>
-                    </el-col>
-                </el-row>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="组模板规则内不同名称相同模板" placement="top">
+                        <el-form-item label="显示名称/valueName">
+                            <el-input v-model="pageFormList.valueName" :placeholder="pageFormList.valueName" />
+                        </el-form-item>
+                    </el-tooltip>
+                    <el-form-item label="模板状态/valueStatues">
+                        <el-select v-model="pageFormList.valueStatus" placeholder="请重新选择" style="width: 180px;">
+                            <el-option label="有效" value="efficient" />
+                            <el-option label="失效" value="invalid" />
+                        </el-select>
+                    </el-form-item>
+                    <el-tooltip class="item" effect="dark" content="前缀不可改变" placement="top">
+                        <el-form-item label="前缀编码/prefix">
+                            <el-input v-model="pageFormList.prefix" placeholder="pageFormList.prefix" disabled />
+                        </el-form-item>
+                    </el-tooltip>
+                    <el-tooltip class="item" effect="dark" content="必须四位数字,且以数字大于1开头" placement="top">
+                        <el-form-item label="UID/uniqueID">
+                            <el-input v-model="pageFormList.uniqueID" :placeholder="pageFormList.uniqueID" />
+                        </el-form-item>
+                    </el-tooltip>
+                    <el-form-item label="模板种类/type">
+                        <el-select v-model="pageFormList.type" placeholder="请重新选择" style="width: 180px;">
+                            <el-option label="单一" value="single" />
+                            <el-option label="模组" value="group" />
+                        </el-select>
+                    </el-form-item>
+                    <el-tooltip class="item" effect="dark" content="模板创建说明" placement="top">
+                        <el-form-item label="模板说明/description">
+                            <el-input v-model="pageFormList.description" placeholder="请重新描述" />
+                        </el-form-item>
+                    </el-tooltip>
+                </div>
             </el-form>
             <el-row />
             <span slot="footer" class="dialog-footer">
