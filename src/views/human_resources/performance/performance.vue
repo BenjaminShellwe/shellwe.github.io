@@ -90,8 +90,8 @@
                                             label="所属部门"
                                         />
                                         <el-table-column
-                                            prop="Q2"
-                                            label="Q2"
+                                            prop="expression"
+                                            label="表现"
                                         />
                                         <el-table-column
                                             prop="rules"
@@ -149,6 +149,8 @@
 
 <script>
 
+import axios from 'axios'
+
 export default {
     name: 'Performance',
     data() {
@@ -167,7 +169,7 @@ export default {
                         performance: '4.1',
                         proportion: '75%',
                         completion: '88%',
-                        Q2: '1.2'
+                        expression: '1.2'
                     },
                     {
                         id: '202102101713',
@@ -180,7 +182,7 @@ export default {
                         performance: '5.1',
                         proportion: '95%',
                         completion: '95%',
-                        Q2: '1.2'
+                        expression: '1.2'
                     },
                     {
                         id: '202102101714',
@@ -193,7 +195,7 @@ export default {
                         performance: '6.2',
                         proportion: '75%',
                         completion: '85%',
-                        Q2: '3.2'
+                        expression: '3.2'
                     },
                     {
                         id: '2016-05-03',
@@ -206,12 +208,13 @@ export default {
                         performance: '6.1',
                         proportion: '76%',
                         completion: '75%',
-                        Q2: '2.2'
+                        expression: '2.2'
                     }
                 ]
         }
     },
     mounted() {
+        this.handleQueryValue()
         this.echartsUni()
         this.echartsBin()
         this.echartsTer()
@@ -707,6 +710,18 @@ export default {
                 ]
             }
             chartSen.setOption(option)
+        },
+        handleQueryValue() {
+            const that = this
+            axios({
+                method: 'post',
+                url: '/performance/queryAll'
+            }).then(function(response) {
+                // console.log(response)
+                that.tableData = response.data.data
+            }).catch(function(error) {
+                console.log(error)
+            })
         }
     }
 }

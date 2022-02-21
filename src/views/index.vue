@@ -196,7 +196,7 @@ export default {
             const that = this
             axios({
                 method: 'post',
-                url: '/queryInfo/enterprise',
+                url: '/queryInfo/employee',
                 data: {
                     userID: this.pageQueryValue
                 }
@@ -209,9 +209,9 @@ export default {
                         keys.push(property)
                     }
                     that.pageTableHeaderEnterprise = keys
-                    console.log(that.pageTableHeaderEnterprise)
+                    // console.log(that.pageTableHeaderEnterprise)
                     that.enterprise = response.data.data[0]
-                    console.log(that.enterprise)
+                    // console.log(that.enterprise)
                 }
             }).catch(function(error) {
                 console.log(error)
@@ -231,9 +231,9 @@ export default {
                         keys.push(property)
                     }
                     that.pageTableHeaderEnterprise = keys
-                    console.log(that.pageTableHeaderEnterprise)
+                    // console.log(that.pageTableHeaderEnterprise)
                     that.personal = response.data.data[0]
-                    console.log(that.personal)
+                    // console.log(that.personal)
                 }
             }).catch(function(error) {
                 console.log(error)

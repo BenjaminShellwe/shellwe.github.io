@@ -273,7 +273,7 @@ export default {
             })
             axios({
                 method: 'post',
-                url: '/queryInfo/enterprise',
+                url: '/queryInfo/employee',
                 data: {
                     userID: this.pageQueryValue
                 }

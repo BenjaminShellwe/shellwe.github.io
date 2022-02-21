@@ -7,7 +7,7 @@
                 </div>
                 &nbsp;
                 <div class="inLine">
-                    此页为账户的安全设置
+                    此页为账户的安全设置 此页面设置为管理员可见
                 </div>
             </template>
         </page-header>
@@ -15,8 +15,8 @@
             <el-card>
                 <div>
                     <el-carousel indicator-position="outside" :height="dataHeight">
-                        <el-carousel-item v-for="item in 3" :key="item">
-                            <h3 class="pageText">提示{{ item }}</h3>
+                        <el-carousel-item v-for="item in pageCarouselValue" :key="item">
+                            <h3 class="pageText">提示: {{ item }}</h3>
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -28,14 +28,20 @@
                             </div>
                         </el-col>
                         <el-col :span="18">
-                            <el-card class="pageCard" shadow="hover">
-                                <h3>发现 问题</h3>
-                                <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
-                            </el-card>
-                            <el-card class="pageCard" shadow="hover">
-                                <h3>发现 问题</h3>
-                                <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
-                            </el-card>
+                            <el-row>
+                                <el-col :span="12">
+                                    <el-card class="pageCard" shadow="hover">
+                                        <h3>发现 问题</h3>
+                                        <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
+                                    </el-card>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-card class="pageCard" shadow="hover">
+                                        <h3>发现 问题</h3>
+                                        <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
+                                    </el-card>
+                                </el-col>
+                            </el-row>
                         </el-col>
                     </el-row>
                     <el-row />
@@ -107,11 +113,16 @@ export default {
     props: {
         dataHeight: {
             type: String,
-            default: '120px'
+            default: '50px'
         }
     },
     data() {
         return {
+            pageCarouselValue: [
+                '请经常修改密码',
+                '不要随意打开未知连接',
+                '反正怎么安全怎么做'
+            ],
             pageInputValue: ''
         }
     },

@@ -24,7 +24,7 @@
                 :row-class-name="tableRowClassName"
             >
                 <el-table-column
-                    prop="id"
+                    prop="affairID"
                     label="事务ID"
                 />
                 <el-table-column
@@ -60,7 +60,7 @@
                                         <svg-icon name="application" />
                                         申请事件 ID
                                     </template>
-                                    <span>{{ props.row.id }}</span>
+                                    <span>{{ props.row.affairID }}</span>
                                 </el-descriptions-item>
                                 <el-descriptions-item>
                                     <template slot="label">
@@ -139,7 +139,7 @@
                 </el-table-column>
                 <el-table-column
                     label="申请事务 ID"
-                    prop="id"
+                    prop="affairID"
                 />
                 <el-table-column
                     label="空缺职位"
@@ -248,7 +248,7 @@
                                                 <svg-icon name="application" />
                                                 申请事件 ID
                                             </template>
-                                            <span>{{ props.row.id }}</span>
+                                            <span>{{ props.row.affairID }}</span>
                                         </el-descriptions-item>
                                         <el-descriptions-item>
                                             <template slot="label">
@@ -306,7 +306,7 @@
                         </el-table-column>
                         <el-table-column
                             label="申请事务 ID"
-                            prop="id"
+                            prop="affairID"
                         />
                         <el-table-column
                             label="员工名称"
@@ -331,7 +331,7 @@
                     >
                         <el-table-column
                             fixed
-                            prop="id"
+                            prop="affairID"
                             label="事务ID"
                         />
                         <el-table-column
@@ -367,11 +367,11 @@
                     </el-table>
                 </el-tab-pane>
                 <div v-show="pageTemplateShow" style="margin-top: 10px;">
-                    <el-form ref="form" :model="pagePropsValueBin" label-width="80px" size="mini">
+                    <el-form ref="form" v-model="pagePropsValueBin" label-width="80px" size="mini">
                         <el-row>
                             <el-col :span="4">
                                 <el-form-item label="事务ID">
-                                    <el-input v-model="pagePropsValueBin.id" :placeholder="pagePropsValueBin.id" disabled />
+                                    <el-input v-model="pagePropsValueBin.affairID" :placeholder="pagePropsValueBin.id" disabled />
                                 </el-form-item>
                             </el-col>
                             <el-col :span="4">
@@ -510,6 +510,7 @@
 
 <script>
 import PageMain from '@/components/PageMain'
+import axios from 'axios'
 
 export default {
     name: 'Vacancies',
@@ -561,7 +562,7 @@ export default {
                 ]
             },
             pageTableHeaderUni: {
-                id: '事务ID',
+                affairID: '事务ID',
                 name: '账户姓名',
                 sex: '用户性别',
                 phone: '电话号码',
@@ -573,7 +574,7 @@ export default {
                 estimatedTime: '到期时间'
             },
             pageTableHeaderBin: {
-                id: '事务ID',
+                affairID: '事务ID',
                 position: '空缺职位',
                 positionStatus: '职位状态',
                 department: '所属部门',
@@ -588,7 +589,7 @@ export default {
             },
             pagePropsValueUni: [
                 {
-                    id: '202202081942',
+                    affairID: '202202081942',
                     name: 'Sebastian',
                     sex: '男',
                     phone: '12300000000',
@@ -600,7 +601,7 @@ export default {
                     estimatedTime: '2022/03/08'
                 },
                 {
-                    id: '202202081943',
+                    affairID: '202202081943',
                     name: 'Jack',
                     sex: '男',
                     phone: '12300000000',
@@ -612,7 +613,7 @@ export default {
                     estimatedTime: '2022/03/08'
                 },
                 {
-                    id: '202202081944',
+                    affairID: '202202081944',
                     name: 'Rose',
                     sex: '女',
                     phone: '12300000000',
@@ -626,7 +627,7 @@ export default {
             ],
             pagePropsValueBin: [
                 {
-                    id: '202202081945',
+                    affairID: '202202081945',
                     position: '开发工程师',
                     positionStatus: '目前空缺',
                     department: '软件部门',
@@ -640,7 +641,7 @@ export default {
                     estimatedTime: '2022/03/08'
                 },
                 {
-                    id: '202202081946',
+                    affairID: '202202081946',
                     position: '辅导员',
                     positionStatus: '正在招聘',
                     department: '教辅部门',
@@ -654,7 +655,7 @@ export default {
                     estimatedTime: '2022/03/08'
                 },
                 {
-                    id: '202202081947',
+                    affairID: '202202081947',
                     position: '人事主管',
                     positionStatus: '暂停招聘',
                     department: '人事部门',
@@ -669,6 +670,9 @@ export default {
                 }
             ]
         }
+    },
+    mounted() {
+        this.handleQueryValue()
     },
     methods: {
         back() {
@@ -718,6 +722,28 @@ export default {
                 return 'humanResources-row'
             }
             return ''
+        },
+        handleQueryValue() {
+            const that = this
+            axios({
+                method: 'post',
+                url: '/vacancy/queryAll'
+            }).then(function(response) {
+                // console.log(response)
+                that.pagePropsValueBin = response.data.data
+
+            }).catch(function(error) {
+                console.log(error)
+            })
+            axios({
+                method: 'post',
+                url: '/vacancyComing/queryAll'
+            }).then(function(response) {
+                // console.log(response)
+                that.pagePropsValueUni = response.data.data
+            }).catch(function(error) {
+                console.log(error)
+            })
         }
     }
 }

@@ -88,7 +88,7 @@
                                         style="margin-left: 5px; margin-right: 5px;"
                                     />
                                     <el-button icon="el-icon-search" @click.native.prevent="dialogVisible = false">搜索输入</el-button>
-                                    <el-button type="primary" icon="el-icon-refresh" @click.native.prevent="dialogVisible = false">刷新数据</el-button>
+                                    <el-button type="primary" icon="el-icon-refresh" @click="handleLogValue">刷新数据</el-button>
                                     <el-row class="pageComponent">
                                         <el-button icon="el-icon-delete" @click.native.prevent="dialogVisible = false">重置输入</el-button>
                                     </el-row>
@@ -114,12 +114,12 @@
                         <el-table-column
                             fixed="right"
                             label="操作"
-                            width="290"
+                            width="210"
                         >
-                            <template>
-                                <el-button type="primary" size="small" @click="dialogVisible = false">查看</el-button>
+                            <template slot-scope="scope">
+                                <el-button type="primary" size="small" @click="dialogVisible = true">查看</el-button>
                                 <el-button type="primary" size="small" @click="dialogVisible = true">编辑</el-button>
-                                <el-button type="danger" size="small" @click.native.prevent="dialogVisible = true">移除</el-button>
+                                <el-button type="danger" size="small" @click.native.prevent="deleteRow(scope.$index, data)">移除</el-button>
                                 <!--                            <el-button type="danger" size="small" @click.native.prevent="deleteRow(scope.$index, data)">移除</el-button>-->
                             </template>
                         </el-table-column>
@@ -132,7 +132,7 @@
             :visible.sync="dialogVisible"
             width="30%"
         >
-            <span>开发中 此操作暂时拒绝</span>
+            <span>头发和开发时间都不足,不装载该功能</span>
             <span slot="footer" class="dialog-footer">
                 <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
                 <el-button type="primary" @click="dialogVisible = false">明 白</el-button>
@@ -144,6 +144,7 @@
 <script>
 import PageHeader from '@/components/PageHeader'
 import PageMain from '@/components/PageMain'
+import axios from 'axios'
 const fields = [
     {label: '日期', prop: 'date'},
     {label: '服务名称', prop: 'model_serviceName'},
@@ -319,6 +320,9 @@ export default {
             })
         }
     },
+    mounted() {
+        this.handleLogValue()
+    },
     methods: {
         back() {
             history.go(-1)
@@ -369,6 +373,18 @@ export default {
         },
         deleteRow(index, rows) {
             rows.splice(index, 1)
+        },
+        handleLogValue() {
+            const that = this
+            axios({
+                method: 'post',
+                url: '/log/queryAll'
+            }).then(function(response) {
+                that.data = response.data.data
+                // console.log(that.data)
+            }).catch(function(error) {
+                console.log(error)
+            })
         }
     }
 }

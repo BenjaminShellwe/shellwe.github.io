@@ -22,15 +22,14 @@
         </page-header>
         <AbsoluteContainer>
             <page-main v-show="pageMainShow">
-                <el-button type="primary">功能按钮位置</el-button>
+                <el-button type="primary" @click="handleQueryValue">刷新</el-button>
                 <el-table :data="pageDataList" border stripe highlight-current-row>
-                    <el-table-column type="index" label="序列" width="50" />
-                    <el-table-column prop="name" label="账户名称" width="100" />
-                    <el-table-column prop="id" label="账户ID" width="150" />
-                    <el-table-column prop="gid" label="值GID" width="150" />
-                    <el-table-column prop="type" label="操作类型" width="150" />
-                    <el-table-column prop="date" label="操作时间" width="150" />
-                    <el-table-column prop="address" label="地址" />
+                    <el-table-column type="index" label="序列" width="50px"/>
+                    <el-table-column prop="nameName" label="账户名称" />
+                    <el-table-column prop="userID" label="账户ID" />
+                    <el-table-column prop="gid" label="GID" />
+                    <el-table-column prop="type" label="操作类型" />
+                    <el-table-column prop="date" label="操作时间" />
                 </el-table>
             </page-main>
         </AbsoluteContainer>
@@ -40,6 +39,7 @@
 <script>
 import PageHeader from '@/components/PageHeader'
 import PageMain from '@/components/PageMain'
+import axios from 'axios'
 export default {
     name: 'Monitor',
     components: {PageMain, PageHeader},
@@ -47,96 +47,11 @@ export default {
         return {
             pageSwitchShow: true,
             pageMainShow: true,
-            pageDataList: [
-                {
-                    date: '2022-01-02',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-04',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-01',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-03',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-04',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-01',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-03',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-04',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-01',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-03',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-04',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-01',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-03',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-04',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-01',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-03',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                },
-                {
-                    date: '2022-01-03',
-                    name: 'shellwe',
-                    address: '广州市从化区广从南路548号'
-                }
-            ]
+            pageDataList: [{}]
         }
     },
     mounted() {
+        this.handleQueryValue
         this.$nextTick(() => {
             // 获取表头高度，然后设置 .el-table__body-wrapper 的 height
             let height = document.getElementsByClassName('el-table__header-wrapper')[0].offsetHeight
@@ -150,6 +65,18 @@ export default {
         handleSwitchChange() {
             this.pageMainShow = !this.pageMainShow
             console.log(this.pageMainShow)
+        },
+        handleQueryValue() {
+            const that = this
+            axios({
+                method: 'post',
+                url: '/monitor/queryAll'
+            }).then(function(response) {
+                // console.log(response)
+                that.pageDataList = response.data.data
+            }).catch(function(error) {
+                console.log(error)
+            })
         }
     }
 }
