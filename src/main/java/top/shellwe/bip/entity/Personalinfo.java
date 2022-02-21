@@ -9,6 +9,7 @@ public class Personalinfo {
     @Id
     @Column(name = "id", nullable = false)
     private int id;
+    private int userID;
     private String realName;
     private String nickName;
     private int phone;
@@ -20,6 +21,9 @@ public class Personalinfo {
     private String habitation;
     private String address;
     private String remarks;
+    private String wechat;
+    private String homeUrl;
+    private String qq;
 
     public int getId() {
         return id;
@@ -115,5 +119,37 @@ public class Personalinfo {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
+
+    public String getHomeUrl() {
+        return homeUrl;
+    }
+
+    public void setHomeUrl(String homeUrl) {
+        this.homeUrl = homeUrl;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }

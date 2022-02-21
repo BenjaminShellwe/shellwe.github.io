@@ -1,10 +1,7 @@
 package top.shellwe.bip.mapper;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import top.shellwe.bip.entity.Dictionary;
 
 import java.util.List;
@@ -28,6 +25,4 @@ public interface GlobalDicMapper {
 
     @Delete("delete from dictionary where id = #{id}")
     public void deleteId(Object id);
-
-
 }

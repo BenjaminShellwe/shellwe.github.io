@@ -9,12 +9,15 @@ public class Employeesinfo {
     @Id
     @Column(name = "id", nullable = false)
     private int id;
+    private String userID;
     private String realName;
-    private String enterprise;
+    private String enterpriseID;
+    private String enterpriseName;
     private String department;
     private String position;
     private String status;
     private String phone;
+    private String remarks;
 
     public int getId() {
         return id;
@@ -32,12 +35,12 @@ public class Employeesinfo {
         this.realName = realName;
     }
 
-    public String getEnterprise() {
-        return enterprise;
+    public String getEnterpriseID() {
+        return enterpriseID;
     }
 
-    public void setEnterprise(String enterprise) {
-        this.enterprise = enterprise;
+    public void setEnterpriseID(String enterpriseID) {
+        this.enterpriseID = enterpriseID;
     }
 
     public String getDepartment() {
@@ -70,5 +73,29 @@ public class Employeesinfo {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getEnterpriseName() {
+        return enterpriseName;
+    }
+
+    public void setEnterpriseName(String enterpriseName) {
+        this.enterpriseName = enterpriseName;
     }
 }

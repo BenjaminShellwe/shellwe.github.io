@@ -1,13 +1,16 @@
 package top.shellwe.bip.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import top.shellwe.bip.entity.User;
 import top.shellwe.bip.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import top.shellwe.bip.util.Result;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 
 @Controller
@@ -98,6 +101,30 @@ public class UserController {
             return "1";
         }
     }
+
+    @ResponseBody
+    @RequestMapping("/update")
+    public Result updatePsw(@RequestBody JSONObject data){
+        Object o = data.get("id");
+        if(o.toString().length() == 6){
+            return new Result(4033, "此账号类型不允许在此页面修改密码,请联系管理员");
+        }
+        Object o1 = data.get("psw");
+        Object o2 = data.get("userName");
+        userMapper.updatePsw(o, o1, o2);
+        return new Result(200, "success");
+    }
+
+    @ResponseBody
+    @RequestMapping("/query/EID")
+    public Result query(@RequestBody JSONObject data){
+        List<User> list = userMapper.queryEID("enterpriseID");
+        if (list.size() == 0){
+            return new Result(2001, "暂无可绑定用户");
+        }
+        return new Result(list);
+    }
+
 
     public String passwordMD5(String userName, String userPassword) {
         // 需要加密的字符串

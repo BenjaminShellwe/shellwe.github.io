@@ -3,6 +3,7 @@ package top.shellwe.bip.entity;
 public class User {
     private int id;
     private String GID;
+    private String enterpriseID;
     private String userName;
     private String userRealName;
     private String userPassword;
@@ -64,5 +65,13 @@ public class User {
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public String getEnterpriseID() {
+        return enterpriseID;
+    }
+
+    public void setEnterpriseID(String enterpriseID) {
+        this.enterpriseID = enterpriseID;
     }
 }

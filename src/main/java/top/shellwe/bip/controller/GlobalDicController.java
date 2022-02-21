@@ -35,7 +35,7 @@ public class GlobalDicController {
     @PostMapping("/queryTypeName")
     public Result getByTypeName(@RequestBody JSONObject data) {
         List<Dictionary> list = globalDicMapper.getByTypeName(data.get("typeName"));
-        if (list == null){
+        if (list.size() == 0){
             return new Result(200, "查无数据");
         }
         return new Result(list);
@@ -43,8 +43,8 @@ public class GlobalDicController {
 
     @PostMapping("/queryId")
     public Result getById(@RequestBody JSONObject data) {
-        List<Dictionary> list = globalDicMapper.getById(data.get("id"));
-        if (list == null){
+        List<Dictionary> list = globalDicMapper.getById(data.get("userID"));
+        if (list.size() == 0){
             return new Result(200, "查无数据");
         }
         System.out.println(list.get(0).getEditable());
@@ -55,7 +55,7 @@ public class GlobalDicController {
     }
     @PostMapping("/deleteId")
     public Result DeleteById(@RequestBody JSONObject data) {
-        List<Dictionary> list = globalDicMapper.getById(data.get("id"));
+        List<Dictionary> list = globalDicMapper.getById(data.get("userID"));
         System.out.println(list.get(0).getEditable());
         if(Objects.equals(list.get(0).getEditable(), "0")){
             return new Result(4033, "删除动作被拒绝");
