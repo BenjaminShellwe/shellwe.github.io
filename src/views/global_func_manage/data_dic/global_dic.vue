@@ -47,46 +47,46 @@
                         </div>
                     </div>
                 </el-col>
-                <el-col :span="6">
-                    <div class="inLine">
-                        <span slot="label">
-                            <el-tooltip content="提供模板数据说明" placement="top">
-                                <i class="el-icon-question" />
-                            </el-tooltip>
-                        </span>
-                        模板说明&nbsp;
-                        <div class="inLine">
-                            <el-input
-                                v-model="description"
-                                type="text"
-                                size="small"
-                                placeholder="请输入模板说明"
-                                style="display: inline;"
-                                clearable
-                            />
-                        </div>
-                    </div>
-                </el-col>
-                <el-col :span="5" style="margin-top: 15px;">
-                    <div>
-                        <span slot="label">
-                            <el-tooltip content="定义字典的状态 必选 审核为工作人员使用" placement="top">
-                                <i class="el-icon-warning-outline" style="color: red;" />
-                            </el-tooltip>
-                        </span>
-                        模板状态&nbsp;
-                        <el-select v-model="valueState" placeholder="请选择">
-                            <el-option
-                                v-for="item in options"
-                                :key="item.valueState"
-                                :label="item.label"
-                                :value="item.valueState"
-                                :disabled="item.disabled"
-                                size="small"
-                            />
-                        </el-select>
-                    </div>
-                </el-col>
+                <!--                <el-col :span="6">-->
+                <!--                    &lt;!&ndash;                    <div class="inLine">&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        <span slot="label">&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            <el-tooltip content="提供模板数据说明" placement="top">&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                <i class="el-icon-question" />&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            </el-tooltip>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        </span>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        模板说明&nbsp;&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        <div class="inLine">&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            <el-input&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                v-model="description"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                type="text"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                size="small"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                placeholder="请输入模板说明"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                style="display: inline;"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                clearable&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            />&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                    </div>&ndash;&gt;-->
+                <!--                </el-col>-->
+                <!--                <el-col :span="5" style="margin-top: 15px;">-->
+                <!--                    &lt;!&ndash;                    <div>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        <span slot="label">&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            <el-tooltip content="定义字典的状态 必选 审核为工作人员使用" placement="top">&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                <i class="el-icon-warning-outline" style="color: red;" />&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            </el-tooltip>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        </span>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        模板状态&nbsp;&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        <el-select v-model="valueState" placeholder="请选择">&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            <el-option&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                v-for="item in options"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                :key="item.valueState"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                :label="item.label"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                :value="item.valueState"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                :disabled="item.disabled"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                size="small"&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            />&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        </el-select>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                    </div>&ndash;&gt;-->
+                <!--                </el-col>-->
                 <el-col :span="6" style="margin-top: 20px; margin-left: 10px;">
                     <el-button type="primary" icon="el-icon-search" size="mini" @click="handleButtonQuery">搜索</el-button>
                     <el-tooltip content="创建新字典数据" placement="top">
@@ -100,7 +100,14 @@
 
             <br>
         </page-main>
-        <page-main v-show="isShow">
+        <page-main v-show="isShow" title="按类型修改">
+            <el-tabs tab-position="left" style="height: 200px;">
+                <el-tab-pane v-for="(item, index) in pageTabValue" :key="index" :label="item">
+                    {{ index }}{{ item }}
+                </el-tab-pane>
+            </el-tabs>
+        </page-main>
+        <page-main v-show="isShow" title="全部字典信息">
             <template>
                 <el-table :key="key" v-loading="false" :data="data" style="width: 100%;" border @cell-mouse-enter="getDetails">
                     <template slot="empty">
@@ -266,6 +273,7 @@ export default {
             isShow: true,
             value1: true,
             description: '',
+            pageTabValue: [],
             pageRowValue: {},
             pageFormList: {
                 prefix: '',
@@ -370,7 +378,18 @@ export default {
             }
             // console.log(keys)
             this.pageFormHead = keys
-            this.data = result.data
+            this.data = result.data.reduce((total, current) => {
+                current.valueID !== 0 && total.push(current)
+                return total
+            }, [])
+            console.log(this.data)
+            const map = {}
+            this.data.forEach(item => {
+                map[item.uniqueID] = item.typeName
+            })
+            console.log(map)
+            this.pageTabValue = map
+
             // <<数据获取思路>>
             // let values = function(object) {
             //     let values = []
@@ -405,8 +424,9 @@ export default {
                 url: '/queryTypeName',
                 data: this.pageQueryValue
             }).then(function(response) {
+                // console.log(response)
                 let keys = []
-                if (response.data.data[0] === '') {
+                if (response.data.data == null) {
                     that.data = null
                 } else {
                     for (let property in response.data.data[0]) {
