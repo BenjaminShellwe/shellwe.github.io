@@ -43,7 +43,7 @@ public class GlobalDicController {
 
     @PostMapping("/queryId")
     public Result getById(@RequestBody JSONObject data) {
-        List<Dictionary> list = globalDicMapper.getById(data.get("userID"));
+        List<Dictionary> list = globalDicMapper.getById(data.get("uniqueID"));
         if (list.size() == 0){
             return new Result(200, "查无数据");
         }
@@ -55,8 +55,8 @@ public class GlobalDicController {
     }
     @PostMapping("/deleteId")
     public Result DeleteById(@RequestBody JSONObject data) {
-        List<Dictionary> list = globalDicMapper.getById(data.get("userID"));
-        System.out.println(list.get(0).getEditable());
+        List<Dictionary> list = globalDicMapper.getById(data.get("id"));
+//        System.out.println(list);
         if(Objects.equals(list.get(0).getEditable(), "0")){
             return new Result(4033, "删除动作被拒绝");
         }
