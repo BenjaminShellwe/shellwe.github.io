@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import top.shellwe.bip.entity.Dictionary;
 import top.shellwe.bip.entity.Enterprise;
 import top.shellwe.bip.mapper.EnterpriseMapper;
 import top.shellwe.bip.util.Result;
