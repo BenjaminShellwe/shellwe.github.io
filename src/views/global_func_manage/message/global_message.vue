@@ -67,7 +67,7 @@
                 </el-col>
                 <el-col :span="10">
                     <el-card style="margin-left: 20px; margin-right: 20px;" shadow="hover">
-                        <span>点击左侧信息展示详情</span>
+                        <span>点击左侧信息展示详 情</span>
                     </el-card>
                 </el-col>
             </el-row>
