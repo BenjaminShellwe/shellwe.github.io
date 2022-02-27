@@ -9,7 +9,8 @@ export default {
     name: 'multilevelMenuBasic',
     meta: {
         title: '基础功能',
-        icon: 'sidebar-menu'
+        icon: 'sidebar-menu',
+        auth: ['permission.basic']
     },
     children: [
         {
@@ -129,10 +130,8 @@ export default {
                     meta: {
                         title: '安全设置',
                         sidebar: true,
-                        breadcrumb: true
-                        //    前端功能要求1 根据登录账户判断是否为改角色 完善访问路径和交互页面
-                        //    后端功能要求1 实现 角色,权限,用户,绩效,背调 功能
-                        //    后端2 企业基础信息及设置,安全设置
+                        breadcrumb: true,
+                        auth: ['permission.access']
                     }
                 }
             ]

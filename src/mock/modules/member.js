@@ -22,17 +22,16 @@ module.exports = [
             let permissions = []
             if (option.query.account == 'admin') {
                 permissions = [
-                    'permission.browse',
+                    'permission.basic',
                     'permission.create',
                     'permission.edit',
                     'permission.remove',
-                    'supplay.department.browse',
-                    'supplay.department_job.browse',
-                    'supplay.role.browse'
+                    'permission.access',
+                    'permission.department'
                 ]
-            } else if (option.query.account == 'test') {
+            } else if (option.query.account == 'tester') {
                 permissions = [
-                    'permission.browse'
+                    'permission.basic'
                 ]
             }
             return {

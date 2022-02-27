@@ -47,46 +47,6 @@
                         </div>
                     </div>
                 </el-col>
-                <!--                <el-col :span="6">-->
-                <!--                    &lt;!&ndash;                    <div class="inLine">&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        <span slot="label">&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                            <el-tooltip content="提供模板数据说明" placement="top">&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                <i class="el-icon-question" />&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                            </el-tooltip>&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        </span>&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        模板说明&nbsp;&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        <div class="inLine">&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                            <el-input&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                v-model="description"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                type="text"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                size="small"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                placeholder="请输入模板说明"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                style="display: inline;"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                clearable&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                            />&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                    </div>&ndash;&gt;-->
-                <!--                </el-col>-->
-                <!--                <el-col :span="5" style="margin-top: 15px;">-->
-                <!--                    &lt;!&ndash;                    <div>&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        <span slot="label">&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                            <el-tooltip content="定义字典的状态 必选 审核为工作人员使用" placement="top">&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                <i class="el-icon-warning-outline" style="color: red;" />&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                            </el-tooltip>&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        </span>&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        模板状态&nbsp;&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        <el-select v-model="valueState" placeholder="请选择">&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                            <el-option&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                v-for="item in options"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                :key="item.valueState"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                :label="item.label"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                :value="item.valueState"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                :disabled="item.disabled"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                                size="small"&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                            />&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                        </el-select>&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                    </div>&ndash;&gt;-->
-                <!--                </el-col>-->
                 <el-col :span="6" style="margin-top: 20px; margin-left: 10px;">
                     <el-button type="primary" icon="el-icon-search" size="mini" @click="handleButtonQuery">搜索</el-button>
                     <el-tooltip content="创建新字典数据" placement="top">
@@ -101,9 +61,40 @@
             <br>
         </page-main>
         <page-main v-show="isShow" title="按类型修改">
-            <el-tabs tab-position="left" style="height: 200px;">
-                <el-tab-pane v-for="(item, index) in pageTabValue" :key="index" :label="item">
-                    {{ index }}{{ item }}
+            <el-alert title="请点击下方左侧栏加载" type="info" style="margin-bottom: 20px;" />
+            <el-tabs tab-position="left" @tab-click="handleQueryUID">
+                <el-tab-pane v-for="(item, index) in pageTabValue" :key="index" :label="item" :name="index">
+                    <span style="margin: 5px 0 15px 0;">当前操作: {{ item }} - {{ index }}</span>
+                    <el-button v-show="pageButtonVisible" type="primary" size="mini" style="margin: 0 5px 0 5px;" @click="handleEditable('pageButtonVisible')">修改数据</el-button>
+                    <el-button v-show="pageButtonVisibleUni" type="success" size="mini" style="margin: 0 5px 0 5px;" @click="handleEditable('pageButtonVisibleUni')">完成修改</el-button>
+                    <el-row style="margin-top: 10px;">
+                        <el-col v-for="(indexUni) in pageQueryUID.length" :key="indexUni" :span="7">
+                            <el-card shadow="hover" style="margin: 5px  5px 8px 10px;">
+                                <el-descriptions :title="item + pageQueryUID[indexUni-1].id" :column="2" size="mini" border>
+                                    <el-descriptions-item label="GID">
+                                        <el-input v-model="pageFormValue.GID" :placeholder="pageQueryUID[indexUni-1].prefix+pageQueryUID[indexUni-1].uniqueID" :disabled="editable" style="width: 100px;" size="mini" clearable />
+                                    </el-descriptions-item>
+                                    <el-descriptions-item label="序号">
+                                        <el-input v-model="pageFormValue.valueID" :placeholder="pageQueryUID[indexUni-1].valueID" :disabled="editable" style="width: 60px;" size="mini" clearable />
+                                    </el-descriptions-item>
+                                    <el-descriptions-item label="代码">
+                                        <el-input v-model="pageFormValue.typeCode" :placeholder="pageQueryUID[indexUni-1].typeCode" :disabled="editable" style="width: 135px;" size="mini" clearable />
+                                    </el-descriptions-item>
+                                    <el-descriptions-item label="类型">
+                                        <el-input v-model="pageFormValue.typeName" :placeholder="pageQueryUID[indexUni-1].typeName" :disabled="editable" style="width: 100px;" size="mini" clearable />
+                                    </el-descriptions-item>
+                                    <el-descriptions-item label="名称">
+                                        <el-input v-model="pageFormValue.valueName" :placeholder="pageQueryUID[indexUni-1].valueName" :disabled="editable" style="width: 100px;" size="mini" clearable />
+                                    </el-descriptions-item>
+                                    <el-descriptions-item label="生效">
+                                        <el-select v-model="pageFormValue.valueStatus" :placeholder="pageQueryUID[indexUni-1].valueStatus" :disabled="editable" style="width: 100px;" size="mini" >
+                                            <el-option v-for="item in options" :key="item.valueState" :label="item.label" :value="item.valueState" />
+                                        </el-select>
+                                    </el-descriptions-item>
+                                </el-descriptions>
+                            </el-card>
+                        </el-col>
+                    </el-row>
                 </el-tab-pane>
             </el-tabs>
         </page-main>
@@ -247,7 +238,7 @@
             <el-row />
             <span slot="footer" class="dialog-footer">
                 <el-button @click="pageDialogVisibleUni = false">取 消</el-button>
-                <el-button type="primary" @click="handleButtonEdit()">修 改</el-button>
+                <el-button type="primary" @click="pageDialogVisibleUni = false">修 改</el-button>
             </span>
         </el-dialog>
     </div>
@@ -267,13 +258,26 @@ export default {
     components: {PageMain},
     data() {
         return {
+            editable: true,
+            pageButtonVisible: true,
+            pageButtonVisibleUni: false,
             pageFormHead: [],
             pageDialogVisible: false,
             pageDialogVisibleUni: false,
             isShow: true,
             value1: true,
             description: '',
+            pageQueryUID: [],
             pageTabValue: [],
+            pageFormValue: {
+                id: '',
+                GID: '',
+                valueID: '',
+                typeCode: '',
+                typeName: '',
+                valueName: '',
+                valueStatus: ''
+            },
             pageRowValue: {},
             pageFormList: {
                 prefix: '',
@@ -283,6 +287,7 @@ export default {
                 valueStatus: '',
                 description: '',
                 uniqueID: '',
+                valueID: '',
                 type: ''
             },
             pageQueryValue: {
@@ -293,12 +298,8 @@ export default {
                 valueState: 'efficient',
                 label: '有效'
             }, {
-                valueState: 'invalid',
+                valueState: 'inefficient',
                 label: '无效'
-            }, {
-                valueState: 'verifying',
-                label: '审核',
-                disabled: true
             }],
             key: 1, // table key
             formThead: fields, // 默认表头 Default header
@@ -382,13 +383,15 @@ export default {
                 current.valueID !== 0 && total.push(current)
                 return total
             }, [])
-            console.log(this.data)
+            // console.log(this.data)
             const map = {}
             this.data.forEach(item => {
                 map[item.uniqueID] = item.typeName
             })
-            console.log(map)
+            // console.log(map)
             this.pageTabValue = map
+            // this.handleQueryUID(1000)
+            // console.log(this.pageTabValue)
 
             // <<数据获取思路>>
             // let values = function(object) {
@@ -459,8 +462,9 @@ export default {
             // console.log(this.pageRowValue)
         },
         handleButtonEdit() {
-            let t = this.pageRowValue.id
-            console.log(t)
+            // let t = this.pageRowValue.id
+            console.log('handleButtonEdit')
+            // console.log(t)
             const that = this
             axios({
                 method: 'post',
@@ -469,6 +473,7 @@ export default {
                     id: this.pageRowValue.id
                 }
             }).then(function(response) {
+                console.log(response)
                 if (response.data.code === 4033) {
                     that.$notify({
                         title: '操作被拒绝',
@@ -479,7 +484,7 @@ export default {
                 }
                 if (response.data.code === 200) {
                     that.pageFormList = that.pageRowValue
-                    console.log(that.pageFormList)
+                    // console.log(that.pageFormList)
                     that.pageDialogVisibleUni = true
                 }
 
@@ -524,6 +529,23 @@ export default {
                 type: 'success',
                 duration: 6500
             })
+        },
+        handleQueryUID(tab) {
+            this.pageQueryUID = this.data.reduce((total, current) => {
+                current.uniqueID == tab.name && total.push(current)
+                return total
+            }, [])
+            // console.log(this.pageQueryUID)
+        },
+        handleEditable(button) {
+            this[button] = !this[button]
+            if (button == 'pageButtonVisible') {
+                this.pageButtonVisibleUni = true
+            }
+            if (button == 'pageButtonVisibleUni') {
+                this.pageButtonVisible = true
+            }
+            this.editable = !this.editable
         }
     }
 }

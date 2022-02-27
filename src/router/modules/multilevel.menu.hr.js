@@ -9,7 +9,8 @@ export default {
     name: 'multilevelMenuHR',
     meta: {
         title: '人事功能',
-        icon: 'person-hr'
+        icon: 'person-hr',
+        auth: ['permission.access']
     },
     children: [
         {

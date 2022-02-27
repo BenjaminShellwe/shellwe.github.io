@@ -14,7 +14,12 @@
         <page-main title="企业账户">
             <el-row :gutter="10" style="margin-bottom: 5px;">
                 <el-button-group v-show="page.loginButton">
-                    <el-button type="primary" size="mini" class="pageStyle" @click="pageLogin('E')">启用企业管理账户</el-button>
+                    <Auth :value="'department.create'">
+                        <el-button type="primary" size="mini" class="pageStyle" @click="pageLogin('E')">启用企业管理账户</el-button>
+                        <template slot="no-auth">
+                            你没有该权限进入企业管理页面
+                        </template>
+                    </Auth>
                     <el-button type="primary" size="mini" @click="pageLogin('P')">启用企业个人账户</el-button>
                 </el-button-group>
             </el-row>
