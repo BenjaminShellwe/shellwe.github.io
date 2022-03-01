@@ -3,6 +3,9 @@ package top.shellwe.bip.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import java.util.Date;
 
 @Entity(name = "vacancy")
 public class Vacancy {
@@ -11,15 +14,15 @@ public class Vacancy {
     @Column(name = "affairID", nullable = false)
     private String affairID;
     private String position;
-    private String status;
+    private String positionStatus;
     private String department;
-    private String director;
-    private String phoneD;
-    private String manager;
-    private String phoneM;
     private String departmentStatus;
     private String description;
-    private String createdTime;
+    private Date createdTime;
+    private Date deadline;
+    private String salary;
+    private String requirement;
+    private String type;
 
     public String getAffairID() {
         return affairID;
@@ -37,12 +40,12 @@ public class Vacancy {
         this.position = position;
     }
 
-    public String getStatus() {
-        return status;
+    public String getPositionStatus() {
+        return positionStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPositionStatus(String positionStatus) {
+        this.positionStatus = positionStatus;
     }
 
     public String getDepartment() {
@@ -51,38 +54,6 @@ public class Vacancy {
 
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    public String getPhoneD() {
-        return phoneD;
-    }
-
-    public void setPhoneD(String phoneD) {
-        this.phoneD = phoneD;
-    }
-
-    public String getManager() {
-        return manager;
-    }
-
-    public void setManager(String manager) {
-        this.manager = manager;
-    }
-
-    public String getPhoneM() {
-        return phoneM;
-    }
-
-    public void setPhoneM(String phoneM) {
-        this.phoneM = phoneM;
     }
 
     public String getDepartmentStatus() {
@@ -101,11 +72,43 @@ public class Vacancy {
         this.description = description;
     }
 
-    public String getCreatedTime() {
+    public Date getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(String createdTime) {
+    public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

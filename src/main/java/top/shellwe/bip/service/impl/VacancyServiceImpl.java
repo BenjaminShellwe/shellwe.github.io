@@ -20,4 +20,10 @@ public class VacancyServiceImpl implements VacancyService {
         List<Vacancy> list = vacancyRepository.findAll();
         return new Result(list);
     }
+
+    @Override
+    public Result publish(Vacancy data) {
+        vacancyRepository.save(data);
+        return new Result(200, "done");
+    }
 }
