@@ -12,7 +12,6 @@
             </template>
         </page-header>
         <page-main>
-            本页面正在设计中<br>
             <div>
                 <el-form
                     ref="ruleForm"

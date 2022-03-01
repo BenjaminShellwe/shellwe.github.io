@@ -38,7 +38,7 @@
                 <el-form :model="search" size="small" label-width="120px">
                     <el-row>
                         <el-col :span="12">
-                            <el-form-item label="工作记录">
+                            <el-form-item label="数据记录">
                                 <el-input v-model="search.name" placeholder="请输入姓名或者账户ID,暂不支持模糊查询(减少数据库负担),将根据您权限提供进阶选项" clearable />
                             </el-form-item>
                         </el-col>

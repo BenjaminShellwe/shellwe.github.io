@@ -52,9 +52,9 @@
                     <template #default="props">
                         <el-form label-position="left" inline>
                             <el-descriptions class="margin-top" title="职位空缺详情" :column="4" :size="size" border>
-                                <template slot="extra">
-                                    <el-button type="primary" size="small" style="margin-right: 20px;">操作</el-button>
-                                </template>
+                                <!--                                <template slot="extra">-->
+                                <!--                                    <el-button type="primary" size="small" style="margin-right: 20px;">操作</el-button>-->
+                                <!--                                </template>-->
                                 <el-descriptions-item>
                                     <template slot="label">
                                         <svg-icon name="application" />
@@ -158,62 +158,92 @@
         <page-main id="pageTer" title="空缺信息调整">
             <el-tabs tab-position="left">
                 <el-tab-pane label="空缺发布">
-                    <el-form ref="pageForm" :model="pageForm" :rules="rules" label-width="110px">
-                        <el-form-item label="空缺职位名称" prop="position">
-                            <el-input v-model="pageForm.position" />
-                        </el-form-item>
-                        <el-form-item label="空缺职位部门" prop="position">
-                            <el-select v-model="pageForm.department" placeholder="选择部门">
-                                <el-option label="人事部门" value="HR" />
-                                <el-option label="教辅部门" value="education" />
-                                <el-option label="软件部门" value="software" />
-                            </el-select>
-                        </el-form-item>
-                        <el-row>
-                            <el-col :span="8">
-                                <el-form-item label="预设发布时间" prop="date">
-                                    <el-date-picker v-model="pageForm.date" :disabled.sync="publish" type="datetime" placeholder="选择日期" style="width: 100%;" />
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item label="立即发布">
-                                    <el-switch
-                                        v-model="publish"
-                                        @change="handlePropChange"
-                                    />
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="12">
-                                !!预留!!
-                            </el-col>
-                        </el-row>
-                        <el-form-item label="!!薪资预留!!">
-                            <el-switch v-model="pageForm.delivery" />
-                        </el-form-item>
-                        <el-form-item label="!!条件预留!!">
-                            <el-switch v-model="pageForm.delivery" />
-                        </el-form-item>
-                        <el-form-item label="招聘性质" prop="type">
-                            <el-checkbox-group v-model="pageForm.type">
-                                <el-checkbox label="线上招聘" name="type" />
-                                <el-checkbox label="线下招聘" name="type" />
-                                <el-checkbox label="内推招聘" name="type" />
-                                <el-checkbox label="第三方商" name="type" />
-                            </el-checkbox-group>
-                        </el-form-item>
-                        <el-form-item label="特殊资源">
-                            <el-radio-group v-model="pageForm.resource">
-                                <el-radio label="!!预留!!" />
-                                <el-radio label="!!预留!!" />
-                            </el-radio-group>
-                        </el-form-item>
-                        <el-form-item label="附加说明">
-                            <el-input v-model="pageForm.desc" type="textarea" />
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="onSubmit('pageForm')">发布</el-button>
-                            <el-button @click="resetForm('pageForm')">重置</el-button>
-                        </el-form-item>
+                    <el-form ref="pageForm" :model="pageForm" :rules="rules" label-width="120px" label-position="right">
+                        <div>
+                            <el-row>
+                                <el-col :span="6">
+                                    <el-form-item label="空缺职位名称" prop="position">
+                                        <el-input v-model="pageForm.position" style="width: 150px;" size="mini" />
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="空缺职位部门" prop="position">
+                                        <el-select v-model="pageForm.department" placeholder="选择部门" style="width: 150px;" size="mini">
+                                            <el-option label="人事部门" value="人事部门" />
+                                            <el-option label="教辅部门" value="education" />
+                                            <el-option label="软件部门" value="software" />
+                                        </el-select>
+                                        <el-form-item label="员工账户" prop="account" label-width="120px">
+                                            <el-select
+                                                v-model="pageSelectValue"
+                                                filterable
+                                                allow-create
+                                                remote
+                                                reserve-keyword
+                                                placeholder="可查询,可新建(不可重复)"
+                                                :remote-method="handleRemoteMethod"
+                                                :loading="pageLoading"
+                                                style="width: 190px;"
+                                                size="small"
+                                            >
+                                                <el-option
+                                                    v-for="item in options"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value"
+                                                />
+                                            </el-select>
+                                        </el-form-item>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="空缺职位状态" prop="positionStatus">
+                                        <el-input v-model="pageForm.positionStatus" style="width: 150px;" size="mini" />
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="空缺职位薪资" prop="salary">
+                                        <el-input v-model="pageForm.salary" style="width: 150px;" size="mini" />
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="6">
+                                    <el-form-item label="空缺职位要求" prop="requirement">
+                                        <el-input v-model="pageForm.requirement" style="width: 150px;" size="mini" />
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="空缺预设发布" prop="date">
+                                        <el-tooltip class="item" effect="dark" content="立即发布" placement="top">
+                                            <el-switch v-model="publish" style="width: 20px;" @change="handlePropChange" />
+                                        </el-tooltip>
+                                        <el-date-picker v-show="pageShow" v-model="pageForm.createdTime" :disabled.sync="publish" type="datetime" placeholder="选择日期" style="margin-left: 5px; width: 175px;" size="mini" />
+                                        <span v-show="pageShowUni">  立 即 发 布!!</span>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="发布截止时间" prop="date">
+                                        <el-date-picker v-model="pageForm.deadline" type="datetime" placeholder="选择日期" style="width: 175px;" size="mini" />
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-form-item label="招聘性质" prop="type">
+                                <el-checkbox-group v-model="pageForm.type">
+                                    <el-checkbox label="线上招聘" value="online" />
+                                    <el-checkbox label="线下招聘" value="offline" />
+                                    <el-checkbox label="内推招聘" value="internal" />
+                                    <el-checkbox label="第三方商" value="third" />
+                                </el-checkbox-group>
+                            </el-form-item>
+                            <el-form-item label="附加说明">
+                                <el-input v-model="pageForm.description" type="textarea" />
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="onSubmit('pageForm')">发布</el-button>
+                                <el-button @click="resetForm('pageForm')">重置</el-button>
+                            </el-form-item>
+                        </div>
                     </el-form>
                 </el-tab-pane>
                 <el-tab-pane label="离职审批">
@@ -406,8 +436,8 @@
                 <el-tab-pane v-auth="'permission.edit'" label="信息调整">
                     <el-alert
                         title="仅拥有高级权限管理员可见与编辑"
-                        type="error">
-                    </el-alert>
+                        type="error"
+                    />
                     <el-table
                         :data="pagePropsValueUni.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
                         style="width: 100%;"
@@ -455,8 +485,8 @@
                     <br>
                     <el-alert
                         title="仅拥有高级权限管理员可见与编辑"
-                        type="error">
-                    </el-alert>
+                        type="error"
+                    />
                     <el-table
                         :data="pagePropsValueBin.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
                         style="width: 100%;"
@@ -504,7 +534,6 @@
                 </el-tab-pane>
             </el-tabs>
         </page-main>
-        <el-card>离职审批;部门,职位状态调整;空缺职位信息调整;职位发布</el-card>
     </div>
 </template>
 
@@ -517,19 +546,24 @@ export default {
     components: {PageMain},
     data() {
         return {
+            pageLoading: false,
+            pageSelectValue: [],
+            pageShow: true,
+            pageShowUni: false,
             size: '',
             search: '',
             pageTemplateShow: false,
             publish: false,
+            options: [],
             pageForm: {
                 position: '',
                 department: '',
-                date: '',
-                publish: false,
-                delivery: false,
+                createdTime: '',
+                deadline: '',
+                salary: '',
                 type: [],
-                resource: '',
-                desc: ''
+                requirement: '',
+                description: ''
             },
             rules: {
                 position: [
@@ -539,8 +573,11 @@ export default {
                 department: [
                     { required: true, message: '请选择一个部门', trigger: 'change' }
                 ],
-                date: [
-                    { type: 'date', required: false, message: '请选择日期', trigger: 'change' }
+                createdTime: [
+                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+                ],
+                deadline: [
+                    { type: 'date', required: true, message: '请选择截止日期', trigger: 'change' }
                 ],
                 publish: [
                     { type: 'array', required: true, message: '请选择发布时间性质', trigger: 'change' }
@@ -673,6 +710,7 @@ export default {
     },
     mounted() {
         this.handleQueryValue()
+        this.handleGetValue()
     },
     methods: {
         back() {
@@ -681,6 +719,15 @@ export default {
         onSubmit(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
+                    axios({
+                        method: 'post',
+                        url: '/vacancy/addNewVacancy',
+                        data: this.pageForm
+                    }).then(function(response) {
+                        console.log(response)
+                    }).catch(function(error) {
+                        console.log(error)
+                    })
                     alert('submit!')
                 } else {
                     console.log('error submit!!')
@@ -692,11 +739,16 @@ export default {
             this.$refs[formName].resetFields()
         },
         handlePropChange() {
-            console.log('work?')
             if (this.publish) {
+                this.pageShow = false
+                this.pageShowUni = true
+                this.pageForm.date = 'publish now'
                 this.rules.date = [
                     { required: false, trigger: 'change' }
                 ]
+            } else {
+                this.pageShow = true
+                this.pageShowUni = false
             }
             console.log('work!')
         },
@@ -744,6 +796,69 @@ export default {
             }).catch(function(error) {
                 console.log(error)
             })
+        },
+        handleGetValue() {
+            const that = this
+            axios({
+                method: 'post',
+                url: '/user/query/EID',
+                data: {
+                    enterpriseID: 0
+                }
+            }).then(function(response) {
+                // console.log(response)
+                let t = {}
+                let u = []
+                response.data.data.forEach(function(item) {
+                    for (let key in item) {
+                        if (key == 'id') {
+                            t[key] = item[key]
+                        }
+                    }
+                    u.push(t)
+                    t = {}
+                    for (let key in u) {
+                        if (u[key].id !== '' && u[key].id !== null) {
+                            // console.log(u[key].id)
+                            that.pageRemoteValue.push(u[key].id)
+                            that.pageRemoteValue = that.pageRemoteValue.sort()
+                            var arrry = [that.pageRemoteValue[0]]
+                            for (var i = 1; i < that.pageRemoteValue.length; i++) {
+                                if (that.pageRemoteValue[i] !== that.pageRemoteValue[i - 1]) {
+                                    arrry.push(that.pageRemoteValue[i])
+                                }
+                            }
+                            that.pageRemoteValue = arrry
+                        }
+                    }
+                    t = {}
+                    // console.log(that.pageRemoteValue)
+                    // that.pageRemoteValue = u
+                    // console.log(that.pageRemoteValue)
+                    that.list = that.pageRemoteValue.map(item => {
+                        return {value: `${item}`, label: `${item}`}
+                    })
+                    // console.log(that.pageRemoteValue.map)
+                    // console.log(that.list)
+                })
+            }).catch(function(error) {
+                console.log(error)
+            })
+        },
+        handleRemoteMethod(query) {
+            if (query !== '') {
+                this.pageLoading = true
+                setTimeout(() => {
+                    this.pageLoading = false
+                    this.options = this.list.filter(item => {
+                        return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1
+                    })
+                }, 1000)
+                // console.log(this.list)
+                // console.log(this.options)
+            } else {
+                this.options = []
+            }
         }
     }
 }

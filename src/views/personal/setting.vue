@@ -155,7 +155,6 @@
                         </div>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="未定设置" />
             </el-tabs>
         </page-main>
         <el-dialog

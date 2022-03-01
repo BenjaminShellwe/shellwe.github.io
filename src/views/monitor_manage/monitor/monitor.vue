@@ -20,19 +20,16 @@
                 </div>
             </template>
         </page-header>
-        <AbsoluteContainer>
-            <page-main v-show="pageMainShow">
-                <el-button type="primary" @click="handleQueryValue">刷新</el-button>
-                <el-table :data="pageDataList" border stripe highlight-current-row>
-                    <el-table-column type="index" label="序列" width="50px"/>
-                    <el-table-column prop="nameName" label="账户名称" />
-                    <el-table-column prop="userID" label="账户ID" />
-                    <el-table-column prop="gid" label="GID" />
-                    <el-table-column prop="type" label="操作类型" />
-                    <el-table-column prop="date" label="操作时间" />
-                </el-table>
-            </page-main>
-        </AbsoluteContainer>
+        <page-main v-show="pageMainShow">
+            <el-table :data="pageDataList" border stripe highlight-current-row>
+                <el-table-column type="index" label="序列" width="50px"/>
+                <el-table-column prop="userName" label="账户名称" />
+                <el-table-column prop="userID" label="账户ID" />
+                <el-table-column prop="gid" label="GID" />
+                <el-table-column prop="type" label="操作类型" />
+                <el-table-column prop="date" label="操作时间" />
+            </el-table>
+        </page-main>
     </div>
 </template>
 
@@ -51,7 +48,7 @@ export default {
         }
     },
     mounted() {
-        this.handleQueryValue
+        this.handleQueryValue()
         this.$nextTick(() => {
             // 获取表头高度，然后设置 .el-table__body-wrapper 的 height
             let height = document.getElementsByClassName('el-table__header-wrapper')[0].offsetHeight

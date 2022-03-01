@@ -12,16 +12,16 @@
             </template>
         </page-header>
         <page-main title="企业账户">
-            <el-row :gutter="10" style="margin-bottom: 5px;">
-                <el-button-group v-show="page.loginButton">
-                    <Auth :value="'department.create'">
-                        <el-button type="primary" size="mini" class="pageStyle" @click="pageLogin('E')">启用企业管理账户</el-button>
+            <el-row style="margin-bottom: 5px;">
+                <el-col style="display: inline-block;">
+                    <Auth :value="'permission.department'" style="display: inline-block; margin-right: 5px;">
+                        <el-button type="primary" size="mini" @click="pageLogin('E')">启用企业管理账户</el-button>
                         <template slot="no-auth">
                             你没有该权限进入企业管理页面
                         </template>
                     </Auth>
                     <el-button type="primary" size="mini" @click="pageLogin('P')">启用企业个人账户</el-button>
-                </el-button-group>
+                </el-col>
             </el-row>
             <el-row v-show="pageRowVisible" :gutter="10" style="margin-bottom: 5px;">
                 <el-col>
@@ -696,7 +696,7 @@
                                         <el-card shadow="hover">
                                             <el-descriptions class="margin-top" title="会议申请" :column="2" :size="size" border>
                                                 <template slot="extra">
-                                                    <el-button type="primary" size="small">填写申请</el-button>
+                                                    <el-button type="primary" size="small" @click="handleApplication('会议')">填写申请</el-button>
                                                 </template>
                                                 <el-descriptions-item>
                                                     <template slot="label">
@@ -717,7 +717,7 @@
                                         <el-card shadow="hover">
                                             <el-descriptions class="margin-top" title="请假申请" :column="2" :size="size" border>
                                                 <template slot="extra">
-                                                    <el-button type="primary" size="small">填写申请</el-button>
+                                                    <el-button type="primary" size="small" @click="handleApplication('请假')">填写申请</el-button>
                                                 </template>
                                                 <el-descriptions-item>
                                                     <template slot="label">
@@ -738,7 +738,7 @@
                                         <el-card shadow="hover">
                                             <el-descriptions class="margin-top" title="离职申请" :column="2" :size="size" border>
                                                 <template slot="extra">
-                                                    <el-button type="primary" size="small">填写申请</el-button>
+                                                    <el-button type="primary" size="small" @click="handleApplication('离职')">填写申请</el-button>
                                                 </template>
                                                 <el-descriptions-item>
                                                     <template slot="label">
@@ -759,7 +759,7 @@
                                         <el-card shadow="hover">
                                             <el-descriptions class="margin-top" title="自定义申请" :column="2" :size="size" border>
                                                 <template slot="extra">
-                                                    <el-button type="primary" size="small">填写申请</el-button>
+                                                    <el-button type="primary" size="small" @click="handleApplication('自定义')">填写申请</el-button>
                                                 </template>
                                                 <el-descriptions-item>
                                                     <template slot="label">
@@ -778,6 +778,36 @@
                                     </el-row>
                                 </el-card>
                             </el-col>
+                            <el-dialog
+                                :title="pageDialogTitle + '申请'"
+                                :visible.sync="dialogVisibleUni"
+                                width="30%"
+                                :before-close="handleClose"
+                            >
+                                <span>条件不满足也可以申请,但审核将会较为严格</span>
+                                <div>
+                                    申请理由：
+                                    <el-input
+                                        v-model="pageInput"
+                                        placeholder="请填写原由"
+                                        style="width: 350px;"
+                                        size="mini"
+                                    />
+                                </div>
+                                <div>
+                                    附加内容：
+                                    <el-input
+                                        v-model="pageInputUni"
+                                        placeholder="附加说明"
+                                        style="width: 350px;"
+                                        size="mini"
+                                    />
+                                </div>
+                                <span slot="footer" class="dialog-footer">
+                                    <el-button @click="dialogVisibleUni = false">取 消</el-button>
+                                    <el-button type="primary" @click="dialogVisibleUni = false">确 定</el-button>
+                                </span>
+                            </el-dialog>
                             <el-col :span="7" shadow="hover" style="margin-left: 10px; margin-right: 10px;">
                                 <el-card shadow="hover">
                                     <span>事务状态</span>
@@ -893,6 +923,10 @@ export default {
     data() {
         return {
             dialogVisible: false,
+            dialogVisibleUni: false,
+            pageInput: '',
+            pageInputUni: '',
+            pageDialogTitle: '',
             pageRowVisible: false,
             pageRowVisibleUni: false,
             pageSelectValue: [],
@@ -1315,6 +1349,19 @@ export default {
         },
         deleteRow(index, rows) {
             rows.splice(index, 1)
+        },
+        handleApplication(val) {
+            this.pageDialogTitle = val
+            this.dialogVisibleUni = true
+        },
+        handleClose(done) {
+            this.$confirm('确认关闭？')
+                .then(function() {
+                    done()
+                })
+                .catch(function() {
+
+                })
         }
     }
 }
