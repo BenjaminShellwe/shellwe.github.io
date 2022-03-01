@@ -24,6 +24,6 @@ public class VacancyServiceImpl implements VacancyService {
     @Override
     public Result publish(Vacancy data) {
         vacancyRepository.save(data);
-        return new Result(200, "done");
+        return new Result(200, "Success");
     }
 }

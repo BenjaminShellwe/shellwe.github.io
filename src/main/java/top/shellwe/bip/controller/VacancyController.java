@@ -44,7 +44,10 @@ public class VacancyController {
         vacancy.setDescription(object.getString("description"));
         String s = simpleDateFormat.format(timeStamp);
         vacancy.setAffairID(s);
-        vacancyService.publish(vacancy);
-        return new Result(200, "测试中");
+        Result r = vacancyService.publish(vacancy);
+        if (r.getCode() == 200){
+            return r;
+        }
+        return new Result(400, "Error!");
     }
 }
