@@ -797,13 +797,14 @@ export default {
                 console.log(error)
             })
         },
+        // 需要修改
         handleGetValue() {
             const that = this
             axios({
                 method: 'post',
-                url: '/user/query/EID',
+                url: '',
                 data: {
-                    enterpriseID: 0
+
                 }
             }).then(function(response) {
                 // console.log(response)
