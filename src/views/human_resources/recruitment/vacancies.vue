@@ -180,7 +180,7 @@
                         </el-row>
                         <span slot="footer" class="dialog-footer">
                             <el-button @click="pageDialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="pageDialogVisible = false">确 定</el-button>
+                            <el-button type="primary" @click="handleButtonConfirm">确 定</el-button>
                         </span>
                     </el-dialog>
                 </el-col>
@@ -870,7 +870,9 @@ export default {
                 method: 'post',
                 url: '/vacancyComing/queryAll'
             }).then(function(response) {
-                that.pagePropsValueUni = response.data.data
+                that.pagePropsValueUni = response.data.data.filter(
+                    item => item.verify == '0'
+                )
                 // console.log(that.pagePropsValueUni)
             }).catch(function(error) {
                 console.log(error)
@@ -966,9 +968,45 @@ export default {
             // console.log(this.pageRowValue)
         },
         handleButtonConfirm() {
-            // if (this.pageFormUni.select == 'agree') {
-            //
-            // }
+            // const that = this
+            if (this.pageFormUni.select == 'agree') {
+                axios({
+                    method: 'post',
+                    url: '/vacancyComing/updateById',
+                    data: {
+                        affairID: this.pageRowValue.affairID,
+                        verify: 1
+                    }
+                }).then(response => {
+                    this.$notify({
+                        title: response.data.msg,
+                        type: 'success'
+                    })
+                    this.pageRowValue.verify = 1
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+            if (this.pageFormUni.select == 'disagree') {
+                axios({
+                    method: 'post',
+                    url: '/vacancyComing/updateById',
+                    data: {
+                        affairID: this.pageRowValue.affairID,
+                        verify: 2
+                    }
+                }).then(response => {
+                    this.$notify({
+                        title: response.data.msg,
+                        type: 'success'
+                    })
+                    this.pageRowValue.verify = 2
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+            this.pageDialogVisible = false
+            this.handleQueryValue()
         }
     }
 }
