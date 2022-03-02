@@ -39,15 +39,14 @@ public class VacancyController {
         vacancy.setRequirement(object.getString("requirement"));
         vacancy.setSalary(object.getString("salary"));
         vacancy.setDepartment(object.getString("department"));
-        vacancy.setDepartmentStatus(object.getString("departmentStatus"));
         vacancy.setPosition(object.getString("position"));
         vacancy.setDescription(object.getString("description"));
         String s = simpleDateFormat.format(timeStamp);
         vacancy.setAffairID(s);
         Result r = vacancyService.publish(vacancy);
-        if (r.getCode() == 200){
-            return r;
+        if (r.getCode() != 200){
+            return new Result(400, "Error!");
         }
-        return new Result(400, "Error!");
+        return r;
     }
 }

@@ -10,6 +10,10 @@ public class VacancyComing {
     @Id
     @Column(name = "affairID", nullable = false)
     private String affairID;
+    private int verify;
+    private String result;
+    private String enterpriseID;
+    private String departmentID;
     private String position;
     private String department;
     private String estimatedTime;
@@ -18,6 +22,7 @@ public class VacancyComing {
     private String description;
     private String createdTime;
     private String address;
+    private String phone;
 
     public String getAffairID() {
         return affairID;
@@ -89,5 +94,45 @@ public class VacancyComing {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getVerify() {
+        return verify;
+    }
+
+    public void setVerify(int verify) {
+        this.verify = verify;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getEnterpriseID() {
+        return enterpriseID;
+    }
+
+    public void setEnterpriseID(String enterpriseID) {
+        this.enterpriseID = enterpriseID;
+    }
+
+    public String getDepartmentID() {
+        return departmentID;
+    }
+
+    public void setDepartmentID(String departmentID) {
+        this.departmentID = departmentID;
     }
 }

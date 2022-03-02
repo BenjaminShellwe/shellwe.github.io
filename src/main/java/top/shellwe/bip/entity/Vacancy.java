@@ -3,7 +3,6 @@ package top.shellwe.bip.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import java.util.Date;
 
@@ -16,7 +15,8 @@ public class Vacancy {
     private String position;
     private String positionStatus;
     private String department;
-    private String departmentStatus;
+    private String departmentID;
+    private String enterpriseID;
     private String description;
     private Date createdTime;
     private Date deadline;
@@ -54,14 +54,6 @@ public class Vacancy {
 
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public String getDepartmentStatus() {
-        return departmentStatus;
-    }
-
-    public void setDepartmentStatus(String departmentStatus) {
-        this.departmentStatus = departmentStatus;
     }
 
     public String getDescription() {
@@ -110,5 +102,21 @@ public class Vacancy {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDepartmentID() {
+        return departmentID;
+    }
+
+    public void setDepartmentID(String departmentID) {
+        this.departmentID = departmentID;
+    }
+
+    public String getEnterpriseID() {
+        return enterpriseID;
+    }
+
+    public void setEnterpriseID(String enterpriseID) {
+        this.enterpriseID = enterpriseID;
     }
 }

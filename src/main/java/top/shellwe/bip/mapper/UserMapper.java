@@ -28,4 +28,7 @@ public interface UserMapper {
 
     @Select("select id from user where enterpriseID = #{'enterpriseID'}")
     public List<User> queryEID(String enterpriseID);
+
+    @Select("select enterpriseID from user where id = #{'id'}")
+    public List<User> getEID(String id);
 }

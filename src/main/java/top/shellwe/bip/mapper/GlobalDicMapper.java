@@ -1,11 +1,10 @@
 package top.shellwe.bip.mapper;
 
-import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.annotations.*;
 import top.shellwe.bip.entity.Dictionary;
 
 import java.util.List;
-import java.util.Map;
+
 
 @Mapper
 public interface GlobalDicMapper {

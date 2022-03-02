@@ -125,6 +125,16 @@ public class UserController {
         return new Result(list);
     }
 
+    @ResponseBody
+    @RequestMapping("/get/EID")
+    public Result getEID(@RequestBody JSONObject data){
+        List<User> list = userMapper.getEID(data.getString("id"));
+        if (list.size() == 0){
+            return new Result(2001, "企业不存在或用户未绑定企业");
+        }
+        return new Result(list);
+    }
+
 
     public String passwordMD5(String userName, String userPassword) {
         // 需要加密的字符串
