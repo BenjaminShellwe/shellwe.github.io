@@ -924,6 +924,7 @@ export default {
         return {
             dialogVisible: false,
             dialogVisibleUni: false,
+            enterpriseID: '',
             pageInput: '',
             pageInputUni: '',
             pageDialogTitle: '',
@@ -1111,9 +1112,6 @@ export default {
                 }).catch(function(error) {
                     console.log(error)
                 })
-                // this.page.loginButton = false
-                // this.dialogVisible = true
-                // this.page.loginButton = true
             }
         },
         pageValueChange(val) {
@@ -1148,13 +1146,13 @@ export default {
                             // console.log(u[key].id)
                             that.pageRemoteValue.push(u[key].id)
                             that.pageRemoteValue = that.pageRemoteValue.sort()
-                            var arrry = [that.pageRemoteValue[0]]
+                            var array = [that.pageRemoteValue[0]]
                             for (var i = 1; i < that.pageRemoteValue.length; i++) {
                                 if (that.pageRemoteValue[i] !== that.pageRemoteValue[i - 1]) {
-                                    arrry.push(that.pageRemoteValue[i])
+                                    array.push(that.pageRemoteValue[i])
                                 }
                             }
-                            that.pageRemoteValue = arrry
+                            that.pageRemoteValue = array
                         }
                     }
                     t = {}
