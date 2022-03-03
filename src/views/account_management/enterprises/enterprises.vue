@@ -1089,7 +1089,7 @@ export default {
                                 console.log(error)
                             })
                         }
-                    }).catch()
+                    })
                 }).catch(function(error) {
                     console.log(error)
                 })

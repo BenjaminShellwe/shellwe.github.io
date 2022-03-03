@@ -25,6 +25,7 @@
                         style="width: 720px; margin-right: 10px;"
                         :row-class-name="tableRowClassName"
                         height="337px"
+                        size="mini"
                         @cell-mouse-enter="handleGetDetails"
                     >
                         <el-table-column
@@ -51,12 +52,13 @@
                         style="width: 720px; margin-left: 30px; max-height: 337px;"
                         height="337px"
                         border
+                        size="mini"
                         @cell-mouse-enter="handleGetDetails"
                     >
                         <el-table-column type="expand" label="展开" width="50px">
                             <template #default="props">
-                                <el-form label-position="left" inline>
-                                    <el-descriptions class="margin-top" title="离职申请详情" :column="4" :size="size" border>
+                                <el-form label-position="left" inline="inline">
+                                    <el-descriptions class="margin-top" title="离职申请详情" :column="3" size="mini" border>
                                         <template slot="extra">
                                             <el-button type="primary" size="small" style="margin-right: 20px;" @click="pageDialogVisible = true">操作</el-button>
                                         </template>
@@ -156,7 +158,8 @@
                         title="离职审批操作"
                         :visible.sync="pageDialogVisible"
                         width="25%"
-                        :before-close="handleClose">
+                        :before-close="handleClose"
+                    >
                         <el-row>
                             <el-col>
                                 <el-form :model="pageFormUni" label-width="80px">
@@ -168,8 +171,7 @@
                                                 :label="item.label"
                                                 :value="item.value"
                                                 :disabled="item.disabled"
-                                            >
-                                            </el-option>
+                                            />
                                         </el-select>
                                     </el-form-item>
                                     <el-form-item label="附带说明">
@@ -195,22 +197,13 @@
                         :row-class-name="tableRowClassName"
                         height="337px"
                         border
+                        size="mini"
                         @cell-mouse-enter="handleGetDetails"
                     >
                         <el-table-column type="expand" label="展开" width="50px">
                             <template #default="props">
                                 <el-form label-position="left" inline>
-                                    <el-descriptions class="margin-top" title="职位空缺详情" :column="4" :size="size" border>
-                                        <!--                                <template slot="extra">-->
-                                        <!--                                    <el-button type="primary" size="small" style="margin-right: 20px;">操作</el-button>-->
-                                        <!--                                </template>-->
-                                        <el-descriptions-item>
-                                            <template slot="label">
-                                                <svg-icon name="application" />
-                                                申请事件 ID
-                                            </template>
-                                            <span>{{ props.row.affairID }}</span>
-                                        </el-descriptions-item>
+                                    <el-descriptions class="margin-top" title="职位空缺详情" :column="3" size="mini" border>
                                         <el-descriptions-item>
                                             <template slot="label">
                                                 <svg-icon name="position" />
@@ -227,10 +220,10 @@
                                         </el-descriptions-item>
                                         <el-descriptions-item>
                                             <template slot="label">
-                                                <svg-icon name="department" />
-                                                所属部门
+                                                <svg-icon name="application" />
+                                                申请事件 ID
                                             </template>
-                                            <span>{{ props.row.name }}</span>
+                                            <span>{{ props.row.affairID }}</span>
                                         </el-descriptions-item>
                                         <el-descriptions-item>
                                             <template slot="label">
@@ -245,6 +238,13 @@
                                                 手机号码
                                             </template>
                                             <span>{{ props.row.phoneD }}</span>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="department" />
+                                                所属部门
+                                            </template>
+                                            <span>{{ props.row.name }}</span>
                                         </el-descriptions-item>
                                         <el-descriptions-item>
                                             <template slot="label">
@@ -281,6 +281,13 @@
                                             </template>
                                             <span>{{ props.row.createdTime }}</span>
                                         </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="salary" />
+                                                聘用工资
+                                            </template>
+                                            <span>{{ props.row.salary }}</span>
+                                        </el-descriptions-item>
                                         <br>
                                     </el-descriptions>
                                 </el-form>
@@ -310,6 +317,7 @@
                         style="width: 720px; margin-left: 30px; max-height: 337px;"
                         height="337px"
                         border
+                        size="mini"
                         @cell-mouse-enter="handleGetDetails"
                     >
                         <el-table-column
@@ -343,54 +351,54 @@
                             width="50px"
                         >
                             <template>
-                                <el-button type="text" size="small" @click="pageTemplateShow=true">编辑</el-button>
+                                <el-button type="text" size="small" @click="handleButtonVisible">编辑</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </el-col>
             </el-row>
             <div v-show="pageTemplateShow" style="margin-top: 10px; height: 20px;">
-                <el-form ref="form" v-model="pagePropsValueBin" label-width="80px" size="mini">
+                <el-form ref="form" v-model="pagePropsValueTer" label-width="80px" size="mini">
                     <el-row>
                         <el-col :span="4">
                             <el-form-item label="事务ID">
-                                <el-input v-model="pagePropsValueBin.affairID" :placeholder="pagePropsValueBin.affairID" disabled />
+                                <el-input v-model="pagePropsValueTer.affairID" :placeholder="pagePropsValueBin.affairID" disabled />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item label="职位名称">
-                                <el-input v-model="pagePropsValueBin.position" :placeholder="pagePropsValueBin.position" disabled />
+                                <el-input v-model="pagePropsValueTer.position" :placeholder="pagePropsValueBin.position" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item label="职位状态">
-                                <el-input v-model="pagePropsValueBin.positionStatus" :placeholder="pagePropsValueBin.positionStatus" />
+                                <el-input v-model="pagePropsValueTer.positionStatus" :placeholder="pagePropsValueBin.positionStatus" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item label="归属部门">
-                                <el-input v-model="pagePropsValueBin.department" :placeholder="pagePropsValueBin.department" disabled />
+                                <el-input v-model="pagePropsValueTer.department" :placeholder="pagePropsValueBin.department" disabled />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item label="部门状态">
-                                <el-input v-model="pagePropsValueBin.departmentStatus" :placeholder="pagePropsValueBin.departmentStatus" />
+                                <el-input v-model="pagePropsValueTer.departmentStatus" :placeholder="pagePropsValueBin.departmentStatus" style="width: 210px;" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item size="mini">
-                                <el-button type="primary" @click="pageTemplateShow=false">修改</el-button>
-                                <el-button>取消</el-button>
+                                <el-button type="primary" @click="handleButtonEdit">修改</el-button>
+                                <el-button @click="pagePropsValueTer = {}, pageTemplateShow = false">取消</el-button>
                             </el-form-item>
                         </el-col>
                     </el-row>
                 </el-form>
             </div>
         </page-main>
-        <page-main id="pageTer" title="空缺信息调整">
+        <page-main id="pageTer" title="空缺发布与信息调整">
             <el-tabs tab-position="left">
                 <el-tab-pane label="空缺发布">
-                    <el-form ref="pageForm" :model="pageForm" :rules="rules" label-width="120px" label-position="right">
+                    <el-form ref="pageForm" :model="pageForm" :rules="rules" label-width="120px" label-position="right" size="mini">
                         <div>
                             <el-row>
                                 <el-col :span="6">
@@ -400,11 +408,6 @@
                                 </el-col>
                                 <el-col :span="6">
                                     <el-form-item label="空缺职位部门" prop="department">
-                                        <!--                                        <el-select v-model="pageForm.department" placeholder="选择部门" style="width: 150px;" size="mini">-->
-                                        <!--                                            <el-option label="人事部门" value="人事部门" />-->
-                                        <!--                                            <el-option label="教辅部门" value="education" />-->
-                                        <!--                                            <el-option label="软件部门" value="software" />-->
-                                        <!--                                        </el-select>-->
                                         <el-select
                                             v-model="pageForm.department"
                                             filterable
@@ -477,105 +480,184 @@
                     </el-form>
                 </el-tab-pane>
                 <el-tab-pane v-auth="'permission.edit'" label="信息调整">
-                    <el-alert
-                        title="仅拥有高级权限管理员可见与编辑"
-                        type="error"
-                    />
-                    <el-table
-                        :data="pagePropsValueUni.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
-                        style="width: 100%;"
-                        border
-                        @cell-mouse-enter="handleGetDetails"
-                    >
-                        <el-table-column
-                            v-for="(item, index) in pageTableHeaderUni"
-                            :key="index"
-                            :prop="index"
-                            :label="item"
-                            :fit="true"
-                            sortable
-                            min-width="30px"
+                    <el-card shadow="hover" style="margin: 10px 10px 10px 10px;">
+                        <div slot="header">
+                            <span>离职申请信息调整</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text" @click="handleQueryValue">刷 新</el-button>
+                        </div>
+                        <el-alert
+                            title="直接修改数据将不能撤销,且仅拥有高级权限管理员可见与编辑"
+                            type="error"
                         />
-                        <el-table-column
-                            align="right"
-                            fixed="right"
-                            width="160px"
+                        <el-card v-show="pageTemplateShowUni" shadow="hover" body-style="padding: 0px 0 0px 0;" style="margin: 10px 0 10px 0;">
+                            <el-form ref="form" v-model="pagePropsValueQui" inline="inline" label-width="80px" size="mini">
+                                <el-row>
+                                    <el-col :span="20">
+                                        <el-form-item
+                                            v-for="(item, index) in pageTableHeaderUni"
+                                            :key="index"
+                                            :prop="index"
+                                            :label="item"
+                                            :fit="true"
+                                            style="margin: 5px 5px 5px 5px; width: 210px;"
+                                        >
+                                            <el-input v-model="pagePropsValueQui[index]" :name="index" :placeholder="index" style="width: 130px;" />
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="3">
+                                        <el-form-item size="mini" style="margin: 5px 5px 5px 5px;">
+                                            <el-row style="margin-bottom: 10px;">
+                                                <el-button type="primary" @click="handleUpdate(pagePropsValueQui, 1)">修改</el-button>
+                                            </el-row>
+                                            <el-row style="margin-top: 10px;">
+                                                <el-button @click="pageTemplateShowUni = false, pagePropsValueQui = {}">取消</el-button>
+                                            </el-row>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                            </el-form>
+                        </el-card>
+                        <el-table
+                            :data="pagePropsValueUni.filter(data => !pageSearch || data.affairID.toLowerCase().includes(pageSearch.toLowerCase()))"
+                            style="width: 100%;"
+                            border
+                            size="mini"
+                            @cell-mouse-enter="handleGetDetails"
                         >
-                            <template slot="header">
-                                <input
-                                    v-model="search"
-                                    size="mini"
-                                    placeholder="输入事务ID搜索"
-                                    style="width: 135px;"
-                                >
-                            </template>
-                            <template slot-scope="scope">
-                                <el-button
-                                    size="mini"
-                                    @click="handleEdit(scope.$index, scope.row)"
-                                >
-                                    Edit
-                                </el-button>
-                                <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click="handleDelete(scope.$index, scope.row)"
-                                >
-                                    Delete
-                                </el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
+                            <el-table-column
+                                v-for="(item, index) in pageTableHeaderUni"
+                                :key="index"
+                                :prop="index"
+                                :label="item"
+                                :fit="true"
+                            />
+                            <el-table-column
+                                align="right"
+                                fixed="right"
+                                width="100px"
+                            >
+                                <template #header>
+                                    <el-input
+                                        v-model="pageSearch"
+                                        size="mini"
+                                        placeholder="事务ID"
+                                        style="width: 75px;"
+                                    />
+                                </template>
+                                <template #default="scope">
+                                    <el-button-group>
+                                        <el-button
+                                            type="text"
+                                            size="mini"
+                                            style="width: 40px;"
+                                            @click="handleEdit(scope.row, 'pageTemplateShowUni', 'pagePropsValueQui')"
+                                        >
+                                            编辑
+                                        </el-button>
+                                        <el-button
+                                            size="mini"
+                                            type="text"
+                                            style="width: 40px;"
+                                            @click="deleteRow(scope.$index, pagePropsValueUni)"
+                                        >
+                                            删除
+                                        </el-button>
+                                    </el-button-group>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-card>
                     <br>
-                    <el-alert
-                        title="仅拥有高级权限管理员可见与编辑"
-                        type="error"
-                    />
-                    <el-table
-                        :data="pagePropsValueBin.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
-                        style="width: 100%;"
-                        border
-                        @cell-mouse-enter="handleGetDetails"
-                    >
-                        <el-table-column
-                            v-for="(item, index) in pageTableHeaderBin"
-                            :key="index"
-                            :prop="index"
-                            :label="item"
-                            :fit="true"
-                            sortable
-                            min-width="30px"
+                    <el-card shadow="hover" style="margin: 10px 10px 10px 10px;">
+                        <div slot="header" >
+                            <span>企业部门信息调整</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text" @click="handleQueryValue">刷 新</el-button>
+                        </div>
+                        <el-alert
+                            title="直接修改数据将不能撤销,且仅拥有高级权限管理员可见与编辑"
+                            type="error"
                         />
-                        <el-table-column
-                            align="right"
-                            fixed="right"
-                            width="160px"
+                        <el-card v-show="pageTemplateShowBin" shadow="hover" body-style="padding: 0px 0 0px 0;" style="margin: 10px 0 10px 0;">
+                            <el-form ref="form" v-model="pagePropsValueSen" inline="inline" label-width="80px" size="mini">
+                                <el-row>
+                                    <el-col :span="20">
+                                        <el-form-item
+                                            v-for="(item, index) in pageTableHeaderBin"
+                                            :key="index"
+                                            :prop="index"
+                                            :label="item"
+                                            :fit="true"
+                                            style="margin: 5px 5px 5px 5px; width: 210px;"
+                                        >
+                                            <el-input v-model="pagePropsValueSen[index]" :name="index" :placeholder="index" style="width: 130px;" />
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="3">
+                                        <el-form-item size="mini" style="margin: 5px 5px 5px 5px;">
+                                            <el-row style="margin-bottom: 10px;">
+                                                <el-button type="primary" @click="handleUpdate(pagePropsValueSen, 2)">修改</el-button>
+                                            </el-row>
+                                            <el-row style="margin-top: 10px;">
+                                                <el-button @click="pageTemplateShowBin = false, pagePropsValueSen = {}">取消</el-button>
+                                            </el-row>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                            </el-form>
+                        </el-card>
+                        <el-table
+                            :data="pagePropsValueQua.filter(data => !pageSearchUni || data.departmentID.toLowerCase().includes(pageSearchUni.toLowerCase()))"
+                            style="width: 100%;"
+                            border
+                            size="mini"
+                            min-width="30px"
+                            @cell-mouse-enter="handleGetDetails"
                         >
-                            <template slot="header">
-                                <input
-                                    v-model="search"
-                                    size="mini"
-                                    placeholder="输入事务ID搜索"
-                                    style="width: 135px;"
-                                >
-                            </template>
-                            <template slot-scope="scope">
-                                <el-button
-                                    size="mini"
-                                    @click="handleEdit(scope.$index, scope.row)"
-                                >
-                                    Edit
-                                </el-button>
-                                <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click="handleDelete(scope.$index, scope.row)"
-                                >
-                                    Delete
-                                </el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
+                            <el-table-column
+                                v-for="(item, index) in pageTableHeaderBin"
+                                :key="index"
+                                :prop="index"
+                                :label="item"
+                                :fit="true"
+                                sortable
+                                min-width="30px"
+                            />
+                            <el-table-column
+                                align="right"
+                                fixed="right"
+                                width="100px"
+                            >
+                                <template #header>
+                                    <el-input
+                                        v-model="pageSearchUni"
+                                        size="mini"
+                                        placeholder="部门ID"
+                                        style="width: 75px;"
+                                    />
+                                </template>
+                                <template #default="scope">
+                                    <el-button-group>
+                                        <el-button
+                                            type="text"
+                                            size="mini"
+                                            style="width: 40px;"
+                                            @click="handleEdit(scope.row, 'pageTemplateShowBin', 'pagePropsValueSen')"
+                                        >
+                                            编辑
+                                        </el-button>
+                                        <el-button
+                                            size="mini"
+                                            type="text"
+                                            style="width: 40px;"
+                                            @click.native.prevent="deleteRow(scope.$index, pagePropsValueQua)"
+                                        >
+                                            删除
+                                        </el-button>
+                                    </el-button-group>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-card>
                 </el-tab-pane>
             </el-tabs>
         </page-main>
@@ -596,6 +678,18 @@ export default {
                 input: ''
             },
             pageInputPlaceholder: '请输入',
+            pagePropsValueTer: [
+                {}
+            ],
+            pagePropsValueQua: [
+                {}
+            ],
+            pagePropsValueQui: [
+                {}
+            ],
+            pagePropsValueSen: [
+                {}
+            ],
             pageRowValue: {},
             pageRemoteValue: [],
             pageSelectOptions: [
@@ -620,8 +714,9 @@ export default {
             pageShow: true,
             pageShowUni: false,
             size: '',
-            search: '',
             pageTemplateShow: false,
+            pageTemplateShowUni: false,
+            pageTemplateShowBin: false,
             publish: false,
             options: [],
             pageDepartment: {
@@ -698,10 +793,10 @@ export default {
                 name: '部门名称',
                 enterpriseID: '企业标识',
                 enterprise: '企业名称',
-                UIDD: '主管UID',
+                uidd: '主管UID',
                 director: '部门主管',
                 phoneD: '主管电话',
-                UIDM: '经理UID',
+                uidm: '经理UID',
                 manager: '部门经理',
                 phoneM: '经理电话',
                 departmentStatus: '部门状态'
@@ -784,8 +879,13 @@ export default {
                     phoneM: '经理电话示例2',
                     departmentStatus: '部门状态示例2'
                 }
-            ]
+            ],
+            pageSearch: '',
+            pageSearchUni: ''
         }
+    },
+    created() {
+
     },
     mounted() {
         this.handleQueryValue()
@@ -807,7 +907,6 @@ export default {
                     }).catch(function(error) {
                         console.log(error)
                     })
-                    alert('submit!')
                 } else {
                     console.log('error submit!!')
                     return false
@@ -818,10 +917,11 @@ export default {
             this.$refs[formName].resetFields()
         },
         handlePropChange() {
+            let now = new Date()
             if (this.publish) {
                 this.pageShow = false
                 this.pageShowUni = true
-                this.pageForm.date = 'publish now'
+                this.pageForm.date = (now.getHours()) + ':' + (now.getMinutes())
                 this.rules.date = [
                     { required: false, trigger: 'change' }
                 ]
@@ -829,7 +929,6 @@ export default {
                 this.pageShow = true
                 this.pageShowUni = false
             }
-            // console.log('work!')
         },
         handleToPosition(key) {
             const PageId = document.querySelector('#' + key)
@@ -838,11 +937,36 @@ export default {
                 'behavior': 'smooth'
             })
         },
-        handleEdit(index, row) {
-            console.log(index, row)
+        handleEdit(row, visible, prop) {
+            this[visible] = true
+            this[prop] = row
+            // console.log(this[prop])
         },
-        handleDelete(index, row) {
-            console.log(index, row)
+        deleteRow(index, rows) {
+            // console.log(rows[index].affairID)
+            let l = rows[index].affairID
+            this.$alert('删除后将无法复原', '来自shellwe的提示', {
+                confirmButtonText: '确定',
+                callback: () => {
+                    rows.splice(index, 1)
+                    axios({
+                        method: 'post',
+                        url: '/vacancyComing/deleteByAid',
+                        data: {
+                            affairID: l
+                        }
+                    }).then(response => {
+                        console.log(response)
+                        this.$notify({
+                            title: '已删除',
+                            message: '操作已提交至数据库',
+                            duration: 6055
+                        })
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }
+            })
         },
         tableRowClassName({row}) {
             if (row.department === '教辅部门') {
@@ -898,7 +1022,8 @@ export default {
                         enterpriseID: response.data.data[0].enterpriseID
                     }
                 }).then(function(response) {
-                    // console.log(response)
+                    // console.log(response.data.data)
+                    that.pagePropsValueQua = response.data.data
                     let t = {}
                     let u = []
                     response.data.data.forEach(function(item) {
@@ -972,17 +1097,24 @@ export default {
             if (this.pageFormUni.select == 'agree') {
                 axios({
                     method: 'post',
-                    url: '/vacancyComing/updateById',
+                    url: '/vacancyComing/updateByAid',
                     data: {
                         affairID: this.pageRowValue.affairID,
                         verify: 1
                     }
                 }).then(response => {
+                    this.pageRowValue.verify = 1
+                    axios({
+                        method: 'post',
+                        url: '/vacancy/addNewVacancy',
+                        data: this.pageRowValue
+                    })
                     this.$notify({
                         title: response.data.msg,
+                        msg: '操作成功提交',
                         type: 'success'
                     })
-                    this.pageRowValue.verify = 1
+
                 }).catch(error => {
                     console.log(error)
                 })
@@ -996,17 +1128,75 @@ export default {
                         verify: 2
                     }
                 }).then(response => {
+                    this.pageRowValue.verify = 2
+                    axios({
+                        method: 'post',
+                        url: '/vacancy/addNewVacancy',
+                        data: this.pageRowValue
+                    })
                     this.$notify({
                         title: response.data.msg,
+                        msg: '操作成功提交',
                         type: 'success'
                     })
-                    this.pageRowValue.verify = 2
                 }).catch(error => {
                     console.log(error)
                 })
             }
             this.pageDialogVisible = false
             this.handleQueryValue()
+        },
+        handleButtonVisible() {
+            this.pageTemplateShow = true
+            this.pagePropsValueTer = this.pageRowValue
+        },
+        handleButtonEdit() {
+            // console.log(this.pagePropsValueTer)
+            axios({
+                method: 'post',
+                url: '/vacancy/update',
+                data: this.pagePropsValueTer
+            }).then(response => {
+                this.$notify({
+                    title: response.data.msg,
+                    type: 'success'
+                })
+                this.pageTemplateShow = false
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        handleUpdate(prop, val) {
+            console.log(prop)
+            let d = {}
+            d = prop
+            // console.log(d)
+            if (val == 1) {
+                axios.post('/vacancyComing/updateAll', {
+                    data: d
+                }).then(response => {
+                    this.$notify({
+                        title: response.data.msg,
+                        message: '操作已提交数据库',
+                        duration: 6500
+                    })
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+            if (val == 2) {
+                axios.post('/enterprise/update/department/field', {
+                    data: d
+                }).then(response => {
+                    this.$notify({
+                        title: response.data.msg,
+                        message: '操作已提交数据库',
+                        duration: 6500
+                    })
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
         }
     }
 }
