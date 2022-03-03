@@ -6,4 +6,5 @@ import top.shellwe.bip.util.Result;
 public interface VacancyService {
     Result queryAll();
     Result publish(Vacancy data);
+    void update(Vacancy data);
 }

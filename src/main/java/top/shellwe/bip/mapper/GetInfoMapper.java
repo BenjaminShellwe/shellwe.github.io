@@ -18,4 +18,5 @@ public interface GetInfoMapper {
 
     @Select("select * from personalinfo where userID = #{'userID'}")
     public List<Personalinfo> getByIdPe(Object userID);
+
 }

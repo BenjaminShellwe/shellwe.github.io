@@ -1,12 +1,13 @@
 package top.shellwe.bip.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "vacancycoming")
 public class VacancyComing {
 
+    @Id
+    @Column(name = "id", nullable = false)
+    private int id;
     @Id
     @Column(name = "affairID", nullable = false)
     private String affairID;
@@ -23,6 +24,15 @@ public class VacancyComing {
     private String createdTime;
     private String address;
     private String phone;
+
+    @Id
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getAffairID() {
         return affairID;

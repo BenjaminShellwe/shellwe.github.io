@@ -26,4 +26,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 //        List<Department> list = departmentRepository.getByEnterpriseID(eid);
         return departmentRepository.getByEnterpriseID(eid);
     }
+
+    @Override
+    public Result updateDepartmentField(Department department){
+        departmentRepository.save(department);
+        return new Result(200, "Success");
+    }
 }

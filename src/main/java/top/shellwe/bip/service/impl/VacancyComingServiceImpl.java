@@ -1,5 +1,6 @@
 package top.shellwe.bip.service.impl;
 
+import com.sun.net.httpserver.Authenticator;
 import org.springframework.stereotype.Service;
 import top.shellwe.bip.dao.VacancyComingRepository;
 import top.shellwe.bip.entity.VacancyComing;
@@ -19,5 +20,11 @@ public class VacancyComingServiceImpl implements VacancyComingService {
     public Result queryAll() {
         List<VacancyComing> list = vacancyComingRepository.findAll();
         return new Result(list);
+    }
+
+    @Override
+    public Result updateAll(VacancyComing vacancyComing) {
+        vacancyComingRepository.save(vacancyComing);
+        return new Result(200, "Success");
     }
 }
