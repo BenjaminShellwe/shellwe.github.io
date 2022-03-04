@@ -12,13 +12,19 @@ public class Employeesinfo {
     private String userID;
     private String realName;
     private String enterpriseID;
-    private String enterpriseName;
+    private String enterprise;
     private String department;
     private String position;
     private String status;
     private String phone;
     private String remarks;
+    private String political;
+    private String birth;
+    private String entry;
+    private String salary;
+    private String type;
 
+    @Id
     public int getId() {
         return id;
     }
@@ -91,11 +97,51 @@ public class Employeesinfo {
         this.userID = userID;
     }
 
-    public String getEnterpriseName() {
-        return enterpriseName;
+    public String getEnterprise() {
+        return enterprise;
     }
 
-    public void setEnterpriseName(String enterpriseName) {
-        this.enterpriseName = enterpriseName;
+    public void setEnterprise(String enterprise) {
+        this.enterprise = enterprise;
+    }
+
+    public String getPolitical() {
+        return political;
+    }
+
+    public void setPolitical(String political) {
+        this.political = political;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public String getEntry() {
+        return entry;
+    }
+
+    public void setEntry(String entry) {
+        this.entry = entry;
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

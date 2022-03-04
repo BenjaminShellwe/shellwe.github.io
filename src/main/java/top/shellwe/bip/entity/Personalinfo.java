@@ -12,7 +12,7 @@ public class Personalinfo {
     private int userID;
     private String realName;
     private String nickName;
-    private int phone;
+    private String phone;
     private String sex;
     private String occupationStatus;
     private String enterprise;
@@ -49,11 +49,11 @@ public class Personalinfo {
         this.nickName = nickName;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

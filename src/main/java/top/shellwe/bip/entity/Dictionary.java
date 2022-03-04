@@ -10,7 +10,7 @@ public class Dictionary {
     @Column(name = "id", nullable = false)
     private int id;
     private String prefix;
-    private int uniqueID;
+    private String uniqueID;
     private String typeCode;
     private String typeName;
     private int valueID;
@@ -28,6 +28,7 @@ public class Dictionary {
         this.prefix = prefix;
     }
 
+    @Id
     public int getId() {
         return id;
     }
@@ -36,11 +37,11 @@ public class Dictionary {
         this.id = id;
     }
 
-    public int getUniqueID() {
+    public String getUniqueID() {
         return uniqueID;
     }
 
-    public void setUniqueID(int uniqueID) {
+    public void setUniqueID(String uniqueID) {
         this.uniqueID = uniqueID;
     }
 
