@@ -22,6 +22,7 @@ module.exports = [
             let permissions = []
             if (option.query.account == 'admin') {
                 permissions = [
+                    'permission.browse',
                     'permission.basic',
                     'permission.create',
                     'permission.edit',
@@ -29,7 +30,12 @@ module.exports = [
                     'permission.access',
                     'permission.department'
                 ]
-            } else if (option.query.account == 'tester') {
+            } else if (option.query.account == 'employeeTPT') {
+                permissions = [
+                    'permission.basic',
+                    'permission.access'
+                ]
+            } else if (option.query.account == 'visitor') {
                 permissions = [
                     'permission.basic'
                 ]

@@ -82,7 +82,8 @@ export default {
                             meta: {
                                 title: '简历生成工具',
                                 sidebar: true,
-                                breadcrumb: false
+                                breadcrumb: false,
+                                auth: ['permission.edit']
                             }
                         }
                     ]
@@ -105,7 +106,8 @@ export default {
                             meta: {
                                 title: '企业招聘门户',
                                 sidebar: true,
-                                breadcrumb: true
+                                breadcrumb: true,
+                                auth: ['permission.edit']
                             }
                         },
                         {
@@ -140,7 +142,8 @@ export default {
                             meta: {
                                 title: '外库盘点报表',
                                 sidebar: false,
-                                breadcrumb: false
+                                breadcrumb: false,
+                                auth: ['permission.edit']
                             }
                         },
                         {
@@ -150,7 +153,8 @@ export default {
                             meta: {
                                 title: '渠道有效分析',
                                 sidebar: false,
-                                breadcrumb: false
+                                breadcrumb: false,
+                                auth: ['permission.edit']
                             }
                         },
                         {
@@ -160,7 +164,8 @@ export default {
                             meta: {
                                 title: '周期成本分析',
                                 sidebar: false,
-                                breadcrumb: false
+                                breadcrumb: false,
+                                auth: ['permission.edit']
                             }
                         },
                         {
@@ -170,7 +175,8 @@ export default {
                             meta: {
                                 title: '招聘任务统计',
                                 sidebar: false,
-                                breadcrumb: false
+                                breadcrumb: false,
+                                auth: ['permission.edit']
                             }
                         }
                     ]

@@ -17,16 +17,21 @@ export default {
         if (req.query.account == 'admin') {
             permissions = [
                 'permission.browse',
+                'permission.basic',
                 'permission.create',
                 'permission.edit',
                 'permission.remove',
-                'supplay.department.browse',
-                'supplay.department_job.browse',
-                'supplay.role.browse'
+                'permission.access',
+                'permission.department'
             ]
         } else if (req.query.account == 'test') {
             permissions = [
-                'permission.browse'
+                'permission.basic',
+                'permission.access'
+            ]
+        } else if (req.query.account == 'visitor') {
+            permissions = [
+                'permission.basic'
             ]
         }
         return res.json({

@@ -1,6 +1,16 @@
 <template>
     <div>
-        <page-header title="修改密码" content="定期修改密码可以提高帐号安全性噢~" />
+        <page-header title="修改密码" content="定期修改密码以提高帐号安全性">
+            <template #content>
+                <div class="inLine">
+                    <p class="hover" @click="back">返回上一页</p>
+                </div>
+                &nbsp;
+                <div class="inLine">
+                    此页为个人账户的密码修改设置页面
+                </div>
+            </template>
+        </page-header>
         <page-main>
             <el-row>
                 <el-col :md="24" :lg="12">
@@ -62,6 +72,9 @@ export default {
         }
     },
     methods: {
+        back() {
+            history.go(-1)
+        },
         onSubmit() {
             const that = this
             this.$refs['form'].validate(valid => {
@@ -101,6 +114,7 @@ export default {
                 }
             })
         }
+
     }
 }
 </script>

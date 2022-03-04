@@ -60,17 +60,28 @@
 
             <br>
         </page-main>
-        <page-main v-show="isShow" title="按类型修改">
-            <el-alert title="请点击下方左侧栏加载" type="info" style="margin-bottom: 20px;" />
+        <page-main v-show="isShow" title="按类型查看与修改">
+            <el-row>
+                <el-col :span="2">
+                    <Auth :value="'permission.edit'" style="display: inline-block; padding: 0 0 0 0; margin: 0 0 0 0;">
+                        <el-button v-show="pageButtonVisible" type="primary" size="mini" style="margin: 5px 5px 5px 5px;" @click="handleEditable('pageButtonVisible')">编辑模式</el-button>
+                        <template slot="no-auth">
+                            <span style="font-size: smaller; color: red;">没有使用权限<br>permission.edit</span>
+                        </template>
+                    </Auth>
+                    <el-button v-show="pageButtonVisibleUni" type="success" size="mini" style="margin: 5px 5px 5px 5px;" @click="handleEditable('pageButtonVisibleUni')">完成编辑</el-button>
+                </el-col>
+                <el-col :span="22">
+                    <el-alert title="编辑模式按钮允许你进行修改规则,但请先点击左下方左侧栏加载,删除规则请到全部字典信息表中操作" type="info" style="margin-bottom: 20px;" />
+                </el-col>
+            </el-row>
             <el-tabs tab-position="left" @tab-click="handleQueryUID">
                 <el-tab-pane v-for="(item, index) in pageTabValue" :key="index" :label="item" :name="index">
                     <span style="margin: 5px 0 15px 0;">当前操作: {{ item }} - {{ index }}</span>
-                    <el-button v-show="pageButtonVisible" type="primary" size="mini" style="margin: 0 5px 0 5px;" @click="handleEditable('pageButtonVisible')">修改数据</el-button>
-                    <el-button v-show="pageButtonVisibleUni" type="success" size="mini" style="margin: 0 5px 0 5px;" @click="handleEditable('pageButtonVisibleUni')">完成修改</el-button>
                     <el-row style="margin-top: 10px;">
-                        <el-col v-for="(indexUni) in pageQueryUID.length" :key="indexUni" :span="7">
-                            <el-card shadow="hover" style="margin: 5px  5px 8px 10px;">
-                                <el-descriptions :title="item + pageQueryUID[indexUni-1].id" :column="2" size="mini" border>
+                        <el-col v-for="(indexUni) in pageQueryUID.length" :key="indexUni" :span="4">
+                            <el-card shadow="hover" body-style="padding: 5px 5px 5px 5px;" style="margin: 5px 5px 5px 5px;">
+                                <el-descriptions :title="item + pageQueryUID[indexUni-1].id" :name="pageQueryUID[indexUni-1].id" :column="1" size="mini" border>
                                     <el-descriptions-item label="GID">
                                         <el-input v-model="pageFormValue.GID" :placeholder="pageQueryUID[indexUni-1].prefix+pageQueryUID[indexUni-1].uniqueID" :disabled="editable" style="width: 100px;" size="mini" clearable />
                                     </el-descriptions-item>
@@ -100,7 +111,7 @@
         </page-main>
         <page-main v-show="isShow" title="全部字典信息">
             <template>
-                <el-table :key="key" v-loading="false" :data="data" style="width: 100%;" border @cell-mouse-enter="getDetails">
+                <el-table :key="key" v-loading="false" :data="data" style="width: 100%;" border height="550" size="mini" @cell-mouse-enter="getDetails">
                     <template slot="empty">
                         <span>未找到合适记录</span>
                     </template>
@@ -116,7 +127,7 @@
                     <el-table-column
                         fixed="right"
                         label="操作"
-                        width="200"
+                        width="150"
                     >
                         <template>
                             <el-button-group>
@@ -180,7 +191,7 @@
                 </div>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="pageDialogVisible = false">取 消</el-button>
+                <el-button @click="handleButtonCancel('pageDialogVisible', 'pageFormList')">取 消</el-button>
                 <el-button type="primary" @click="handleButtonCreate">创 建</el-button>
             </span>
         </el-dialog>
@@ -237,8 +248,8 @@
             </el-form>
             <el-row />
             <span slot="footer" class="dialog-footer">
-                <el-button @click="pageDialogVisibleUni = false">取 消</el-button>
-                <el-button type="primary" @click="pageDialogVisibleUni = false">修 改</el-button>
+                <el-button @click="handleButtonCancel('pageDialogVisibleUni', 'pageFormList')">取 消</el-button>
+                <el-button type="primary" @click="handleButtonConfirm">修 改</el-button>
             </span>
         </el-dialog>
     </div>
@@ -308,7 +319,8 @@ export default {
                 model_name: '示例1',
                 model_explain: '展示示例',
                 model_state: '有效'
-            }]
+            }],
+            pageData: [{}]
         }
     },
     watch: {
@@ -371,21 +383,24 @@ export default {
             // 新增操作请求的类型: post  接收时需要使用JSON方式处理
             let {
                 data: result
-            } = await axios.get('/queryAll')
+            } = await axios.post('/dictionary/queryAll')
             // Ajax调用之后, 将请求结果赋值给data属性
             let keys = []
+            // console.log(result)
             for (let property in result.data[0]) {
                 keys.push(property)
             }
             // console.log(keys)
             this.pageFormHead = keys
-            this.data = result.data.reduce((total, current) => {
+            this.data = result.data
+            // console.log(this.data)
+            this.pageData = result.data.reduce((total, current) => {
                 current.valueID !== 0 && total.push(current)
                 return total
             }, [])
-            // console.log(this.data)
+            // console.log(this.pageData)
             const map = {}
-            this.data.forEach(item => {
+            this.pageData.forEach(item => {
                 map[item.uniqueID] = item.typeName
             })
             // console.log(map)
@@ -415,16 +430,13 @@ export default {
             //         values.push(object[property])
             //     return values
             // }
-            // console.log(fields[0]['label'])
-            // console.log(getObjectKeys(result.data[0]))
-            // console.log(getObjectValues(result.data[0]))
         },
         async handleButtonQuery() {
             // console.log(this.pageQueryValue)
             const that = this
             axios({
                 method: 'post',
-                url: '/queryTypeName',
+                url: '/dictionary/queryTypeName',
                 data: this.pageQueryValue
             }).then(function(response) {
                 // console.log(response)
@@ -438,23 +450,34 @@ export default {
                     that.pageFormHead = keys
                     that.data = response.data.data
                 }
-            }).catch(function(error) {
-                console.log(error)
+            }).catch(error => {
+                this.$notify({
+                    title: '操作执行异常',
+                    message: error,
+                    type: 'error',
+                    duration: 6500
+                })
             })
         },
         handleButtonCreate() {
             const that = this
-            console.log(this.pageFormList.valueStatus)
+            // console.log(this.pageFormList)
+            // console.log(this.pageFormList.valueStatus)
             axios({
                 method: 'post',
-                url: '/addGlobalDic',
+                url: '/dictionary/addGlobalDic',
                 data: this.pageFormList
             }).then(function(response) {
                 that.pageDialogVisible = false
-                that.handleSuccess(response.data.msg)
+                that.handleSuccess(response.data.code, response.data.msg)
                 console.log(response)
-            }).catch(function(error) {
-                console.log(error)
+            }).catch(error => {
+                this.$notify({
+                    title: '操作执行异常',
+                    message: error,
+                    type: 'error',
+                    duration: 6500
+                })
             })
         },
         getDetails(row) {
@@ -462,18 +485,15 @@ export default {
             // console.log(this.pageRowValue)
         },
         handleButtonEdit() {
-            // let t = this.pageRowValue.id
-            console.log('handleButtonEdit')
-            // console.log(t)
             const that = this
             axios({
                 method: 'post',
-                url: '/queryId',
+                url: '/dictionary/queryId',
                 data: {
                     id: this.pageRowValue.id
                 }
             }).then(function(response) {
-                console.log(response)
+                // console.log(response)
                 if (response.data.code === 4033) {
                     that.$notify({
                         title: '操作被拒绝',
@@ -484,19 +504,23 @@ export default {
                 }
                 if (response.data.code === 200) {
                     that.pageFormList = that.pageRowValue
-                    // console.log(that.pageFormList)
                     that.pageDialogVisibleUni = true
                 }
 
-            }).catch(function(error) {
-                console.log(error)
+            }).catch(error => {
+                this.$notify({
+                    title: '操作执行异常',
+                    message: error,
+                    type: 'error',
+                    duration: 6500
+                })
             })
         },
         handleButtonDelete() {
             const that = this
             axios({
                 method: 'post',
-                url: '/deleteId',
+                url: '/dictionary/deleteId',
                 data: {
                     id: this.pageRowValue.id
                 }
@@ -518,15 +542,27 @@ export default {
                     })
                     that.getUser()
                 }
-            }).catch(function(error) {
-                console.log(error)
+            }).catch(error => {
+                this.$notify({
+                    title: '操作执行异常',
+                    message: error,
+                    type: 'error',
+                    duration: 6500
+                })
             })
         },
-        handleSuccess(msg) {
+        handleSuccess(code, msg) {
+            let t
+            if (code == 415) {
+                t = 'error'
+            }
+            if (code == 200) {
+                t = 'success'
+            }
             this.$notify({
-                title: '操作成功',
+                title: t,
                 message: msg,
-                type: 'success',
+                type: t,
                 duration: 6500
             })
         },
@@ -541,11 +577,40 @@ export default {
             this[button] = !this[button]
             if (button == 'pageButtonVisible') {
                 this.pageButtonVisibleUni = true
+                this.handleQueryUID()
             }
             if (button == 'pageButtonVisibleUni') {
                 this.pageButtonVisible = true
+                console.log(this.pageFormValue)
             }
             this.editable = !this.editable
+        },
+        handleButtonConfirm() {
+            axios({
+                method: 'post',
+                url: '/dictionary/update/field',
+                data: this.pageFormList
+            }).then(response => {
+                this.$notify({
+                    title: response.data.msg,
+                    message: '操作已提交',
+                    type: 'success',
+                    duration: 6500
+                })
+                this.pageFormList = {}
+                this.pageDialogVisibleUni = false
+            }).catch(error => {
+                this.$notify({
+                    title: '发生异常',
+                    message: error,
+                    type: 'error',
+                    duration: 6600
+                })
+            })
+        },
+        handleButtonCancel(visible, val) {
+            this[visible] = false
+            this[val] = {}
         }
     }
 }

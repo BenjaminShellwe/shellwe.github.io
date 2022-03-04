@@ -17,7 +17,7 @@
                     <Auth :value="'permission.department'" style="display: inline-block; margin-right: 5px;">
                         <el-button type="primary" size="mini" @click="pageLogin('E')">启用企业管理账户</el-button>
                         <template slot="no-auth">
-                            你没有该权限进入企业管理页面
+                            <span>请联系管理员<br>没有进入企业管理页面权限</span>
                         </template>
                     </Auth>
                     <el-button type="primary" size="mini" @click="pageLogin('P')">启用企业个人账户</el-button>
@@ -370,167 +370,192 @@
             <el-row v-show="pageRowVisible" style="margin-bottom: 5px;">
                 <el-col :span="12">
                     <el-card shadow="hover" style="margin-right: 5px;">
-                        <span>员工录入</span>
-                        <el-form ref="pageRuleForm" :model="pageRuleForm" :rules="rules">
-                            <el-row type="flex">
-                                <el-col :span="12">
-                                    <el-form-item label="员工真实姓名" prop="realName" label-width="120px">
-                                        <el-input v-model="pageRuleForm.realName" size="mini" style="width: 160px;" />
-                                    </el-form-item>
-                                    <el-form-item label="员工电话号码" prop="phoneNumber" label-width="120px">
-                                        <el-input v-model="pageRuleForm.name" size="mini" style="width: 160px;" />
-                                    </el-form-item>
-                                    <el-form-item label="员工出生年月" label-width="120px" required>
-                                        <el-form-item prop="date">
-                                            <el-date-picker v-model="pageRuleForm.date1" type="date" placeholder="选择日期" style="width: 160px;" size="mini" />
+                        <div slot="header" class="clearfix">
+                            <span>员工录入 (点击右边进行操作)</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text" @click="pageTemplateShowUni = !pageTemplateShowUni">录入操作</el-button>
+                        </div>
+                        <el-card v-show="pageTemplateShowUni" shadow="hover" body-style="padding: 10px 0 10px 0;" style="margin: 10px 0 10px 0;">
+                            <!--       :rules="rules"                     -->
+                            <el-form ref="form" v-model="pageRuleForm" :model="pageRuleForm" inline="inline" label-width="75px" size="mini">
+                                <el-row>
+                                    <el-col :span="21">
+                                        <el-row>
+                                            <el-form-item label="员工账户" :fit="true" style="margin: 15px 0 15px 0; width: 220px;">
+                                                <el-select
+                                                    v-model="pageRuleForm.userID"
+                                                    filterable
+                                                    allow-create
+                                                    remote
+                                                    reserve-keyword
+                                                    placeholder="查询新建"
+                                                    :remote-method="handleRemoteMethod"
+                                                    :loading="pageLoading"
+                                                    style="width: 140px;"
+                                                    size="small"
+                                                >
+                                                    <el-option
+                                                        v-for="item in options"
+                                                        :key="item.value"
+                                                        :label="item.label"
+                                                        :value="item.value"
+                                                    />
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="员工性别" prop="sex" :fit="true" style="margin: 15px 0 15px 0; width: 190px;">
+                                                <el-select v-model="pageRuleForm.sex" placeholder="请选择" style="width: 85px;">
+                                                    <el-option label="先生" value="woman" />
+                                                    <el-option label="女士" value="man" />
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="员工部门" prop="department" :fit="true" style="margin: 15px 0 15px 0; width: 190px;">
+                                                <el-select
+                                                    v-model="pageSelectValueUni"
+                                                    filterable
+                                                    allow-create
+                                                    remote
+                                                    reserve-keyword
+                                                    placeholder="查询部门"
+                                                    :remote-method="handleRemoteMethodUni"
+                                                    :loading="pageLoading"
+                                                    style="width: 110px;"
+                                                    size="small"
+                                                >
+                                                    <el-option
+                                                        v-for="item in optionsUni"
+                                                        :key="item.value"
+                                                        :label="item.label"
+                                                        :value="item.value"
+                                                    />
+                                                </el-select>
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row>
+                                            <el-form-item label="员工姓名" :fit="true" style="margin: 15px 0 15px 0; width: 220px;">
+                                                <el-input v-model="pageRuleForm.userRealName" :placeholder="handleGetName(pageRuleForm.userID)" style="width: 140px;" disabled />
+                                            </el-form-item>
+                                            <el-form-item label="企业标识" :fit="true" style="margin: 15px 0 15px 0; width: 195px;">
+                                                <el-input v-model="pageRuleForm.enterpriseID" placeholder="自动装载" style="width: 115px;" disabled />
+                                            </el-form-item>
+                                            <el-form-item label="企业名称" :fit="true" style="margin: 15px 0 15px 0; width: 190px;">
+                                                <el-input v-model="pageRuleForm.enterprise" placeholder="自动装载" style="width: 110px;" disabled />
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row>
+                                            <el-form-item
+                                                v-for="(item, index) in pageRuleFormHeader"
+                                                :key="index"
+                                                :prop="index"
+                                                :label="item"
+                                                :fit="true"
+                                                style="margin: 15px 0 15px 0; width: 200px;"
+                                            >
+                                                <el-input v-model="pageRuleForm[index]" :name="index" :placeholder="index" style="width: 110px;" />
+                                            </el-form-item>
+                                            <el-form-item label="立即审核" :fit="true" style="margin: 15px 0 15px 0; width: 200px;">
+                                                <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="20" />
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row>
+                                            <el-form-item label="出生日期" :fit="true" style="margin: 15px 0 15px 0; width: 200px;">
+                                                <el-date-picker v-model="pageRuleForm.birth" type="date" style="width: 125px;" :picker-options="pickerOptions" placeholder="请选择日期" />
+                                            </el-form-item>
+                                            <el-form-item label="入职日期" :fit="true" style="margin: 15px 0 15px 0; width: 200px;">
+                                                <el-date-picker v-model="pageRuleForm.entry" type="date" style="width: 125px;" :picker-options="pickerOptions" placeholder="请选择日期" />
+                                            </el-form-item>
+                                            <el-form-item label="审核人员" :fit="true" style="margin: 15px 0 15px 0; width: 200px;">
+                                                <el-switch v-model="pageSwitchValueUni" active-text="自动读取" :width="20" />
+                                            </el-form-item>
+                                        </el-row>
+                                    </el-col>
+                                    <el-col :span="1">
+                                        <el-form-item size="mini" style="margin: 5px 5px 5px 5px;">
+                                            <el-row style="margin-bottom: 10px;">
+                                                <!--handleUpdate(pageRuleForm)-->
+                                                <el-button type="primary" @click="handleConsole(pageRuleForm)">完成</el-button>
+                                            </el-row>
+                                            <el-row style="margin-top: 10px;">
+                                                <el-button @click="pageTemplateShowUni = false, pageRuleForm = {}">取消</el-button>
+                                            </el-row>
                                         </el-form-item>
-                                    </el-form-item>
-                                    <el-form-item label="员工所属部门" prop="department" label-width="120px" size="mini">
-                                        <el-select v-model="pageRuleForm.region" placeholder="请选择所属部门" style="width: 160px;">
-                                            <el-option label="人事部门" value="personnel" />
-                                            <el-option label="软件部门" value="software" />
-                                            <el-option label="教辅部门" value="education" />
-                                            <el-option label="行政部门" value="administrative" />
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-form-item label="补充内容" prop="more" label-width="120px">
-                                        <el-input v-model="pageRuleForm.name" size="mini" style="width: 160px;" />
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="政治面貌" prop="political" label-width="120px">
-                                        <el-input v-model="pageRuleForm.name" size="mini" style="width: 190px;" />
-                                    </el-form-item>
-                                    <el-form-item label="员工账户" prop="account" label-width="120px">
-                                        <el-select
-                                            v-model="pageSelectValue"
-                                            filterable
-                                            allow-create
-                                            remote
-                                            reserve-keyword
-                                            placeholder="可查询,可新建(不可重复)"
-                                            :remote-method="handleRemoteMethod"
-                                            :loading="pageLoading"
-                                            style="width: 190px;"
-                                            size="small"
-                                        >
-                                            <el-option
-                                                v-for="item in options"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value"
-                                            />
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-form-item label="员工性别" prop="gender" label-width="120px" size="small">
-                                        <el-select v-model="pageRuleForm.region" placeholder="请选择" style="width: 190px;">
-                                            <el-option label="先生" value="personnel" />
-                                            <el-option label="女士" value="software" />
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-form-item label="员工职位" prop="position" label-width="120px" size="small">
-                                        <el-select v-model="pageRuleForm.region" placeholder="请选择职位" style="width: 190px;">
-                                            <el-option label="人事部门" value="personnel" />
-                                            <el-option label="软件部门" value="software" />
-                                            <el-option label="教辅部门" value="education" />
-                                            <el-option label="行政部门" value="administrative" />
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-form-item label="补充内容" prop="more2" label-width="120px">
-                                        <el-input v-model="pageRuleForm.name" size="mini" style="width: 160px;" />
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                            <el-form-item label="立即审核" label-width="120px" prop="delivery">
-                                <el-switch v-model="pageRuleForm.audit" />
-                            </el-form-item>
-                            <el-form-item label="补充内容" label-width="120px" prop="type">
-                                <el-checkbox-group v-model="pageRuleForm.content">
-                                    <el-checkbox label="内容1" name="content1" />
-                                    <el-checkbox label="内容2" name="content2" />
-                                    <el-checkbox label="内容3" name="content3" />
-                                    <el-checkbox label="内容4" name="content4" />
-                                </el-checkbox-group>
-                            </el-form-item>
-                            <el-form-item label="招聘来源" label-width="120px" prop="resource">
-                                <el-radio-group v-model="pageRuleForm.source">
-                                    <el-radio label="线上" />
-                                    <el-radio label="线下" />
-                                </el-radio-group>
-                            </el-form-item>
-                            <el-form-item label="补充内容" label-width="120px" prop="desc">
-                                <el-input v-model="pageRuleForm.more3" type="textarea" />
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" @click="handleSubmitForm('pageRuleForm')">入库</el-button>
-                                <el-button @click="handleResetForm('pageRuleForm')">重置</el-button>
-                            </el-form-item>
-                        </el-form>
+                                    </el-col>
+                                </el-row>
+                            </el-form>
+                        </el-card>
+                        <el-card v-show="false" shadow="hover">
+
+                        </el-card>
                     </el-card>
                 </el-col>
                 <el-col :span="12">
                     <el-card shadow="hover" style="margin-left: 5px;">
-                        <el-card shadow="hover" style="margin-top: 5px; margin-right: 5px;">
-                            <el-table
-                                :data="pageTableData.filter(data => !pageSearch || data.name.toLowerCase().includes(pageSearch.toLowerCase()))"
-                                style="width: 100%; height: 150px;"
-                            >
-                                <el-table-column
-                                    label="职员ID"
-                                    prop="userID"
-                                />
-                                <el-table-column
-                                    label="职员名称"
-                                    prop="realName"
-                                />
-                                <el-table-column
-                                    align="right"
+                        <div slot="header" class="clearfix">
+                            <span>信息更改 (点击右边进行操作)</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text" @click="pageTemplateShowBin = !pageTemplateShowBin">修改操作</el-button>
+                        </div>
+                        <el-row v-show="pageTemplateShowBin">
+                            <el-row>
+                                <el-table
+                                    :data="pageTableData.filter(data => !pageSearch || data.name.toLowerCase().includes(pageSearch.toLowerCase()))"
+                                    style="width: 100%; height: 150px;"
                                 >
-                                    <template slot="header">
-                                        <el-input
-                                            v-model="pageSearch"
-                                            size="mini"
-                                            placeholder="输入关键字搜索"
-                                            style="width: 135px;"
-                                        />
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                        </el-card>
-                        <div>
-                            <el-form v-model="pageDataForm" label-width="100px" size="small" label-position="right">
-                                <div>
-                                    <el-form-item label="真实姓名" prop="realName" class="inLine">
-                                        <el-input v-model="pageDataForm.realName" :placeholder="pageDataForm.realName" auto-complete="off" />
-                                    </el-form-item>
-                                    <el-form-item label="账户名称" prop="nickName" class="inLine">
-                                        <el-input v-model="pageDataForm.nickName" :placeholder="pageDataForm.nickName" auto-complete="off" />
-                                    </el-form-item>
-                                    <el-form-item label="手机号码" prop="phone" class="inLine">
-                                        <el-input v-model="pageDataForm.phone" :placeholder="pageDataForm.phone" auto-complete="off" />
-                                    </el-form-item>
-                                    <el-form-item label="首页链接" prop="homeUrl" class="inLine">
-                                        <el-input v-model="pageDataForm.homeUrl" :placeholder="pageDataForm.homeUrl" maxlength="18" />
-                                    </el-form-item>
-                                    <el-form-item label="QQ" class="inLine">
-                                        <el-input v-model="pageDataForm.qq" :placeholder="pageDataForm.qq" />
-                                    </el-form-item>
-                                    <el-form-item label="微信" class="inLine">
-                                        <el-input v-model="pageDataForm.wechat" :placeholder="pageDataForm.wechat" />
-                                    </el-form-item>
-                                    <el-form-item label="用户性别" prop="phone" class="inLine" style="width: 293px;">
-                                        <el-select v-model="value" :placeholder="pageDataForm.sex" style="width: 100%;">
-                                            <el-option
-                                                v-for="item in options"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value"
+                                    <el-table-column
+                                        label="职员ID"
+                                        prop="userID"
+                                    />
+                                    <el-table-column
+                                        label="职员名称"
+                                        prop="realName"
+                                    />
+                                    <el-table-column
+                                        align="right"
+                                    >
+                                        <template slot="header">
+                                            <el-input
+                                                v-model="pageSearch"
+                                                size="mini"
+                                                placeholder="输入关键字搜索"
+                                                style="width: 135px;"
                                             />
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-form-item label="所属公司" prop="homeUrl" class="inLine">
-                                        <el-input v-model="pageDataForm.enterprise" :placeholder="pageDataForm.enterprise" maxlength="18" />
-                                    </el-form-item>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </el-row>
+                            <el-row>
+                                <el-form v-model="pageDataForm" label-width="80px" size="small" inline="inline" label-position="right">
+                                    <el-row>
+                                        <el-form-item
+                                            v-for="(item, index) in pageRuleFormHeader"
+                                            :key="index"
+                                            :prop="index"
+                                            :label="item"
+                                            :fit="true"
+                                            style="margin: 15px 0 15px 0; width: 180px;"
+                                        >
+                                            <el-input v-model="pageRuleForm[index]" :name="index" :placeholder="index" style="width: 100px;" />
+                                        </el-form-item>
+                                    </el-row>
+                                    <el-row>
+                                        <el-form-item label="用户性别" prop="phone" style="margin: 15px 0 15px 0; width: 180px;">
+                                            <el-select v-model="value" :placeholder="pageDataForm.sex" style="width: 100px;">
+                                                <el-option
+                                                    v-for="item in options"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value"
+                                                />
+                                            </el-select>
+                                        </el-form-item>
+                                        <el-form-item label="所属公司" prop="homeUrl" style="margin: 15px 0 15px 0; width: 230px;">
+                                            <el-input v-model="pageDataForm.enterprise" :placeholder="pageDataForm.enterprise" maxlength="18" style="width: 150px;" />
+                                        </el-form-item>
+                                        <el-form-item size="mini" style="margin: 15px 15px 15px 15px;">
+                                            <el-row style="margin-bottom: 10px;">
+                                                <!--handleUpdate(pageRuleForm)-->
+                                                <el-button type="primary" @click="handleConsole(pageDataForm)">完成</el-button>
+                                                <el-button @click="pageTemplateShowBin = false, pageDataForm = {}">取消</el-button>
+                                            </el-row>
+                                        </el-form-item>
+                                    </el-row>
                                     <el-card shadow="hover" style="margin-bottom: 1px;">
                                         <span>企业基础权限</span>
                                         <div style="margin: 0 0;" />
@@ -547,9 +572,9 @@
                                             <el-checkbox v-for="advance in advanceAuthorities" :key="advance" :label="advance">{{ advance }}</el-checkbox>
                                         </el-checkbox-group>
                                     </el-card>
-                                </div>
-                            </el-form>
-                        </div>
+                                </el-form>
+                            </el-row>
+                        </el-row>
                     </el-card>
                 </el-col>
             </el-row>
@@ -922,21 +947,30 @@ export default {
     inject: ['reload'],
     data() {
         return {
+            pageSwitchValue: false,
+            pageSwitchValueUni: false,
+            pageTemplateShowUni: true,
+            pageTemplateShowBin: true,
             dialogVisible: false,
             dialogVisibleUni: false,
             enterpriseID: '',
+            enterprise: '',
             pageInput: '',
             pageInputUni: '',
             pageDialogTitle: '',
             pageRowVisible: false,
             pageRowVisibleUni: false,
             pageSelectValue: [],
+            pageSelectValueUni: [],
             size: 'small',
             pageSearch: '',
             pageLoading: false,
             options: [],
+            optionsUni: [],
             pageRemoteValue: [],
+            pageRemoteValueUni: [],
             list: [],
+            listUni: [],
             value: '',
             checkAll: false,
             checkAll1: false,
@@ -949,6 +983,31 @@ export default {
             advanceAuthorities: advanceAuthority,
             isIndeterminate: true,
             pageEnterpriseNotice: [{}],
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now()
+                },
+                shortcuts: [{
+                    text: '今天',
+                    onClick(picker) {
+                        picker.$emit('pick', new Date())
+                    }
+                }, {
+                    text: '昨天',
+                    onClick(picker) {
+                        const date = new Date()
+                        date.setTime(date.getTime() - 3600 * 1000 * 24)
+                        picker.$emit('pick', date)
+                    }
+                }, {
+                    text: '一周前',
+                    onClick(picker) {
+                        const date = new Date()
+                        date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+                        picker.$emit('pick', date)
+                    }
+                }]
+            },
             pageDataForm: {
                 realName: 'Benjamin Thomas Shellwe',
                 nickName: 'shellwe',
@@ -961,43 +1020,54 @@ export default {
                 sex: ''
             },
             pageRuleForm: {
-                realName: '',
-                phoneNumber: '',
-                department: '',
-                date1: '',
-                more: '',
-                political: '',
-                account: '',
-                gender: '',
+                userID: '',
+                userRealName: '',
+                enterprise: '',
+                enterpriseID: '',
                 position: '',
-                more2: '',
-                audit: false,
-                content: '',
-                source: '',
-                more3: ''
+                department: '',
+                phone: '',
+                remarks: '',
+                political: '',
+                status: '',
+                birth: '',
+                entry: '',
+                salary: '',
+                type: '',
+                sex: ''
+            },
+            pageRuleFormHeader: {
+                political: '政治面貌',
+                department: '隶属部门',
+                phone: '手机号码',
+                salary: '入职工资',
+                position: '所属职位',
+                status: '员工状态',
+                type: '入职方式',
+                remarks: '员工备注'
             },
             rules: {
-                name: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                realName: [
+                    { required: true, message: '请输入真实姓名', trigger: 'blur' },
+                    { min: 2, max: 5, message: '长度在 2 到 10 个字符', trigger: 'blur' }
                 ],
-                region: [
-                    { required: true, message: '请选择活动区域', trigger: 'change' }
+                userID: [
+                    { required: true, message: '请输入账户ID', trigger: 'change' }
                 ],
-                date1: [
-                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+                department: [
+                    { required: true, message: '请输入部门', trigger: 'change' }
                 ],
-                date2: [
-                    { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+                phone: [
+                    { required: true, message: '请输入电话号码', trigger: 'change' }
                 ],
                 type: [
-                    { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+                    { required: true, message: '请输入入职方式', trigger: 'change' }
                 ],
-                resource: [
-                    { required: true, message: '请选择活动资源', trigger: 'change' }
+                position: [
+                    { required: true, message: '请输入所属职位', trigger: 'change' }
                 ],
-                desc: [
-                    { required: true, message: '请填写活动形式', trigger: 'blur' }
+                political: [
+                    { required: true, message: '请输入政治面貌', trigger: 'blur' }
                 ]
             },
             pageTableData: [{}],
@@ -1056,6 +1126,7 @@ export default {
                         userID: this.$store.state.user.id
                     }
                 }).then(function(response) {
+                    that.enterpriseID = response.data.data[0].enterpriseID
                     that.pageValue.enterpriseID = response.data.data[0].enterpriseID
                     // console.log(that.pageValue.enterpriseID)
                     axios({
@@ -1123,6 +1194,7 @@ export default {
         // handleGetValue 获取EID进行查询
         handleGetValue() {
             const that = this
+            // 查询没有绑定企业的账户
             axios({
                 method: 'post',
                 url: '/user/query/EID',
@@ -1138,13 +1210,16 @@ export default {
                         if (key == 'id') {
                             t[key] = item[key]
                         }
+                        if (key == 'userRealName') {
+                            t[key] = item[key]
+                        }
                     }
                     u.push(t)
                     t = {}
                     for (let key in u) {
                         if (u[key].id !== '' && u[key].id !== null) {
                             // console.log(u[key].id)
-                            that.pageRemoteValue.push(u[key].id)
+                            that.pageRemoteValue.push(u[key])
                             that.pageRemoteValue = that.pageRemoteValue.sort()
                             var array = [that.pageRemoteValue[0]]
                             for (var i = 1; i < that.pageRemoteValue.length; i++) {
@@ -1160,13 +1235,75 @@ export default {
                     // that.pageRemoteValue = u
                     // console.log(that.pageRemoteValue)
                     that.list = that.pageRemoteValue.map(item => {
-                        return {value: `${item}`, label: `${item}`}
+                        return {value: `${item.userRealName}`, label: `${item.id}`}
                     })
                     // console.log(that.pageRemoteValue.map)
                     // console.log(that.list)
                 })
             }).catch(function(error) {
                 console.log(error)
+            })
+            // 获取EID
+            axios({
+                method: 'post',
+                url: '/queryInfo/employee',
+                data: {
+                    userID: this.$store.state.user.id
+                }
+            }).then(response => {
+                // console.log(response)
+                this.enterpriseID = response.data.data[0].enterpriseID
+                this.enterprise = response.data.data[0].enterprise
+                // 查询已知企业的部门
+                axios({
+                    method: 'post',
+                    url: '/queryInfo/enterprise/department',
+                    data: {
+                        enterpriseID: this.enterpriseID
+                    }
+                }).then(response => {
+                    // console.log(response)
+                    let t = {}
+                    let u = []
+                    response.data.data.forEach(item => {
+                        for (let key in item) {
+                            if (key == 'name') {
+                                t[key] = item[key]
+                            }
+                        }
+                        u.push(t)
+                        t = {}
+                        for (let key in u) {
+                            if (u[key].name !== '' && u[key].name !== null) {
+                                // console.log(u[key].id)
+                                that.pageRemoteValueUni.push(u[key].name)
+                                that.pageRemoteValueUni = that.pageRemoteValueUni.sort()
+                                let array = [that.pageRemoteValueUni[0]]
+                                for (let i = 1; i < that.pageRemoteValueUni.length; i++) {
+                                    if (that.pageRemoteValueUni[i] !== that.pageRemoteValueUni[i - 1]) {
+                                        array.push(that.pageRemoteValueUni[i])
+                                    }
+                                }
+                                that.pageRemoteValueUni = array
+                            }
+                        }
+                        t = {}
+                        // console.log(that.pageRemoteValue)
+                        // that.pageRemoteValue = u
+                        // console.log(that.pageRemoteValue)
+                        that.listUni = that.pageRemoteValueUni.map(item => {
+                            return {value: `${item}`, label: `${item}`}
+                        })
+                        // console.log(that.pageRemoteValue.map)
+                        // console.log(that.listUni)
+                    })
+                })
+
+            }).catch(error => {
+                this.$notify({
+                    message: error,
+                    duration: 6055
+                })
             })
         },
         handleRemoteMethod(query) {
@@ -1180,6 +1317,23 @@ export default {
                 }, 1000)
                 // console.log(this.list)
                 // console.log(this.options)
+            } else {
+                this.options = []
+            }
+        },
+        handleRemoteMethodUni(query) {
+            if (query !== '') {
+                this.pageLoading = true
+                setTimeout(() => {
+                    this.pageLoading = false
+                    this.optionsUni = this.listUni.filter(item => {
+                        return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1
+                    })
+                }, 1000)
+                // console.log(this.listUni)
+                // console.log(this.options)
+                this.pageRuleForm.enterpriseID = this.enterpriseID
+                this.pageRuleForm.enterprise = this.enterprise
             } else {
                 this.options = []
             }
@@ -1314,14 +1468,26 @@ export default {
             }
             chartUni.setOption(option)
         },
-        handleSubmitForm(formName) {
-            this.$refs[formName].validate(valid => {
-                if (valid) {
-                    alert('submit!')
-                } else {
-                    console.log('error submit!!')
-                    return false
-                }
+        handleUpdate(formName) {
+            this.pageLogin('E')
+            formName.enterpriseID = this.enterpriseID
+            axios({
+                method: 'post',
+                url: '/queryInfo/insert/personal',
+                data: formName
+            }).then(response => {
+                this.$notify({
+                    title: response.data.code,
+                    message: response.data.msg,
+                    type: response.data.data,
+                    duration: 6500
+                })
+            }).catch(error => {
+                this.$notify({
+                    message: error.message,
+                    duration: 6500
+                })
+                console.log(error)
             })
         },
         handleResetForm(formName) {
@@ -1360,6 +1526,15 @@ export default {
                 .catch(function() {
 
                 })
+        },
+        handleGetName(val) {
+            if (val == '') {
+                return '输入账户会自动查询'
+            }
+            return this.pageRuleForm.userRealName = val
+        },
+        handleConsole(val) {
+            console.log(val)
         }
     }
 }

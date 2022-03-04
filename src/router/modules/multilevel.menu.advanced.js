@@ -25,7 +25,8 @@ export default {
             meta: {
                 title: '即时通信',
                 sidebar: false,
-                breadcrumb: false
+                breadcrumb: false,
+                auth: ['permission.access', 'permission.edit']
             }
         },
         {

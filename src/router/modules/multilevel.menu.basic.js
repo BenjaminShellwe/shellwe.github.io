@@ -55,7 +55,8 @@ export default {
                     meta: {
                         title: '个人字典',
                         sidebar: false,
-                        breadcrumb: false
+                        breadcrumb: false,
+                        auth: ['permission.access', 'permission.edit']
                     }
                 },
                 {
@@ -117,7 +118,8 @@ export default {
                     meta: {
                         title: '企业账户',
                         sidebar: true,
-                        breadcrumb: true
+                        breadcrumb: true,
+                        auth: ['permission.access']
                     //    前端功能要求1 根据登录账户判断是否为改角色 完善访问路径和交互页面
                     //    后端功能要求1 实现 角色,权限,用户,绩效,背调 功能 人员管理
                     //    后端2 企业基础信息及设置
@@ -131,7 +133,8 @@ export default {
                         title: '安全设置',
                         sidebar: true,
                         breadcrumb: true,
-                        auth: ['permission.access']
+                        auth: ['permission.edit']
+
                     }
                 }
             ]
@@ -189,7 +192,8 @@ export default {
                     meta: {
                         title: '数据脱敏',
                         sidebar: true,
-                        breadcrumb: true
+                        breadcrumb: true,
+                        auth: ['permission.access', 'permission.edit']
                         //    前端功能要求1 完善访问路径和交互页面
                         //    后端功能要求1 数据脱敏
                     }

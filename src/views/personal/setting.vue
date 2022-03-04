@@ -54,10 +54,16 @@
                             <el-col :span="16">
                                 <div>
                                     <el-card shadow="hover">
-                                        <div slot="header">
-                                            <span>基本资料</span>
-                                            <el-button v-show="editable" type="primary" size="mini" @click="changeEditable(1)">编辑</el-button>
-                                            <el-button v-show="done" type="success" size="mini" @click="changeEditable(0)">完成</el-button>
+                                        <div slot="header" style="display: inline;">
+                                            <el-row :gutter="2">
+                                                <el-col :span="20">
+                                                    <span style="font-size: 14px;">基本资料</span>
+                                                </el-col>
+                                                <el-col :span="2">
+                                                    <el-button v-show="editable" style="margin: 0; padding: 5px 5px 5px 5px;" type="primary" @click="changeEditable(1)">编辑</el-button>
+                                                    <el-button v-show="done" style="margin: 0; padding: 5px 5px 5px 5px;" type="success" @click="changeEditable(0)">完成</el-button>
+                                                </el-col>
+                                            </el-row>
                                         </div>
                                         <div>
                                             <el-form v-model="pageDataForm" label-width="100px" size="small" label-position="right">
@@ -157,17 +163,6 @@
                 </el-tab-pane>
             </el-tabs>
         </page-main>
-        <el-dialog
-            title="来自shellwe的警告"
-            :visible.sync="dialogVisible"
-            width="30%"
-        >
-            <span>开发中 暂时拒绝提交至后台 数据未更改</span>
-            <span slot="footer" class="dialog-footer">
-                <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
-                <el-button type="primary" @click="dialogVisible = false">明 白</el-button>
-            </span>
-        </el-dialog>
     </div>
 </template>
 
@@ -185,6 +180,7 @@ export default {
     props: {},
     data() {
         return {
+            pagePropsValueUni: {},
             pageQueryValue: this.$store.state.user.id,
             pageDataForm: {
                 realName: 'Benjamin Thomas Shellwe',
@@ -224,10 +220,9 @@ export default {
         }
     },
     created() {
-        this.handleQueryValue()
     },
     mounted() {
-
+        this.handleQueryValue()
     },
     methods: {
         back() {
@@ -250,9 +245,24 @@ export default {
                 this.done = !this.done
                 this.editable = !this.editable
             } else {
-                this.dialogVisible = true
                 this.done = !this.done
                 this.editable = !this.editable
+                console.log(this.pageDataForm)
+                this.pagePropsValueUni = this.pageDataForm
+                axios({
+                    method: 'post',
+                    url: '/queryInfo/update/personal',
+                    data: this.pagePropsValueUni
+                }).then(response => {
+                    this.$notify({
+                        title: response.data.code,
+                        message: response.data.msg,
+                        type: response.data.data,
+                        duration: 6500
+                    })
+                }).catch(error => {
+                    console.log(error)
+                })
             }
         },
         handleQueryValue() {

@@ -534,7 +534,7 @@
                             <el-table-column
                                 align="right"
                                 fixed="right"
-                                width="100px"
+                                width="110px"
                             >
                                 <template #header>
                                     <el-input
@@ -569,7 +569,7 @@
                     </el-card>
                     <br>
                     <el-card shadow="hover" style="margin: 10px 10px 10px 10px;">
-                        <div slot="header" >
+                        <div slot="header">
                             <span>企业部门信息调整</span>
                             <el-button style="float: right; padding: 3px 0;" type="text" @click="handleQueryValue">刷 新</el-button>
                         </div>
