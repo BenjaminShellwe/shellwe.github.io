@@ -902,9 +902,15 @@ export default {
                         method: 'post',
                         url: '/vacancy/addNewVacancy',
                         data: this.pageForm
-                    }).then(function(response) {
+                    }).then(response => {
                         console.log(response)
-                    }).catch(function(error) {
+                        this.$notify({
+                            title: response.data.code,
+                            msg: response.data.msg,
+                            type: 'success'
+                        })
+                        this.pageForm = []
+                    }).catch(error => {
                         console.log(error)
                     })
                 } else {
@@ -1114,7 +1120,6 @@ export default {
                         msg: '操作成功提交',
                         type: 'success'
                     })
-
                 }).catch(error => {
                     console.log(error)
                 })

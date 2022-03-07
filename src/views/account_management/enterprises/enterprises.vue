@@ -75,11 +75,69 @@
                         </el-descriptions>
                     </el-card>
                     <el-row>
+                        <el-row v-show="pageRowVisibleUni" :gutter="10" style="margin-top: 5px;">
+                            <el-col>
+                                <el-card shadow="hover">
+                                    <div slot="header" class="clearfix">
+                                        <span>个人信息</span>
+                                        <el-button style="float: right; padding: 3px 0;" type="text">操作</el-button>
+                                    </div>
+                                    <el-descriptions class="margin-top" :column="3" :size="size" border>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <i class="el-icon-user" />
+                                                职员姓名
+                                            </template>
+                                            {{ pageValueUni.realName }}
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <i class="el-icon-mobile" />
+                                                工作电话
+                                            </template>
+                                            {{ pageValueUni.phone }}
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <svg-icon name="representative" />
+                                                所属职位
+                                            </template>
+                                            <el-tag size="small">{{ pageValueUni.position }}</el-tag>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <i class="el-icon-location-outline" />
+                                                备注信息
+                                            </template>
+                                            {{ pageValueUni.remarks }}
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <i class="el-icon-tickets" />
+                                                企业名称
+                                            </template>
+                                            <el-tag size="small">{{ pageValueUni.enterpriseName }}</el-tag>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                                <i class="el-icon-office-building" />
+                                                账号状态
+                                            </template>
+                                            {{ pageValueUni.status }}
+                                        </el-descriptions-item>
+                                    </el-descriptions>
+                                </el-card>
+                            </el-col>
+                        </el-row>
                         <el-col :span="12">
                             <el-card shadow="hover" style="margin-top: 5px; margin-right: 5px;">
+                                <div slot="header" class="clearfix">
+                                    <span>员工状态</span>
+                                    <el-button style="float: right; padding: 3px 0;" type="text">操作</el-button>
+                                </div>
                                 <el-table
-                                    :data="pageTableData.filter(data => !pageSearch || data.name.toLowerCase().includes(pageSearch.toLowerCase()))"
-                                    style="width: 100%;"
+                                    :data="pageTableData.filter(data => !pageSearch || data.userID.toLowerCase().includes(pageSearch.toLowerCase()))"
+                                    style="width: 100%; height: 373px;"
                                 >
                                     <el-table-column
                                         label="职员ID"
@@ -95,12 +153,13 @@
                                     />
                                     <el-table-column
                                         align="right"
+                                        fixed="right"
                                     >
-                                        <template slot="header">
+                                        <template #header>
                                             <el-input
                                                 v-model="pageSearch"
                                                 size="mini"
-                                                placeholder="输入关键字搜索"
+                                                placeholder="输入职员ID字搜索"
                                                 style="width: 135px;"
                                             />
                                         </template>
@@ -110,68 +169,21 @@
                         </el-col>
                         <el-col :span="12">
                             <el-card shadow="hover" style="margin-top: 5px; margin-left: 5px;">
-                                <div class="Echarts">
-                                    <div id="chartsUni" style="width: 705px; height: 373px;" />
+                                <div slot="header" class="clearfix">
+                                    <span>组织树图</span>
+                                    <el-button style="float: right; padding: 3px 0;" type="text">操作</el-button>
                                 </div>
+                                <el-row>
+                                    <div class="Echarts">
+                                        <div id="chartsUni" style="width: 705px; height: 373px;" />
+                                    </div>
+                                </el-row>
                             </el-card>
                         </el-col>
                     </el-row>
                 </el-col>
             </el-row>
-            <el-row v-show="pageRowVisibleUni" :gutter="10" style="margin-bottom: 5px;">
-                <el-col>
-                    <el-card shadow="hover">
-                        <el-descriptions class="margin-top" title="企业职员信息" :column="3" :size="size" border>
-                            <template slot="extra">
-                                <el-button type="primary" size="small" @click="reload(2)">刷 新</el-button>
-                            </template>
-                            <el-descriptions-item>
-                                <template slot="label">
-                                    <i class="el-icon-user" />
-                                    职员姓名
-                                </template>
-                                {{ pageValueUni.realName }}
-                            </el-descriptions-item>
-                            <el-descriptions-item>
-                                <template slot="label">
-                                    <i class="el-icon-mobile" />
-                                    工作电话
-                                </template>
-                                {{ pageValueUni.phone }}
-                            </el-descriptions-item>
-                            <el-descriptions-item>
-                                <template slot="label">
-                                    <svg-icon name="representative" />
-                                    所属职位
-                                </template>
-                                <el-tag size="small">{{ pageValueUni.position }}</el-tag>
-                            </el-descriptions-item>
-                            <el-descriptions-item>
-                                <template slot="label">
-                                    <i class="el-icon-location-outline" />
-                                    备注信息
-                                </template>
-                                {{ pageValueUni.remarks }}
-                            </el-descriptions-item>
-                            <el-descriptions-item>
-                                <template slot="label">
-                                    <i class="el-icon-tickets" />
-                                    企业名称
-                                </template>
-                                <el-tag size="small">{{ pageValueUni.enterpriseName }}</el-tag>
-                            </el-descriptions-item>
-                            <el-descriptions-item>
-                                <template slot="label">
-                                    <i class="el-icon-office-building" />
-                                    账号状态
-                                </template>
-                                {{ pageValueUni.status }}
-                            </el-descriptions-item>
-                        </el-descriptions>
-                    </el-card>
-                </el-col>
-            </el-row>
-            <el-row v-show="pageRowVisible" style="margin-bottom: 5px;">
+            <el-row v-show="false" style="margin-bottom: 5px;">
                 <el-col>
                     <el-card shadow="hover">
                         <el-tabs title="行政管理(仅是展示)">
@@ -369,28 +381,29 @@
             </el-row>
             <el-row v-show="pageRowVisible" style="margin-bottom: 5px;">
                 <el-col :span="12">
-                    <el-card shadow="hover" style="margin-right: 5px;">
+                    <!--                员工信息录入    -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
                         <div slot="header" class="clearfix">
                             <span>员工录入 (点击右边进行操作)</span>
                             <el-button style="float: right; padding: 3px 0;" type="text" @click="pageTemplateShowUni = !pageTemplateShowUni">录入操作</el-button>
                         </div>
-                        <el-card v-show="pageTemplateShowUni" shadow="hover" body-style="padding: 10px 0 10px 0;" style="margin: 10px 0 10px 0;">
+                        <el-card v-show="pageTemplateShowUni" shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
                             <!--       :rules="rules"                     -->
                             <el-form ref="form" v-model="pageRuleForm" :model="pageRuleForm" inline="inline" label-width="75px" size="mini">
                                 <el-row>
-                                    <el-col :span="21">
+                                    <el-col :span="22">
                                         <el-row>
-                                            <el-form-item label="员工账户" :fit="true" style="margin: 15px 0 15px 0; width: 220px;">
+                                            <el-form-item label="员工账户" :fit="true" style="margin: 2px 0 2px 0; width: 220px; height: 25px;">
                                                 <el-select
                                                     v-model="pageRuleForm.userID"
                                                     filterable
                                                     allow-create
                                                     remote
                                                     reserve-keyword
-                                                    placeholder="查询新建"
+                                                    placeholder="输入进行查询或者新建"
                                                     :remote-method="handleRemoteMethod"
                                                     :loading="pageLoading"
-                                                    style="width: 140px;"
+                                                    style="width: 145px;"
                                                     size="small"
                                                 >
                                                     <el-option
@@ -401,23 +414,23 @@
                                                     />
                                                 </el-select>
                                             </el-form-item>
-                                            <el-form-item label="员工性别" prop="sex" :fit="true" style="margin: 15px 0 15px 0; width: 190px;">
-                                                <el-select v-model="pageRuleForm.sex" placeholder="请选择" style="width: 85px;">
+                                            <el-form-item label="员工性别" prop="sex" :fit="true" style="margin: 2px 0 2px 0; width: 220px; height: 20px;">
+                                                <el-select v-model="pageRuleForm.sex" placeholder="请选择" style="width: 145px;">
                                                     <el-option label="先生" value="woman" />
                                                     <el-option label="女士" value="man" />
                                                 </el-select>
                                             </el-form-item>
-                                            <el-form-item label="员工部门" prop="department" :fit="true" style="margin: 15px 0 15px 0; width: 190px;">
+                                            <el-form-item label="员工部门" prop="department" :fit="true" style="margin: 2px 0 2px 0; width: 220px;">
                                                 <el-select
                                                     v-model="pageSelectValueUni"
                                                     filterable
                                                     allow-create
                                                     remote
                                                     reserve-keyword
-                                                    placeholder="查询部门"
+                                                    placeholder="输入进行部门查询"
                                                     :remote-method="handleRemoteMethodUni"
                                                     :loading="pageLoading"
-                                                    style="width: 110px;"
+                                                    style="width: 145px; height: 20px;"
                                                     size="small"
                                                 >
                                                     <el-option
@@ -430,14 +443,14 @@
                                             </el-form-item>
                                         </el-row>
                                         <el-row>
-                                            <el-form-item label="员工姓名" :fit="true" style="margin: 15px 0 15px 0; width: 220px;">
-                                                <el-input v-model="pageRuleForm.userRealName" :placeholder="handleGetName(pageRuleForm.userID)" style="width: 140px;" disabled />
+                                            <el-form-item label="员工姓名" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-input v-model="pageRuleForm.userRealName" :placeholder="handleGetName(pageRuleForm.userID)" style="width: 145px;" disabled />
                                             </el-form-item>
-                                            <el-form-item label="企业标识" :fit="true" style="margin: 15px 0 15px 0; width: 195px;">
-                                                <el-input v-model="pageRuleForm.enterpriseID" placeholder="自动装载" style="width: 115px;" disabled />
+                                            <el-form-item label="企业标识" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-input v-model="pageRuleForm.enterpriseID" placeholder="输入账户自动装载" style="width: 145px;" disabled />
                                             </el-form-item>
-                                            <el-form-item label="企业名称" :fit="true" style="margin: 15px 0 15px 0; width: 190px;">
-                                                <el-input v-model="pageRuleForm.enterprise" placeholder="自动装载" style="width: 110px;" disabled />
+                                            <el-form-item label="企业名称" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-input v-model="pageRuleForm.enterprise" placeholder="输入账户自动装载" style="width: 145px;" disabled />
                                             </el-form-item>
                                         </el-row>
                                         <el-row>
@@ -447,137 +460,188 @@
                                                 :prop="index"
                                                 :label="item"
                                                 :fit="true"
-                                                style="margin: 15px 0 15px 0; width: 200px;"
+                                                style="margin: 5px 0 5px 0; width: 220px;"
                                             >
-                                                <el-input v-model="pageRuleForm[index]" :name="index" :placeholder="index" style="width: 110px;" />
+                                                <el-input v-model="pageRuleForm[index]" :name="index" :placeholder="index" style="width: 145px;" />
                                             </el-form-item>
-                                            <el-form-item label="立即审核" :fit="true" style="margin: 15px 0 15px 0; width: 200px;">
-                                                <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="20" />
+                                            <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 200px;">
+                                                <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="19" />
                                             </el-form-item>
                                         </el-row>
                                         <el-row>
-                                            <el-form-item label="出生日期" :fit="true" style="margin: 15px 0 15px 0; width: 200px;">
-                                                <el-date-picker v-model="pageRuleForm.birth" type="date" style="width: 125px;" :picker-options="pickerOptions" placeholder="请选择日期" />
+                                            <el-form-item label="出生日期" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-date-picker v-model="pageRuleForm.birth" type="date" style="width: 145px;" :picker-options="pickerOptions" placeholder="请选择日期" />
                                             </el-form-item>
-                                            <el-form-item label="入职日期" :fit="true" style="margin: 15px 0 15px 0; width: 200px;">
-                                                <el-date-picker v-model="pageRuleForm.entry" type="date" style="width: 125px;" :picker-options="pickerOptions" placeholder="请选择日期" />
+                                            <el-form-item label="入职日期" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-date-picker v-model="pageRuleForm.entry" type="date" style="width: 145px;" :picker-options="pickerOptions" placeholder="请选择日期" />
                                             </el-form-item>
-                                            <el-form-item label="审核人员" :fit="true" style="margin: 15px 0 15px 0; width: 200px;">
-                                                <el-switch v-model="pageSwitchValueUni" active-text="自动读取" :width="20" />
+                                            <el-form-item label="审核人员" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-switch v-model="pageSwitchValueUni" active-text="自动读取" :width="19" disabled/>
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
+                                            <el-form-item label="基础权限" label-width="75px;" :fit="true">
+                                                <el-row>
+                                                    <el-col style="width: 80px;">
+                                                        <el-checkbox v-model="checkAllUni" :indeterminate="isIndeterminate" border @change="handleCheckAllBasic">全选</el-checkbox>
+                                                    </el-col>
+                                                    <el-col style="width: 420px;">
+                                                        <el-checkbox-group v-model="basicCheckedAuthorities" @change="handleCheckedBasicChange">
+                                                            <el-checkbox-button v-for="basic in basicAuthorities" :key="basic" :label="basic">{{ basic }}</el-checkbox-button>
+                                                        </el-checkbox-group>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
+                                            <el-form-item label="高级权限" label-width="75px;" :fit="true">
+                                                <el-row>
+                                                    <el-col style="width: 80px;">
+                                                        <el-checkbox v-model="checkAllBin" :indeterminate="isIndeterminate" border @change="handleCheckAllAdvance">全选</el-checkbox>
+                                                    </el-col>
+                                                    <el-col style="width: 420px;">
+                                                        <el-checkbox-group v-model="advanceCheckedAuthorities" @change="handleCheckedAdvanceChange">
+                                                            <el-checkbox-button v-for="advance in advanceAuthorities" :key="advance" :label="advance">{{ advance }}</el-checkbox-button>
+                                                        </el-checkbox-group>
+                                                    </el-col>
+                                                </el-row>
                                             </el-form-item>
                                         </el-row>
                                     </el-col>
-                                    <el-col :span="1">
-                                        <el-form-item size="mini" style="margin: 5px 5px 5px 5px;">
-                                            <el-row style="margin-bottom: 10px;">
+                                    <el-col :span="2">
+                                        <el-form-item size="mini">
+                                            <el-row>
                                                 <!--handleUpdate(pageRuleForm)-->
-                                                <el-button type="primary" @click="handleConsole(pageRuleForm)">完成</el-button>
+                                                <el-button type="primary" style="margin: 3px 0 3px 2px;" @click="handleConsole(pageRuleForm)">完成</el-button>
                                             </el-row>
-                                            <el-row style="margin-top: 10px;">
-                                                <el-button @click="pageTemplateShowUni = false, pageRuleForm = {}">取消</el-button>
+                                            <el-row>
+                                                <el-button style="margin: 5px 0 3px 2px;" @click="pageTemplateShowUni = false, pageRuleForm = {}">取消</el-button>
                                             </el-row>
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
                             </el-form>
                         </el-card>
-                        <el-card v-show="false" shadow="hover">
-
-                        </el-card>
                     </el-card>
+                    <!--                行政部门录入    -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">行政部门录入(开发中)</el-card>
                 </el-col>
                 <el-col :span="12">
-                    <el-card shadow="hover" style="margin-left: 5px;">
+                    <!--                员工信息更改    -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
                         <div slot="header" class="clearfix">
                             <span>信息更改 (点击右边进行操作)</span>
                             <el-button style="float: right; padding: 3px 0;" type="text" @click="pageTemplateShowBin = !pageTemplateShowBin">修改操作</el-button>
                         </div>
                         <el-row v-show="pageTemplateShowBin">
-                            <el-row>
-                                <el-table
-                                    :data="pageTableData.filter(data => !pageSearch || data.name.toLowerCase().includes(pageSearch.toLowerCase()))"
-                                    style="width: 100%; height: 150px;"
-                                >
-                                    <el-table-column
-                                        label="职员ID"
-                                        prop="userID"
-                                    />
-                                    <el-table-column
-                                        label="职员名称"
-                                        prop="realName"
-                                    />
-                                    <el-table-column
-                                        align="right"
-                                    >
-                                        <template slot="header">
-                                            <el-input
-                                                v-model="pageSearch"
-                                                size="mini"
-                                                placeholder="输入关键字搜索"
-                                                style="width: 135px;"
-                                            />
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
-                            </el-row>
-                            <el-row>
-                                <el-form v-model="pageDataForm" label-width="80px" size="small" inline="inline" label-position="right">
+                            <el-card shadow="hover" body-style="padding: 10px 0 10px 0;">
+                                <el-form v-model="pageDataForm" label-width="75px" size="small" inline="inline" label-position="right">
                                     <el-row>
-                                        <el-form-item
-                                            v-for="(item, index) in pageRuleFormHeader"
-                                            :key="index"
-                                            :prop="index"
-                                            :label="item"
-                                            :fit="true"
-                                            style="margin: 15px 0 15px 0; width: 180px;"
+                                        <el-table
+                                            :data="pageTableData.filter(data => !pageSearchUni || data.userID.toLowerCase().includes(pageSearchUni.toLowerCase()))"
+                                            style="width: 100%; height: 150px;"
                                         >
-                                            <el-input v-model="pageRuleForm[index]" :name="index" :placeholder="index" style="width: 100px;" />
-                                        </el-form-item>
+                                            <el-table-column
+                                                label="职员ID"
+                                                prop="userID"
+                                            />
+                                            <el-table-column
+                                                label="职员名称"
+                                                prop="realName"
+                                            />
+                                            <el-table-column
+                                                align="right"
+                                            >
+                                                <template #header>
+                                                    <el-input
+                                                        v-model="pageSearchUni"
+                                                        size="mini"
+                                                        placeholder="输入关键字搜索"
+                                                        style="width: 135px;"
+                                                    />
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
                                     </el-row>
                                     <el-row>
-                                        <el-form-item label="用户性别" prop="phone" style="margin: 15px 0 15px 0; width: 180px;">
-                                            <el-select v-model="value" :placeholder="pageDataForm.sex" style="width: 100px;">
-                                                <el-option
-                                                    v-for="item in options"
-                                                    :key="item.value"
-                                                    :label="item.label"
-                                                    :value="item.value"
-                                                />
-                                            </el-select>
-                                        </el-form-item>
-                                        <el-form-item label="所属公司" prop="homeUrl" style="margin: 15px 0 15px 0; width: 230px;">
-                                            <el-input v-model="pageDataForm.enterprise" :placeholder="pageDataForm.enterprise" maxlength="18" style="width: 150px;" />
-                                        </el-form-item>
-                                        <el-form-item size="mini" style="margin: 15px 15px 15px 15px;">
-                                            <el-row style="margin-bottom: 10px;">
-                                                <!--handleUpdate(pageRuleForm)-->
-                                                <el-button type="primary" @click="handleConsole(pageDataForm)">完成</el-button>
-                                                <el-button @click="pageTemplateShowBin = false, pageDataForm = {}">取消</el-button>
+                                        <el-col :span="22">
+                                            <el-row>
+                                                <el-form-item
+                                                    v-for="(item, index) in pageRuleFormHeader"
+                                                    :key="index"
+                                                    :prop="index"
+                                                    :label="item"
+                                                    :fit="true"
+                                                    style="margin: 2px 0 2px 0; width: 220px;"
+                                                >
+                                                    <el-input v-model="pageRuleForm[index]" :name="index" :placeholder="index" style="width: 145px;" />
+                                                </el-form-item>
                                             </el-row>
-                                        </el-form-item>
+                                            <el-row>
+                                                <el-form-item label="用户性别" prop="sex" style="margin: 2px 0 2px 0; width: 220px;">
+                                                    <el-select v-model="value" :placeholder="pageDataForm.sex" style="width: 145px;">
+                                                        <el-option
+                                                            v-for="item in options"
+                                                            :key="item.value"
+                                                            :label="item.label"
+                                                            :value="item.value"
+                                                        />
+                                                    </el-select>
+                                                </el-form-item>
+                                                <el-form-item label="所属公司" prop="homeUrl" style="margin: 2px 0 2px 0; width: 220px;">
+                                                    <el-input v-model="pageDataForm.enterprise" :placeholder="pageDataForm.enterprise" maxlength="30" style="width: 145px;" />
+                                                </el-form-item>
+                                            </el-row>
+                                            <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
+                                                <el-form-item label="基础权限" label-width="75px;" :fit="true">
+                                                    <el-row>
+                                                        <el-col style="width: 80px;">
+                                                            <el-checkbox v-model="checkAllTer" :indeterminate="isIndeterminate" border @change="handleCheckAllBasicUni">全选</el-checkbox>
+                                                        </el-col>
+                                                        <el-col style="width: 420px;">
+                                                            <el-checkbox-group v-model="basicCheckedAuthoritiesUni" @change="handleCheckedBasicChangeUni">
+                                                                <el-checkbox-button v-for="basic in basicAuthorities" :key="basic" :label="basic">{{ basic }}</el-checkbox-button>
+                                                            </el-checkbox-group>
+                                                        </el-col>
+                                                    </el-row>
+                                                </el-form-item>
+                                            </el-row>
+                                            <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
+                                                <el-form-item label="高级权限" label-width="75px;" :fit="true">
+                                                    <el-row>
+                                                        <el-col style="width: 80px;">
+                                                            <el-checkbox v-model="checkAllQua" :indeterminate="isIndeterminate" border @change="handleCheckAllAdvanceUni">全选</el-checkbox>
+                                                        </el-col>
+                                                        <el-col style="width: 420px;">
+                                                            <el-checkbox-group v-model="advanceCheckedAuthoritiesUni" @change="handleCheckedAdvanceChangeUni">
+                                                                <el-checkbox-button v-for="advance in advanceAuthorities" :key="advance" :label="advance">{{ advance }}</el-checkbox-button>
+                                                            </el-checkbox-group>
+                                                        </el-col>
+                                                    </el-row>
+                                                </el-form-item>
+                                            </el-row>
+                                        </el-col>
+                                        <el-col :span="2">
+                                            <el-form-item size="mini">
+                                                <el-row>
+                                                    <!--handleUpdate(pageRuleForm)-->
+                                                    <el-button type="primary" style="margin: 6px 0 3px;" @click="handleConsole(pageDataForm)">完成</el-button>
+                                                </el-row>
+                                                <el-row>
+                                                    <el-button style="margin: 6px 0 3px;" @click="pageTemplateShowUni = false, pageRuleForm = {}">取消</el-button>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-col>
                                     </el-row>
-                                    <el-card shadow="hover" style="margin-bottom: 1px;">
-                                        <span>企业基础权限</span>
-                                        <div style="margin: 0 0;" />
-                                        <el-checkbox v-model="checkAll1" :indeterminate="isIndeterminate" @change="handleCheckAllBasic">全选</el-checkbox>
-                                        <el-checkbox-group v-model="basicCheckedAuthorities" @change="handleCheckedBasicChange">
-                                            <el-checkbox v-for="basic in basicAuthorities" :key="basic" :label="basic">{{ basic }}</el-checkbox>
-                                        </el-checkbox-group>
-                                    </el-card>
-                                    <el-card shadow="hover" style="margin-bottom: 0;">
-                                        <span>企业高级权限</span>
-                                        <div style="margin: 0 0;" />
-                                        <el-checkbox v-model="checkAll2" :indeterminate="isIndeterminate" @change="handleCheckAllAdvance">全选</el-checkbox>
-                                        <el-checkbox-group v-model="advanceCheckedAuthorities" @change="handleCheckedAdvanceChange">
-                                            <el-checkbox v-for="advance in advanceAuthorities" :key="advance" :label="advance">{{ advance }}</el-checkbox>
-                                        </el-checkbox-group>
-                                    </el-card>
                                 </el-form>
-                            </el-row>
+                            </el-card>
                         </el-row>
                     </el-card>
+                    <!--                部门信息更改    -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">部门信息更改(开发中)</el-card>
                 </el-col>
             </el-row>
+            <!--        员工信息页面    -->
             <el-row v-show="pageRowVisibleUni">
                 <el-col>
                     <el-card>
@@ -948,7 +1012,7 @@ export default {
     data() {
         return {
             pageSwitchValue: false,
-            pageSwitchValueUni: false,
+            pageSwitchValueUni: true,
             pageTemplateShowUni: true,
             pageTemplateShowBin: true,
             dialogVisible: false,
@@ -964,6 +1028,7 @@ export default {
             pageSelectValueUni: [],
             size: 'small',
             pageSearch: '',
+            pageSearchUni: '',
             pageLoading: false,
             options: [],
             optionsUni: [],
@@ -973,14 +1038,20 @@ export default {
             listUni: [],
             value: '',
             checkAll: false,
-            checkAll1: false,
-            checkAll2: false,
+            checkAllUni: false,
+            checkAllBin: false,
+            checkAllTer: false,
+            checkAllQua: false,
             checkedCities: ['上海', '北京'],
             cities: cityOptions,
             basicCheckedAuthorities: ['基本读取', '基本增加', '基本修改'],
             advanceCheckedAuthorities: [],
+            basicCheckedAuthoritiesUni: ['基本读取', '基本增加', '基本修改'],
+            advanceCheckedAuthoritiesUni: [],
             basicAuthorities: basicAuthority,
             advanceAuthorities: advanceAuthority,
+            basicAuthoritiesUni: basicAuthority,
+            advanceAuthoritiesUni: advanceAuthority,
             isIndeterminate: true,
             pageEnterpriseNotice: [{}],
             pickerOptions: {
@@ -1070,7 +1141,13 @@ export default {
                     { required: true, message: '请输入政治面貌', trigger: 'blur' }
                 ]
             },
-            pageTableData: [{}],
+            pageTableData: [
+                {
+                    userID: '',
+                    status: '',
+                    realName: ''
+                }
+            ],
             pageValue: {
                 enterpriseID: '数据脱敏处理Example',
                 name: '数据脱敏处理Example',
@@ -1156,6 +1233,7 @@ export default {
                             }).then(function(response) {
                                 // console.log(response)
                                 that.pageTableData = response.data.data
+                                // console.log(that.pageTableData)
                             }).catch(function(error) {
                                 console.log(error)
                             })
@@ -1497,19 +1575,37 @@ export default {
             this.basicCheckedAuthorities = val ? basicAuthority : []
             this.isIndeterminate = false
         },
+        handleCheckAllBasicUni(val) {
+            this.basicCheckedAuthoritiesUni = val ? basicAuthority : []
+            this.isIndeterminate = false
+        },
         handleCheckedBasicChange(value) {
             let checkedCount1 = value.length
             this.checkAll = checkedCount1 === this.basicAuthorities.length
             this.isIndeterminate = checkedCount1 > 0 && checkedCount1 < this.basicAuthorities.length
         },
+        handleCheckedBasicChangeUni(value) {
+            let checkedCount1 = value.length
+            this.checkAll = checkedCount1 === this.basicAuthorities.length
+            this.isIndeterminate = checkedCount1 > 0 && checkedCount1 < this.basicAuthoritiesUni.length
+        },
         handleCheckAllAdvance(val) {
             this.advanceCheckedAuthorities = val ? advanceAuthority : []
+            this.isIndeterminate = false
+        },
+        handleCheckAllAdvanceUni(val) {
+            this.advanceCheckedAuthoritiesUni = val ? advanceAuthority : []
             this.isIndeterminate = false
         },
         handleCheckedAdvanceChange(value) {
             let checkedCount2 = value.length
             this.checkAll = checkedCount2 === this.advanceAuthorities.length
             this.isIndeterminate = checkedCount2 > 0 && checkedCount2 < this.advanceAuthorities.length
+        },
+        handleCheckedAdvanceChangeUni(value) {
+            let checkedCount2 = value.length
+            this.checkAll = checkedCount2 === this.advanceAuthoritiesUni.length
+            this.isIndeterminate = checkedCount2 > 0 && checkedCount2 < this.advanceAuthoritiesUni.length
         },
         deleteRow(index, rows) {
             rows.splice(index, 1)
@@ -1529,7 +1625,7 @@ export default {
         },
         handleGetName(val) {
             if (val == '') {
-                return '输入账户会自动查询'
+                return '输入账户即可自动查询'
             }
             return this.pageRuleForm.userRealName = val
         },
@@ -1543,8 +1639,15 @@ export default {
 .hover {
     cursor: pointer;
 }
-.pageStyle {
-    margin-left: 5px;
-    margin-bottom: 5px;
+.el-select .el-input__inner {
+    height: 26px;
+    padding: 0 6px;
+}
+.el-input .el-input__inner {
+    height: 26px;
+    padding: 0 6px;
+}
+.el-input .el-input__icon {
+    padding: 0 0 0 120px;
 }
 </style>

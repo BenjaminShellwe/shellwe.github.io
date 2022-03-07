@@ -60,7 +60,8 @@
 
             <br>
         </page-main>
-        <page-main v-show="isShow" title="按类型查看与修改">
+        <!--   按类型查看与修改     -->
+        <page-main v-show="isShow" title="按类型查看">
             <el-row>
                 <el-col :span="2">
                     <Auth :value="'permission.edit'" style="display: inline-block; padding: 0 0 0 0; margin: 0 0 0 0;">
@@ -75,12 +76,12 @@
                     <el-alert title="编辑模式按钮允许你进行修改规则,但请先点击左下方左侧栏加载,删除规则请到全部字典信息表中操作" type="info" style="margin-bottom: 20px;" />
                 </el-col>
             </el-row>
-            <el-tabs tab-position="left" @tab-click="handleQueryUID">
-                <el-tab-pane v-for="(item, index) in pageTabValue" :key="index" :label="item" :name="index">
+            <el-tabs tab-position="left" style="max-height: 310px; overflow-y: auto; overflow-x: hidden;" @tab-click="handleQueryUID">
+                <el-tab-pane v-for="(item, index) in pageTabValue" :key="index" :label="item" :name="index" style="min-height: 315px; overflow-y: auto; overflow-x: hidden;">
                     <span style="margin: 5px 0 15px 0;">当前操作: {{ item }} - {{ index }}</span>
                     <el-row style="margin-top: 10px;">
                         <el-col v-for="(indexUni) in pageQueryUID.length" :key="indexUni" :span="4">
-                            <el-card shadow="hover" body-style="padding: 5px 5px 5px 5px;" style="margin: 5px 5px 5px 5px;">
+                            <el-card shadow="hover" body-style="padding: 2px;" style="margin: 2px;">
                                 <el-descriptions :title="item + pageQueryUID[indexUni-1].id" :name="pageQueryUID[indexUni-1].id" :column="1" size="mini" border>
                                     <el-descriptions-item label="GID">
                                         <el-input v-model="pageFormValue.GID" :placeholder="pageQueryUID[indexUni-1].prefix+pageQueryUID[indexUni-1].uniqueID" :disabled="editable" style="width: 100px;" size="mini" clearable />
@@ -622,8 +623,4 @@ export default {
 .inLine {
     display: inline-block;
 }
-.pageInputCSS {
-    width: 150px;
-}
-
 </style>
