@@ -78,7 +78,7 @@ public class VacancyController {
         }
         Result r = vacancyService.publish(vacancy);
         if (r.getCode() != 200){
-            return new Result(400, "Error!", "error");
+            return new Result(401, "Error!", "error");
         }
         return new Result(200, "success", "success");
     }
