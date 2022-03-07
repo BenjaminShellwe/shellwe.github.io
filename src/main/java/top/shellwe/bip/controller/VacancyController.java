@@ -76,11 +76,10 @@ public class VacancyController {
         } else {
             vacancy.setAffairID(object.getString("AffairID"));
         }
-
         Result r = vacancyService.publish(vacancy);
         if (r.getCode() != 200){
-            return new Result(400, "Error!");
+            return new Result(400, "Error!", "error");
         }
-        return r;
+        return new Result(200, "success", "success");
     }
 }
