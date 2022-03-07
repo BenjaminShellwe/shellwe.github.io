@@ -203,7 +203,7 @@
         >
             <el-form :inline="true" :model="pageFormList" label-width="200px" label-position="right" size="mini">
                 <div>
-                    <el-tooltip class="item" effect="dark" content="如果是组模板规制请在结尾添加_Type" placement="top">
+                    <el-tooltip class="item" effect="dark" content="如果是组模板规制请在结尾添加 _Type" placement="top">
                         <el-form-item label="类型代码/typeCode">
                             <el-input v-model="pageFormList.typeCode" :placeholder="pageFormList.typeCode" />
                         </el-form-item>
