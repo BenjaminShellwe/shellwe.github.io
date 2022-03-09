@@ -38,7 +38,7 @@ export default {
                 {
                     path: 'global_dic',
                     name: 'Dictionary_G',
-                    component: () => import('@/views/global_func_manage/data_dic/global_dic'),
+                    component: () => import('@/views/basic_functions/global_func_manage/data_dic/global_dic'),
                     meta: {
                         title: '数据字典',
                         sidebar: true,
@@ -51,7 +51,7 @@ export default {
                 {
                     path: 'personal_dic',
                     name: 'Dictionary_P',
-                    component: () => import('@/views/global_func_manage/data_dic/personal_dic'),
+                    component: () => import('@/views/basic_functions/global_func_manage/data_dic/personal_dic'),
                     meta: {
                         title: '个人字典',
                         sidebar: false,
@@ -62,7 +62,7 @@ export default {
                 {
                     path: 'notice',
                     name: 'Notification',
-                    component: () => import('@/views/global_func_manage/message/global_message'),
+                    component: () => import('@/views/basic_functions/global_func_manage/message/global_message'),
                     meta: {
                         title: '系统通知',
                         sidebar: true,
@@ -75,7 +75,7 @@ export default {
                 {
                     path: 'basic',
                     name: 'Basic',
-                    component: () => import('@/views/global_func_manage/basic_settings/basic'),
+                    component: () => import('@/views/basic_functions/global_func_manage/basic_settings/basic'),
                     meta: {
                         title: '基础设置',
                         sidebar: true,
@@ -102,7 +102,7 @@ export default {
                 {
                     path: 'personal',
                     name: 'Personal',
-                    component: () => import('@/views/personal/setting'),
+                    component: () => import('@/views/basic_functions/account_management/personal/setting'),
                     meta: {
                         title: '个人设置',
                         sidebar: true,
@@ -114,7 +114,7 @@ export default {
                 {
                     path: 'enterprises',
                     name: 'Enterprises',
-                    component: () => import('@/views/account_management/enterprises/enterprises'),
+                    component: () => import('@/views/basic_functions/account_management/enterprises/enterprises'),
                     meta: {
                         title: '企业账户',
                         sidebar: true,
@@ -128,7 +128,7 @@ export default {
                 {
                     path: 'security',
                     name: 'Security',
-                    component: () => import('@/views/account_management/security/security'),
+                    component: () => import('@/views/basic_functions/account_management/security/security'),
                     meta: {
                         title: '安全设置',
                         sidebar: true,
@@ -152,7 +152,7 @@ export default {
                 {
                     path: 'log',
                     name: 'Logging',
-                    component: () => import('@/views/monitor_manage/log/log'),
+                    component: () => import('@/views/basic_functions/monitor_manage/log/log'),
                     meta: {
                         title: '系统日志',
                         sidebar: true,
@@ -164,7 +164,7 @@ export default {
                 {
                     path: 'monitor',
                     name: 'Monitoring',
-                    component: () => import('@/views/monitor_manage/monitor/monitor'),
+                    component: () => import('@/views/basic_functions/monitor_manage/monitor/monitor'),
                     meta: {
                         title: '监控设置',
                         sidebar: true,
@@ -176,7 +176,7 @@ export default {
                 {
                     path: 'statistic',
                     name: 'Statistics',
-                    component: () => import('@/views/monitor_manage/statistic/statistic'),
+                    component: () => import('@/views/basic_functions/monitor_manage/statistic/statistic'),
                     meta: {
                         title: '数据统计',
                         sidebar: true,
@@ -188,7 +188,7 @@ export default {
                 {
                     path: 'desensitize',
                     name: 'Desensitization',
-                    component: () => import('@/views/monitor_manage/desensitize/desensitize'),
+                    component: () => import('@/views/basic_functions/monitor_manage/desensitize/desensitize'),
                     meta: {
                         title: '数据脱敏',
                         sidebar: true,

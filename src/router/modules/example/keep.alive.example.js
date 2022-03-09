@@ -15,7 +15,7 @@ export default {
         {
             path: 'page',
             name: 'keepAliveExamplePage',
-            component: () => import(/* webpackChunkName: 'keep_alive_example' */ '@/views/example/keep_alive_example/page'),
+            component: () => import(/* webpackChunkName: 'keep_alive_example' */ '@/views/extra_functions/example/keep_alive_example/page'),
             meta: {
                 title: '演示',
                 sidebar: false,
@@ -25,7 +25,7 @@ export default {
         {
             path: 'detail',
             name: 'keepAliveExampleDetail',
-            component: () => import(/* webpackChunkName: 'keep_alive_example' */ '@/views/example/keep_alive_example/detail'),
+            component: () => import(/* webpackChunkName: 'keep_alive_example' */ '@/views/extra_functions/example/keep_alive_example/detail'),
             meta: {
                 title: '同级路由',
                 sidebar: false,
@@ -44,7 +44,7 @@ export default {
                 {
                     path: '',
                     name: 'keepAliveExampleDetail2',
-                    component: () => import(/* webpackChunkName: 'keep_alive_example' */ '@/views/example/keep_alive_example/detail'),
+                    component: () => import(/* webpackChunkName: 'keep_alive_example' */ '@/views/extra_functions/example/keep_alive_example/detail'),
                     meta: {
                         title: '下级路由',
                         activeMenu: '/keep_alive_example'
@@ -62,7 +62,7 @@ export default {
                         {
                             path: '',
                             name: 'keepAliveExampleDetail3',
-                            component: () => import(/* webpackChunkName: 'keep_alive_example' */ '@/views/example/keep_alive_example/detail'),
+                            component: () => import(/* webpackChunkName: 'keep_alive_example' */ '@/views/extra_functions/example/keep_alive_example/detail'),
                             meta: {
                                 title: '下下级路由',
                                 activeMenu: '/keep_alive_example'

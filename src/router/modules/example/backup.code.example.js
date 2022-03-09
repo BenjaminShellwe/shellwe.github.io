@@ -15,7 +15,7 @@ export default {
         {
             path: 'page',
             name: 'multilevelMenuExample1',
-            component: () => import('@/views/multilevel_menu/foundation/foundation_sub/bankAccountManagement'),
+            component: () => import('@/views/extra_functions/multilevel_menu/foundation/foundation_sub/bankAccountManagement'),
             meta: {
                 title: '银行账户管理'
             }
@@ -32,7 +32,7 @@ export default {
                 {
                     path: 'page',
                     name: 'multilevelMenuExample2-1',
-                    component: () => import('@/views/personal/setting'),
+                    component: () => import('@/views/basic_functions/account_management/personal/setting'),
                     meta: {
                         title: '个人设置'
                     }
@@ -49,7 +49,7 @@ export default {
                         {
                             path: 'page1',
                             name: 'advancedAlert',
-                            component: () => import('@/views/multilevel_menu/foundation/foundation_sub/advancedAlert'),
+                            component: () => import('@/views/extra_functions/multilevel_menu/foundation/foundation_sub/advancedAlert'),
                             meta: {
                                 title: '特殊访问说明'
                             }
@@ -57,7 +57,7 @@ export default {
                         {
                             path: 'page2',
                             name: 'advancedSetting',
-                            component: () => import('@/views/multilevel_menu/foundation/foundation_sub/advancedSetting'),
+                            component: () => import('@/views/extra_functions/multilevel_menu/foundation/foundation_sub/advancedSetting'),
                             meta: {
                                 title: '高级用户管理'
                             }
@@ -65,7 +65,7 @@ export default {
                         {
                             path: 'page3',
                             name: 'forTest',
-                            component: () => import('@/views/multilevel_menu/foundation/serial/serial.vue'),
+                            component: () => import('@/views/extra_functions/multilevel_menu/foundation/serial/serial.vue'),
                             meta: {
                                 title: '流水测试入口(T)'
                             }
@@ -73,7 +73,7 @@ export default {
                         {
                             path: 'page5',
                             name: 'forTest1',
-                            component: () => import('@/views/multilevel_menu/foundation/serial/advancedFunc.vue'),
+                            component: () => import('@/views/extra_functions/multilevel_menu/foundation/serial/advancedFunc.vue'),
                             meta: {
                                 title: '测试入口(T)'
                             }
@@ -85,7 +85,7 @@ export default {
         {
             path: 'dept',
             name: 'deptFunction',
-            component: () => import('@/views/multilevel_menu/dept'),
+            component: () => import('@/views/extra_functions/multilevel_menu/dept'),
             meta: {
                 title: '归属部门管理'
             }

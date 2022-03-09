@@ -21,7 +21,7 @@ export default {
         {
             path: 'chat',
             name: 'ChatRoom',
-            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/global_func_manage/chat/chat'),
+            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/basic_functions/global_func_manage/chat/chat'),
             meta: {
                 title: '即时通信',
                 sidebar: false,
@@ -32,7 +32,7 @@ export default {
         {
             path: 'message',
             name: 'Message',
-            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/global_func_manage/message/message'),
+            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/basic_functions/global_func_manage/message/message'),
             meta: {
                 title: '站内通知',
                 sidebar: false,
@@ -52,7 +52,7 @@ export default {
                 {
                     path: 'list1',
                     name: 'ExampleList1',
-                    component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/example/breadcrumb_example/list1'),
+                    component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/extra_functions/example/breadcrumb_example/list1'),
                     meta: {
                         title: '列表1（平级模式）'
                     }
@@ -60,7 +60,7 @@ export default {
                 {
                     path: 'detail1',
                     name: 'ExampleDetail1',
-                    component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/example/breadcrumb_example/detail1'),
+                    component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/extra_functions/example/breadcrumb_example/detail1'),
                     meta: {
                         title: '详情1',
                         sidebar: false,
@@ -78,7 +78,7 @@ export default {
                     children: [
                         {
                             path: '',
-                            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/example/breadcrumb_example/list2'),
+                            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/extra_functions/example/breadcrumb_example/list2'),
                             meta: {
                                 title: '列表2（层级模式）',
                                 sidebar: false,
@@ -88,7 +88,7 @@ export default {
                         {
                             path: 'detail2',
                             name: 'ExampleDetail2',
-                            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/example/breadcrumb_example/detail2'),
+                            component: () => import(/* webpackChunkName: 'breadcrumb_example' */ '@/views/extra_functions/example/breadcrumb_example/detail2'),
                             meta: {
                                 title: '详情2',
                                 sidebar: false,

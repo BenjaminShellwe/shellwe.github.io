@@ -14,7 +14,7 @@ export default {
         {
             path: 'index',
             name: 'Index',
-            component: () => import('@/views/help/index'),
+            component: () => import('@/views/basic_help/index'),
             meta: {
                 title: '帮助说明',
                 sidebar: false,
@@ -26,7 +26,7 @@ export default {
         {
             path: 'manual',
             name: 'Manual',
-            component: () => import('@/views/help/manual'),
+            component: () => import('@/views/basic_help/manual'),
             meta: {
                 title: '使用手册',
                 sidebar: true,
@@ -38,7 +38,7 @@ export default {
         {
             path: 'online',
             name: 'Intelligence',
-            component: () => import('@/views/help/online'),
+            component: () => import('@/views/basic_help/online'),
             meta: {
                 title: '在线助理',
                 sidebar: true,
@@ -50,7 +50,7 @@ export default {
         {
             path: 'artificial',
             name: 'Artificiality',
-            component: () => import('@/views/help/artificial'),
+            component: () => import('@/views/basic_help/artificial'),
             meta: {
                 title: '人工客服',
                 sidebar: true,

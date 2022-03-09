@@ -23,7 +23,8 @@
                     <el-button type="primary" size="mini" @click="pageLogin('P')">启用企业个人账户</el-button>
                 </el-col>
             </el-row>
-            <el-row v-show="pageRowVisible" :gutter="10" style="margin-bottom: 5px;">
+            <!--     pageRowVisible       -->
+            <el-row v-show="true" :gutter="10" style="margin-bottom: 5px;">
                 <el-col>
                     <el-card shadow="hover">
                         <el-descriptions class="margin-top" title="企业基本信息" :column="3" :size="size" border>
@@ -183,7 +184,710 @@
                     </el-row>
                 </el-col>
             </el-row>
-            <el-row v-show="false" style="margin-bottom: 5px;">
+            <el-row v-show="pageRowVisible" style="margin-bottom: 5px;">
+                <el-col :span="12">
+                    <!--                员工信息录入    -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
+                        <div slot="header" class="clearfix">
+                            <span>员工录入 (点击右边进行操作)</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text" @click="pageTemplateShowUni = !pageTemplateShowUni">录入操作</el-button>
+                        </div>
+                        <el-card v-show="pageTemplateShowUni" shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
+                            <!--                            -->
+                            <el-form ref="pageEmployeeForm" v-model="pageEmployeeForm" :rules="rules" hide-required-asterisk="hide-required-asterisk" :model="pageEmployeeForm" inline="inline" label-width="75px" size="mini">
+                                <el-row>
+                                    <el-alert
+                                        title="所有信息都是必填 在输入账户后会自动查询姓名 输入部门时企业信息自动加载"
+                                        type="error"
+                                        style="margin: 5px 0;"
+                                    />
+                                    <el-col :span="22">
+                                        <el-row>
+                                            <el-form-item label="员工账户" prop="userID" :fit="true" style="margin: 2px 0 2px 0; width: 220px; height: 25px;">
+                                                <el-select
+                                                    v-model="pageEmployeeForm.userID"
+                                                    filterable
+                                                    allow-create
+                                                    remote
+                                                    reserve-keyword
+                                                    placeholder="输入进行查询或者新建"
+                                                    :remote-method="handleRemoteMethod"
+                                                    :loading="pageLoading"
+                                                    style="width: 145px;"
+                                                    size="small"
+                                                >
+                                                    <el-option
+                                                        v-for="item in options"
+                                                        :key="item.value"
+                                                        :label="item.label"
+                                                        :value="item.value"
+                                                    />
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="员工性别" prop="sex" :fit="true" style="margin: 2px 0 2px 0; width: 220px; height: 20px;">
+                                                <el-select v-model="pageEmployeeForm.sex" placeholder="请选择" style="width: 145px;">
+                                                    <el-option label="先生" value="woman" />
+                                                    <el-option label="女士" value="man" />
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="隶属部门" prop="department" :fit="true" style="margin: 2px 0 2px 0; width: 220px;">
+                                                <el-select
+                                                    v-model="pageSelectValueUni"
+                                                    filterable
+                                                    allow-create
+                                                    remote
+                                                    reserve-keyword
+                                                    placeholder="输入进行部门查询"
+                                                    :remote-method="handleRemoteMethodUni"
+                                                    :loading="pageLoading"
+                                                    style="width: 145px; height: 20px;"
+                                                    size="small"
+                                                >
+                                                    <el-option
+                                                        v-for="item in optionsUni"
+                                                        :key="item.value"
+                                                        :label="item.label"
+                                                        :value="item.value"
+                                                    />
+                                                </el-select>
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row>
+                                            <el-form-item label="员工姓名" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-input v-model="pageEmployeeForm.userRealName" :placeholder="handleGetName(pageEmployeeForm.userID)" style="width: 145px;" disabled />
+                                            </el-form-item>
+                                            <el-form-item label="企业标识" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-input v-model="pageEmployeeForm.enterpriseID" placeholder="输入账户自动装载" style="width: 145px;" disabled />
+                                            </el-form-item>
+                                            <el-form-item label="企业名称" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-input v-model="pageEmployeeForm.enterprise" placeholder="输入账户自动装载" style="width: 145px;" disabled />
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row>
+                                            <el-form-item
+                                                v-for="(item, index) in pageEmployeeFormHeader"
+                                                :key="index"
+                                                :prop="index"
+                                                :label="item"
+                                                :fit="true"
+                                                style="margin: 5px 0 5px 0; width: 220px; height: 35px;"
+                                            >
+                                                <el-input v-model="pageEmployeeForm[index]" :name="index" :placeholder="index" style="width: 145px;" />
+                                            </el-form-item>
+                                            <el-form-item label="出生日期" prop="birth" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-date-picker v-model="pageEmployeeForm.birth" type="date" style="width: 145px;" :picker-options="pickerOptions" placeholder="请选择日期" />
+                                            </el-form-item>
+                                            <el-form-item label="入职日期" prop="entry" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-date-picker v-model="pageEmployeeForm.entry" type="date" style="width: 145px;" :picker-options="pickerOptions" placeholder="请选择日期" />
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row style="height: 50px;">
+                                            <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 200px;">
+                                                <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="19" />
+                                            </el-form-item>
+                                            <el-form-item label="录入人员" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-switch v-model="pageSwitchValueUni" active-text="自动读取" :width="19" disabled />
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
+                                            <el-form-item label="基础权限" label-width="75px;" :fit="true">
+                                                <el-row>
+                                                    <el-col style="width: 80px;">
+                                                        <el-checkbox v-model="checkAllUni" :indeterminate="isIndeterminate" border @change="handleCheckAllBasic">全选</el-checkbox>
+                                                    </el-col>
+                                                    <el-col style="width: 420px;">
+                                                        <el-checkbox-group v-model="basicCheckedAuthorities" @change="handleCheckedBasicChange">
+                                                            <el-checkbox-button v-for="basic in basicAuthorities" :key="basic" :label="basic">{{ basic }}</el-checkbox-button>
+                                                        </el-checkbox-group>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-row>
+                                        <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
+                                            <el-form-item label="高级权限" label-width="75px;" :fit="true">
+                                                <el-row>
+                                                    <el-col style="width: 80px;">
+                                                        <el-checkbox v-model="checkAllBin" :indeterminate="isIndeterminate" border @change="handleCheckAllAdvance">全选</el-checkbox>
+                                                    </el-col>
+                                                    <el-col style="width: 420px;">
+                                                        <el-checkbox-group v-model="advanceCheckedAuthorities" @change="handleCheckedAdvanceChange">
+                                                            <el-checkbox-button v-for="advance in advanceAuthorities" :key="advance" :label="advance">{{ advance }}</el-checkbox-button>
+                                                        </el-checkbox-group>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-row>
+                                    </el-col>
+                                    <el-col :span="2">
+                                        <el-form-item size="mini">
+                                            <el-row>
+                                                <!--handleUpdate(pageEmployeeForm)-->
+                                                <el-button type="primary" style="margin: 3px 0 3px 2px;" @click="handleConsole(pageEmployeeForm)">完成</el-button>
+                                            </el-row>
+                                            <el-row>
+                                                <el-button style="margin: 5px 0 3px 2px;" @click="pageTemplateShowUni = false, pageEmployeeForm = {}">取消</el-button>
+                                            </el-row>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                            </el-form>
+                        </el-card>
+                    </el-card>
+                    <!--                行政部门录入    -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
+                        <div slot="header" class="clearfix">
+                            <span>行政部门增添 开发中 (点击右边进行操作)</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text">修改操作</el-button>
+                        </div>
+                        <el-row>
+                            <el-card shadow="hover" body-style="padding: 10px 0 10px 0;">
+                                <el-form v-model="pageDataForm" label-width="75px" size="small" inline="inline" label-position="right">
+                                    <el-row>
+                                        <el-col :span="22">
+                                            <el-row>
+                                                <el-form-item label="部门ID" style="margin: 2px 0 2px 0; width: 220px; height: 53px;">
+                                                    <el-input v-model="pageDepartmentHeader.departmentID" :placeholder="pageDepartmentHeader.departmentID" maxlength="30" style="width: 145px;" />
+                                                </el-form-item>
+                                                <el-form-item
+                                                    v-for="(item, index) in pageDepartmentHeader"
+                                                    :key="index"
+                                                    :prop="index"
+                                                    :label="item"
+                                                    :fit="true"
+                                                    style="margin: 2px 0 2px 0; width: 220px; height: 53px;"
+                                                >
+                                                    <el-input v-model="pageDepartment[index]" :name="index" :placeholder="index" style="width: 145px;" />
+                                                </el-form-item>
+                                                <el-form-item label="企业ID" style="margin: 2px 0 2px 0; width: 220px; height: 53px;">
+                                                    <el-input v-model="pageDepartmentHeader.enterpriseID" :placeholder="pageDepartmentHeader.enterpriseID" maxlength="30" style="width: 145px;" />
+                                                </el-form-item>
+                                                <el-form-item label="企业名称" style="margin: 2px 0 2px 0; width: 220px; height: 53px;">
+                                                    <el-input v-model="pageDepartmentHeader.enterprise" :placeholder="pageDepartmentHeader.enterprise" maxlength="30" style="width: 145px;" />
+                                                </el-form-item>
+                                                <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 200px; height: 53px;">
+                                                    <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="19" />
+                                                </el-form-item>
+                                            </el-row>
+                                        </el-col>
+                                        <el-col :span="2">
+                                            <el-form-item size="mini">
+                                                <el-row>
+                                                    <!--handleUpdate(pageEmployeeForm)-->
+                                                    <el-button type="primary" style="margin: 6px 0 3px;">完成</el-button>
+                                                </el-row>
+                                                <el-row>
+                                                    <el-button style="margin: 6px 0 3px;">取消</el-button>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-card>
+                        </el-row>
+                    </el-card>
+                </el-col>
+                <el-col :span="12">
+                    <!--                员工信息更改    -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
+                        <div slot="header" class="clearfix">
+                            <span>信息更改 (点击右边进行操作)</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text" @click="pageTemplateShowBin = !pageTemplateShowBin">修改操作</el-button>
+                        </div>
+                        <el-row v-show="pageTemplateShowBin">
+                            <el-card shadow="hover" body-style="padding: 10px 0 10px 0;">
+                                <el-form v-model="pageDataForm" label-width="75px" size="small" inline="inline" label-position="right">
+                                    <el-row>
+                                        <el-table
+                                            :data="pageTableData.filter(data => !pageSearchUni || data.userID.toLowerCase().includes(pageSearchUni.toLowerCase()))"
+                                            style="width: 100%; height: 150px;"
+                                        >
+                                            <el-table-column
+                                                label="职员ID"
+                                                prop="userID"
+                                            />
+                                            <el-table-column
+                                                label="职员名称"
+                                                prop="realName"
+                                            />
+                                            <el-table-column
+                                                align="right"
+                                            >
+                                                <template #header>
+                                                    <el-input
+                                                        v-model="pageSearchUni"
+                                                        size="mini"
+                                                        placeholder="输入关键字搜索"
+                                                        style="width: 135px;"
+                                                    />
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </el-row>
+                                    <el-row>
+                                        <el-col :span="22">
+                                            <el-row>
+                                                <el-form-item
+                                                    v-for="(item, index) in pageEmployeeChangeFormHeader"
+                                                    :key="index"
+                                                    :prop="index"
+                                                    :label="item"
+                                                    :fit="true"
+                                                    style="margin: 2px 0 2px 0; width: 220px;"
+                                                >
+                                                    <el-input v-model="pageEmployeeChangeForm[index]" :name="index" :placeholder="index" style="width: 145px;" />
+                                                </el-form-item>
+                                            </el-row>
+                                            <el-row>
+                                                <el-form-item label="用户性别" prop="sex" style="margin: 2px 0 2px 0; width: 220px;">
+                                                    <el-select v-model="value" :placeholder="pageDataForm.sex" style="width: 145px;">
+                                                        <el-option
+                                                            v-for="item in options"
+                                                            :key="item.value"
+                                                            :label="item.label"
+                                                            :value="item.value"
+                                                        />
+                                                    </el-select>
+                                                </el-form-item>
+                                                <el-form-item label="所属公司" style="margin: 2px 0 2px 0; width: 220px;">
+                                                    <el-input v-model="pageDataForm.enterprise" :placeholder="pageDataForm.enterprise" maxlength="30" style="width: 145px;" />
+                                                </el-form-item>
+                                            </el-row>
+                                            <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
+                                                <el-form-item label="基础权限" label-width="75px;" :fit="true">
+                                                    <el-row>
+                                                        <el-col style="width: 80px;">
+                                                            <el-checkbox v-model="checkAllTer" :indeterminate="isIndeterminate" border @change="handleCheckAllBasicUni">全选</el-checkbox>
+                                                        </el-col>
+                                                        <el-col style="width: 420px;">
+                                                            <el-checkbox-group v-model="basicCheckedAuthoritiesUni" @change="handleCheckedBasicChangeUni">
+                                                                <el-checkbox-button v-for="basic in basicAuthorities" :key="basic" :label="basic">{{ basic }}</el-checkbox-button>
+                                                            </el-checkbox-group>
+                                                        </el-col>
+                                                    </el-row>
+                                                </el-form-item>
+                                            </el-row>
+                                            <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
+                                                <el-form-item label="高级权限" label-width="75px;" :fit="true">
+                                                    <el-row>
+                                                        <el-col style="width: 80px;">
+                                                            <el-checkbox v-model="checkAllQua" :indeterminate="isIndeterminate" border @change="handleCheckAllAdvanceUni">全选</el-checkbox>
+                                                        </el-col>
+                                                        <el-col style="width: 420px;">
+                                                            <el-checkbox-group v-model="advanceCheckedAuthoritiesUni" @change="handleCheckedAdvanceChangeUni">
+                                                                <el-checkbox-button v-for="advance in advanceAuthorities" :key="advance" :label="advance">{{ advance }}</el-checkbox-button>
+                                                            </el-checkbox-group>
+                                                        </el-col>
+                                                    </el-row>
+                                                </el-form-item>
+                                            </el-row>
+                                        </el-col>
+                                        <el-col :span="2">
+                                            <el-form-item size="mini">
+                                                <el-row>
+                                                    <!--handleUpdate(pageEmployeeForm)-->
+                                                    <el-button type="primary" style="margin: 6px 0 3px;" @click="handleConsole(pageDataForm)">完成</el-button>
+                                                </el-row>
+                                                <el-row>
+                                                    <el-button style="margin: 6px 0 3px;" @click="pageTemplateShowUni = false, pageEmployeeForm = {}">取消</el-button>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-card>
+                        </el-row>
+                    </el-card>
+                    <!--                部门信息更改    -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
+                        <div slot="header" class="clearfix">
+                            <span>部门信息更改 开发中 (点击右边进行操作)</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text">修改操作</el-button>
+                        </div>
+                        <el-col>
+                            <el-card shadow="hover" body-style="padding: 10px 0 10px 0;" style="margin: 5px 0;">
+                                <el-form v-model="pageDepartment" label-width="75px" size="small" inline="inline" label-position="right">
+                                    <el-row>
+                                        <el-table
+                                            :data="pageDepartmentData.filter(data => !pageSearchUni || data.userID.toLowerCase().includes(pageSearchUni.toLowerCase()))"
+                                            style="width: 100%; max-height: 150px;"
+                                        >
+                                            <el-table-column
+                                                label="部门ID"
+                                                prop="departmentID"
+                                            />
+                                            <el-table-column
+                                                label="部门名称"
+                                                prop="name"
+                                            />
+                                            <el-table-column
+                                                label="部门状态"
+                                                prop="departmentStatus"
+                                            />
+                                            <el-table-column
+                                                align="right"
+                                            >
+                                                <template #header>
+                                                    <el-input
+                                                        v-model="pageSearchUni"
+                                                        size="mini"
+                                                        placeholder="输入部门ID搜索"
+                                                        style="width: 135px;"
+                                                    />
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </el-row>
+                                    <el-row>
+                                        <el-col :span="22">
+                                            <el-row>
+                                                <el-form-item label="部门ID" style="margin: 2px 0 2px 0; width: 220px;">
+                                                    <el-input v-model="pageDepartmentHeader.departmentID" :placeholder="pageDepartmentHeader.departmentID" maxlength="30" style="width: 145px;" />
+                                                </el-form-item>
+                                                <el-form-item
+                                                    v-for="(item, index) in pageDepartmentHeader"
+                                                    :key="index"
+                                                    :prop="index"
+                                                    :label="item"
+                                                    :fit="true"
+                                                    style="margin: 2px 0 2px 0; width: 220px;"
+                                                >
+                                                    <el-input v-model="pageDepartment[index]" :name="index" :placeholder="index" style="width: 145px;" />
+                                                </el-form-item>
+                                                <el-form-item label="企业ID" style="margin: 2px 0 2px 0; width: 220px;">
+                                                    <el-input v-model="pageDepartmentHeader.enterpriseID" :placeholder="pageDepartmentHeader.enterpriseID" maxlength="30" style="width: 145px;" />
+                                                </el-form-item>
+                                                <el-form-item label="企业名称" style="margin: 2px 0 2px 0; width: 220px;">
+                                                    <el-input v-model="pageDepartmentHeader.enterprise" :placeholder="pageDepartmentHeader.enterprise" maxlength="30" style="width: 145px;" />
+                                                </el-form-item>
+                                                <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 200px;">
+                                                    <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="19" />
+                                                </el-form-item>
+                                            </el-row>
+                                        </el-col>
+                                        <el-col :span="2">
+                                            <el-form-item size="mini">
+                                                <el-row>
+                                                    <!--handleUpdate(pageEmployeeForm)-->
+                                                    <el-button type="primary" style="margin: 6px 0 3px;" @click="handleConsole(pageDataForm)">完成</el-button>
+                                                </el-row>
+                                                <el-row>
+                                                    <el-button style="margin: 6px 0 3px;" @click="pageTemplateShowUni = false, pageEmployeeForm = {}">取消</el-button>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-card>
+                        </el-col>
+                    </el-card>
+                </el-col>
+            </el-row>
+            <!--        员工信息页面    -->
+            <el-row v-show="pageRowVisibleUni">
+                <el-col>
+                    <el-card>
+                        <el-row>
+                            <el-col :span="7" shadow="hover" style="margin-left: 10px; margin-right: 10px;">
+                                <el-card shadow="hover">
+                                    <div slot="header" class="clearfix">
+                                        <span>工作日程</span>
+                                    </div>
+                                    <span>企业通知</span>
+                                    <el-row>
+                                        <el-table
+                                            :data="pageEnterpriseNotice"
+                                            style="width: 100%;"
+                                        >
+                                            <el-table-column
+                                                fixed
+                                                prop="date"
+                                                label="日期"
+                                            />
+                                            <el-table-column
+                                                prop="name"
+                                                label="内容"
+                                            />
+                                            <el-table-column
+                                                prop="name"
+                                                label="类型"
+                                            />
+                                            <el-table-column
+                                                fixed="right"
+                                                label="操作"
+                                            >
+                                                <template #default="scope">
+                                                    <el-button
+                                                        type="text"
+                                                        size="small"
+                                                    >
+                                                        查看
+                                                    </el-button>
+                                                    <el-button
+                                                        type="text"
+                                                        size="small"
+                                                        @click.native.prevent="deleteRow(scope.$index, pageEnterpriseNotice)"
+                                                    >
+                                                        移除
+                                                    </el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </el-row>
+                                    <span>部门通知</span>
+                                    <el-row>
+                                        <el-table
+                                            :data="pageEnterpriseNotice"
+                                            style="width: 100%;"
+                                        >
+                                            <el-table-column
+                                                fixed
+                                                prop="date"
+                                                label="日期"
+                                            />
+                                            <el-table-column
+                                                prop="name"
+                                                label="内容"
+                                            />
+                                            <el-table-column
+                                                prop="name"
+                                                label="类型"
+                                            />
+                                            <el-table-column
+                                                fixed="right"
+                                                label="操作"
+                                            >
+                                                <template #default="scope">
+                                                    <el-button
+                                                        type="text"
+                                                        size="small"
+                                                    >
+                                                        查看
+                                                    </el-button>
+                                                    <el-button
+                                                        type="text"
+                                                        size="small"
+                                                        @click.native.prevent="deleteRow(scope.$index, pageEnterpriseNotice)"
+                                                    >
+                                                        移除
+                                                    </el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </el-row>
+                                    <span>今日日程</span>
+                                    <el-row>
+                                        <el-table
+                                            :data="pageEnterpriseNotice"
+                                            style="width: 100%;"
+                                        >
+                                            <el-table-column
+                                                fixed
+                                                prop="date"
+                                                label="日期"
+                                            />
+                                            <el-table-column
+                                                prop="name"
+                                                label="内容"
+                                            />
+                                            <el-table-column
+                                                prop="name"
+                                                label="类型"
+                                            />
+                                            <el-table-column
+                                                fixed="right"
+                                                label="操作"
+                                            >
+                                                <template #default="scope">
+                                                    <el-button
+                                                        type="text"
+                                                        size="small"
+                                                    >
+                                                        查看
+                                                    </el-button>
+                                                    <el-button
+                                                        type="text"
+                                                        size="small"
+                                                        @click.native.prevent="deleteRow(scope.$index, pageEnterpriseNotice)"
+                                                    >
+                                                        已读
+                                                    </el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </el-row>
+                                </el-card>
+                            </el-col>
+                            <el-col :span="7" shadow="hover" style="margin-left: 10px; margin-right: 10px;">
+                                <el-card shadow="hover">
+                                    <div slot="header" class="clearfix">
+                                        <span>事务申请</span>
+                                    </div>
+                                    <el-row style="margin-top: 5px;">
+                                        <el-card shadow="hover">
+                                            <el-descriptions class="margin-top" title="会议申请" :column="2" :size="size" border>
+                                                <template slot="extra">
+                                                    <el-button type="primary" size="small" @click="handleApplication('会议')">填写申请</el-button>
+                                                </template>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        提交会议申请
+                                                    </template>
+                                                    请申请前阅读注意事项
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        要求
+                                                    </template>
+                                                    <el-tag size="small">主管级别以上</el-tag>
+                                                </el-descriptions-item>
+                                            </el-descriptions>
+                                        </el-card>
+                                    </el-row>
+                                    <el-row style="margin-top: 5px;">
+                                        <el-card shadow="hover">
+                                            <el-descriptions class="margin-top" title="请假申请" :column="2" :size="size" border>
+                                                <template slot="extra">
+                                                    <el-button type="primary" size="small" @click="handleApplication('请假')">填写申请</el-button>
+                                                </template>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        提交请假申请
+                                                    </template>
+                                                    包括所有请假类型
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        要求
+                                                    </template>
+                                                    <el-tag size="small">合适理由及剩余假期</el-tag>
+                                                </el-descriptions-item>
+                                            </el-descriptions>
+                                        </el-card>
+                                    </el-row>
+                                    <el-row style="margin-top: 5px;">
+                                        <el-card shadow="hover">
+                                            <el-descriptions class="margin-top" title="离职申请" :column="2" :size="size" border>
+                                                <template slot="extra">
+                                                    <el-button type="primary" size="small" @click="handleApplication('离职')">填写申请</el-button>
+                                                </template>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        提交离职申请
+                                                    </template>
+                                                    认真思考后填写
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        要求
+                                                    </template>
+                                                    <el-tag size="small">符合劳务合同解除要求</el-tag>
+                                                </el-descriptions-item>
+                                            </el-descriptions>
+                                        </el-card>
+                                    </el-row>
+                                    <el-row style="margin-top: 5px;">
+                                        <el-card shadow="hover">
+                                            <el-descriptions class="margin-top" title="自定义申请" :column="2" :size="size" border>
+                                                <template slot="extra">
+                                                    <el-button type="primary" size="small" @click="handleApplication('自定义')">填写申请</el-button>
+                                                </template>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        提交自定义申请
+                                                    </template>
+                                                    提供基本申请模板
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        要求
+                                                    </template>
+                                                    <el-tag size="small">符合基本制度要求</el-tag>
+                                                </el-descriptions-item>
+                                            </el-descriptions>
+                                        </el-card>
+                                    </el-row>
+                                </el-card>
+                            </el-col>
+                            <el-dialog
+                                :title="pageDialogTitle + '申请'"
+                                :visible.sync="dialogVisibleUni"
+                                width="30%"
+                                :before-close="handleClose"
+                            >
+                                <span>条件不满足也可以申请,但审核将会较为严格</span>
+                                <div>
+                                    申请理由：
+                                    <el-input
+                                        v-model="pageInput"
+                                        placeholder="请填写原由"
+                                        style="width: 350px;"
+                                        size="mini"
+                                    />
+                                </div>
+                                <div>
+                                    附加内容：
+                                    <el-input
+                                        v-model="pageInputUni"
+                                        placeholder="附加说明"
+                                        style="width: 350px;"
+                                        size="mini"
+                                    />
+                                </div>
+                                <span slot="footer" class="dialog-footer">
+                                    <el-button @click="dialogVisibleUni = false">取 消</el-button>
+                                    <el-button type="primary" @click="dialogVisibleUni = false">确 定</el-button>
+                                </span>
+                            </el-dialog>
+                            <el-col :span="7" shadow="hover" style="margin-left: 10px; margin-right: 10px;">
+                                <el-card shadow="hover">
+                                    <span>事务状态</span>
+                                    <el-row>
+                                        <el-table
+                                            :data="pageEnterpriseNotice"
+                                            style="width: 100%;"
+                                        >
+                                            <el-table-column
+                                                fixed
+                                                prop="date"
+                                                label="日期"
+                                            />
+                                            <el-table-column
+                                                prop="name"
+                                                label="内容"
+                                            />
+                                            <el-table-column
+                                                prop="name"
+                                                label="类型"
+                                            />
+                                            <el-table-column
+                                                fixed="right"
+                                                label="操作"
+                                            >
+                                                <template #default="scope">
+                                                    <el-button
+                                                        type="text"
+                                                        size="small"
+                                                    >
+                                                        查看
+                                                    </el-button>
+                                                    <el-button
+                                                        type="text"
+                                                        size="small"
+                                                        @click.native.prevent="deleteRow(scope.$index, pageEnterpriseNotice)"
+                                                    >
+                                                        移除
+                                                    </el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </el-row>
+                                </el-card>
+                            </el-col>
+                        </el-row>
+                    </el-card>
+                </el-col>
+            </el-row>
+            <el-row v-show="true" style="margin-bottom: 5px;">
                 <el-col>
                     <el-card shadow="hover">
                         <el-tabs title="行政管理(仅是展示)">
@@ -379,606 +1083,41 @@
                     </el-card>
                 </el-col>
             </el-row>
-            <el-row v-show="pageRowVisible" style="margin-bottom: 5px;">
-                <el-col :span="12">
-                    <!--                员工信息录入    -->
-                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
-                        <div slot="header" class="clearfix">
-                            <span>员工录入 (点击右边进行操作)</span>
-                            <el-button style="float: right; padding: 3px 0;" type="text" @click="pageTemplateShowUni = !pageTemplateShowUni">录入操作</el-button>
-                        </div>
-                        <el-card v-show="pageTemplateShowUni" shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
-                            <!--       :rules="rules"                     -->
-                            <el-form ref="form" v-model="pageRuleForm" :model="pageRuleForm" inline="inline" label-width="75px" size="mini">
-                                <el-row>
-                                    <el-col :span="22">
-                                        <el-row>
-                                            <el-form-item label="员工账户" :fit="true" style="margin: 2px 0 2px 0; width: 220px; height: 25px;">
-                                                <el-select
-                                                    v-model="pageRuleForm.userID"
-                                                    filterable
-                                                    allow-create
-                                                    remote
-                                                    reserve-keyword
-                                                    placeholder="输入进行查询或者新建"
-                                                    :remote-method="handleRemoteMethod"
-                                                    :loading="pageLoading"
-                                                    style="width: 145px;"
-                                                    size="small"
-                                                >
-                                                    <el-option
-                                                        v-for="item in options"
-                                                        :key="item.value"
-                                                        :label="item.label"
-                                                        :value="item.value"
-                                                    />
-                                                </el-select>
-                                            </el-form-item>
-                                            <el-form-item label="员工性别" prop="sex" :fit="true" style="margin: 2px 0 2px 0; width: 220px; height: 20px;">
-                                                <el-select v-model="pageRuleForm.sex" placeholder="请选择" style="width: 145px;">
-                                                    <el-option label="先生" value="woman" />
-                                                    <el-option label="女士" value="man" />
-                                                </el-select>
-                                            </el-form-item>
-                                            <el-form-item label="员工部门" prop="department" :fit="true" style="margin: 2px 0 2px 0; width: 220px;">
-                                                <el-select
-                                                    v-model="pageSelectValueUni"
-                                                    filterable
-                                                    allow-create
-                                                    remote
-                                                    reserve-keyword
-                                                    placeholder="输入进行部门查询"
-                                                    :remote-method="handleRemoteMethodUni"
-                                                    :loading="pageLoading"
-                                                    style="width: 145px; height: 20px;"
-                                                    size="small"
-                                                >
-                                                    <el-option
-                                                        v-for="item in optionsUni"
-                                                        :key="item.value"
-                                                        :label="item.label"
-                                                        :value="item.value"
-                                                    />
-                                                </el-select>
-                                            </el-form-item>
-                                        </el-row>
-                                        <el-row>
-                                            <el-form-item label="员工姓名" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
-                                                <el-input v-model="pageRuleForm.userRealName" :placeholder="handleGetName(pageRuleForm.userID)" style="width: 145px;" disabled />
-                                            </el-form-item>
-                                            <el-form-item label="企业标识" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
-                                                <el-input v-model="pageRuleForm.enterpriseID" placeholder="输入账户自动装载" style="width: 145px;" disabled />
-                                            </el-form-item>
-                                            <el-form-item label="企业名称" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
-                                                <el-input v-model="pageRuleForm.enterprise" placeholder="输入账户自动装载" style="width: 145px;" disabled />
-                                            </el-form-item>
-                                        </el-row>
-                                        <el-row>
-                                            <el-form-item
-                                                v-for="(item, index) in pageRuleFormHeader"
-                                                :key="index"
-                                                :prop="index"
-                                                :label="item"
-                                                :fit="true"
-                                                style="margin: 5px 0 5px 0; width: 220px;"
-                                            >
-                                                <el-input v-model="pageRuleForm[index]" :name="index" :placeholder="index" style="width: 145px;" />
-                                            </el-form-item>
-                                            <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 200px;">
-                                                <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="19" />
-                                            </el-form-item>
-                                        </el-row>
-                                        <el-row>
-                                            <el-form-item label="出生日期" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
-                                                <el-date-picker v-model="pageRuleForm.birth" type="date" style="width: 145px;" :picker-options="pickerOptions" placeholder="请选择日期" />
-                                            </el-form-item>
-                                            <el-form-item label="入职日期" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
-                                                <el-date-picker v-model="pageRuleForm.entry" type="date" style="width: 145px;" :picker-options="pickerOptions" placeholder="请选择日期" />
-                                            </el-form-item>
-                                            <el-form-item label="审核人员" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
-                                                <el-switch v-model="pageSwitchValueUni" active-text="自动读取" :width="19" disabled/>
-                                            </el-form-item>
-                                        </el-row>
-                                        <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
-                                            <el-form-item label="基础权限" label-width="75px;" :fit="true">
-                                                <el-row>
-                                                    <el-col style="width: 80px;">
-                                                        <el-checkbox v-model="checkAllUni" :indeterminate="isIndeterminate" border @change="handleCheckAllBasic">全选</el-checkbox>
-                                                    </el-col>
-                                                    <el-col style="width: 420px;">
-                                                        <el-checkbox-group v-model="basicCheckedAuthorities" @change="handleCheckedBasicChange">
-                                                            <el-checkbox-button v-for="basic in basicAuthorities" :key="basic" :label="basic">{{ basic }}</el-checkbox-button>
-                                                        </el-checkbox-group>
-                                                    </el-col>
-                                                </el-row>
-                                            </el-form-item>
-                                        </el-row>
-                                        <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
-                                            <el-form-item label="高级权限" label-width="75px;" :fit="true">
-                                                <el-row>
-                                                    <el-col style="width: 80px;">
-                                                        <el-checkbox v-model="checkAllBin" :indeterminate="isIndeterminate" border @change="handleCheckAllAdvance">全选</el-checkbox>
-                                                    </el-col>
-                                                    <el-col style="width: 420px;">
-                                                        <el-checkbox-group v-model="advanceCheckedAuthorities" @change="handleCheckedAdvanceChange">
-                                                            <el-checkbox-button v-for="advance in advanceAuthorities" :key="advance" :label="advance">{{ advance }}</el-checkbox-button>
-                                                        </el-checkbox-group>
-                                                    </el-col>
-                                                </el-row>
-                                            </el-form-item>
-                                        </el-row>
-                                    </el-col>
-                                    <el-col :span="2">
-                                        <el-form-item size="mini">
-                                            <el-row>
-                                                <!--handleUpdate(pageRuleForm)-->
-                                                <el-button type="primary" style="margin: 3px 0 3px 2px;" @click="handleConsole(pageRuleForm)">完成</el-button>
-                                            </el-row>
-                                            <el-row>
-                                                <el-button style="margin: 5px 0 3px 2px;" @click="pageTemplateShowUni = false, pageRuleForm = {}">取消</el-button>
-                                            </el-row>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                            </el-form>
+            <div v-show="true">
+                <span>statement:double click would closed the window button create.</span>
+                <el-row>
+                    <el-col>
+                        <el-card>
+                            <el-button-group style="margin-right: 10px;">
+                                <el-button type="success" plain @click="pageValueChange('user')">用户信息总览(用户)</el-button>
+                                <el-button type="primary" plain @click="pageValueChange('background')">背调信息总览(背调)</el-button>
+                            </el-button-group>
+                            <el-button-group style="margin-right: 10px;">
+                                <el-button type="success" plain @click="pageValueChange('role')">角色信息总览(角色)</el-button>
+                                <el-button type="primary" plain @click="pageValueChange('permission')">权限控制总览(权限)</el-button>
+                                <el-button type="warn" plain @click="pageValueChange('performance')">绩效信息总览(绩效)</el-button>
+                            </el-button-group>
                         </el-card>
-                    </el-card>
-                    <!--                行政部门录入    -->
-                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">行政部门录入(开发中)</el-card>
-                </el-col>
-                <el-col :span="12">
-                    <!--                员工信息更改    -->
-                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
-                        <div slot="header" class="clearfix">
-                            <span>信息更改 (点击右边进行操作)</span>
-                            <el-button style="float: right; padding: 3px 0;" type="text" @click="pageTemplateShowBin = !pageTemplateShowBin">修改操作</el-button>
-                        </div>
-                        <el-row v-show="pageTemplateShowBin">
-                            <el-card shadow="hover" body-style="padding: 10px 0 10px 0;">
-                                <el-form v-model="pageDataForm" label-width="75px" size="small" inline="inline" label-position="right">
-                                    <el-row>
-                                        <el-table
-                                            :data="pageTableData.filter(data => !pageSearchUni || data.userID.toLowerCase().includes(pageSearchUni.toLowerCase()))"
-                                            style="width: 100%; height: 150px;"
-                                        >
-                                            <el-table-column
-                                                label="职员ID"
-                                                prop="userID"
-                                            />
-                                            <el-table-column
-                                                label="职员名称"
-                                                prop="realName"
-                                            />
-                                            <el-table-column
-                                                align="right"
-                                            >
-                                                <template #header>
-                                                    <el-input
-                                                        v-model="pageSearchUni"
-                                                        size="mini"
-                                                        placeholder="输入关键字搜索"
-                                                        style="width: 135px;"
-                                                    />
-                                                </template>
-                                            </el-table-column>
-                                        </el-table>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col :span="22">
-                                            <el-row>
-                                                <el-form-item
-                                                    v-for="(item, index) in pageRuleFormHeader"
-                                                    :key="index"
-                                                    :prop="index"
-                                                    :label="item"
-                                                    :fit="true"
-                                                    style="margin: 2px 0 2px 0; width: 220px;"
-                                                >
-                                                    <el-input v-model="pageRuleForm[index]" :name="index" :placeholder="index" style="width: 145px;" />
-                                                </el-form-item>
-                                            </el-row>
-                                            <el-row>
-                                                <el-form-item label="用户性别" prop="sex" style="margin: 2px 0 2px 0; width: 220px;">
-                                                    <el-select v-model="value" :placeholder="pageDataForm.sex" style="width: 145px;">
-                                                        <el-option
-                                                            v-for="item in options"
-                                                            :key="item.value"
-                                                            :label="item.label"
-                                                            :value="item.value"
-                                                        />
-                                                    </el-select>
-                                                </el-form-item>
-                                                <el-form-item label="所属公司" prop="homeUrl" style="margin: 2px 0 2px 0; width: 220px;">
-                                                    <el-input v-model="pageDataForm.enterprise" :placeholder="pageDataForm.enterprise" maxlength="30" style="width: 145px;" />
-                                                </el-form-item>
-                                            </el-row>
-                                            <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
-                                                <el-form-item label="基础权限" label-width="75px;" :fit="true">
-                                                    <el-row>
-                                                        <el-col style="width: 80px;">
-                                                            <el-checkbox v-model="checkAllTer" :indeterminate="isIndeterminate" border @change="handleCheckAllBasicUni">全选</el-checkbox>
-                                                        </el-col>
-                                                        <el-col style="width: 420px;">
-                                                            <el-checkbox-group v-model="basicCheckedAuthoritiesUni" @change="handleCheckedBasicChangeUni">
-                                                                <el-checkbox-button v-for="basic in basicAuthorities" :key="basic" :label="basic">{{ basic }}</el-checkbox-button>
-                                                            </el-checkbox-group>
-                                                        </el-col>
-                                                    </el-row>
-                                                </el-form-item>
-                                            </el-row>
-                                            <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
-                                                <el-form-item label="高级权限" label-width="75px;" :fit="true">
-                                                    <el-row>
-                                                        <el-col style="width: 80px;">
-                                                            <el-checkbox v-model="checkAllQua" :indeterminate="isIndeterminate" border @change="handleCheckAllAdvanceUni">全选</el-checkbox>
-                                                        </el-col>
-                                                        <el-col style="width: 420px;">
-                                                            <el-checkbox-group v-model="advanceCheckedAuthoritiesUni" @change="handleCheckedAdvanceChangeUni">
-                                                                <el-checkbox-button v-for="advance in advanceAuthorities" :key="advance" :label="advance">{{ advance }}</el-checkbox-button>
-                                                            </el-checkbox-group>
-                                                        </el-col>
-                                                    </el-row>
-                                                </el-form-item>
-                                            </el-row>
-                                        </el-col>
-                                        <el-col :span="2">
-                                            <el-form-item size="mini">
-                                                <el-row>
-                                                    <!--handleUpdate(pageRuleForm)-->
-                                                    <el-button type="primary" style="margin: 6px 0 3px;" @click="handleConsole(pageDataForm)">完成</el-button>
-                                                </el-row>
-                                                <el-row>
-                                                    <el-button style="margin: 6px 0 3px;" @click="pageTemplateShowUni = false, pageRuleForm = {}">取消</el-button>
-                                                </el-row>
-                                            </el-form-item>
-                                        </el-col>
-                                    </el-row>
-                                </el-form>
-                            </el-card>
-                        </el-row>
-                    </el-card>
-                    <!--                部门信息更改    -->
-                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">部门信息更改(开发中)</el-card>
-                </el-col>
-            </el-row>
-            <!--        员工信息页面    -->
-            <el-row v-show="pageRowVisibleUni">
-                <el-col>
-                    <el-card>
-                        <el-row>
-                            <el-col :span="7" shadow="hover" style="margin-left: 10px; margin-right: 10px;">
-                                <el-card shadow="hover">
-                                    <div slot="header" class="clearfix">
-                                        <span>工作日程</span>
-                                    </div>
-                                    <span>企业通知</span>
-                                    <el-row>
-                                        <el-table
-                                            :data="pageEnterpriseNotice"
-                                            style="width: 100%;"
-                                        >
-                                            <el-table-column
-                                                fixed
-                                                prop="date"
-                                                label="日期"
-                                            />
-                                            <el-table-column
-                                                prop="name"
-                                                label="内容"
-                                            />
-                                            <el-table-column
-                                                prop="name"
-                                                label="类型"
-                                            />
-                                            <el-table-column
-                                                fixed="right"
-                                                label="操作"
-                                            >
-                                                <template slot-scope="scope">
-                                                    <el-button
-                                                        type="text"
-                                                        size="small"
-                                                    >
-                                                        查看
-                                                    </el-button>
-                                                    <el-button
-                                                        type="text"
-                                                        size="small"
-                                                        @click.native.prevent="deleteRow(scope.$index, pageEnterpriseNotice)"
-                                                    >
-                                                        移除
-                                                    </el-button>
-                                                </template>
-                                            </el-table-column>
-                                        </el-table>
-                                    </el-row>
-                                    <span>部门通知</span>
-                                    <el-row>
-                                        <el-table
-                                            :data="pageEnterpriseNotice"
-                                            style="width: 100%;"
-                                        >
-                                            <el-table-column
-                                                fixed
-                                                prop="date"
-                                                label="日期"
-                                            />
-                                            <el-table-column
-                                                prop="name"
-                                                label="内容"
-                                            />
-                                            <el-table-column
-                                                prop="name"
-                                                label="类型"
-                                            />
-                                            <el-table-column
-                                                fixed="right"
-                                                label="操作"
-                                            >
-                                                <template slot-scope="scope">
-                                                    <el-button
-                                                        type="text"
-                                                        size="small"
-                                                    >
-                                                        查看
-                                                    </el-button>
-                                                    <el-button
-                                                        type="text"
-                                                        size="small"
-                                                        @click.native.prevent="deleteRow(scope.$index, pageEnterpriseNotice)"
-                                                    >
-                                                        移除
-                                                    </el-button>
-                                                </template>
-                                            </el-table-column>
-                                        </el-table>
-                                    </el-row>
-                                    <span>今日日程</span>
-                                    <el-row>
-                                        <el-table
-                                            :data="pageEnterpriseNotice"
-                                            style="width: 100%;"
-                                        >
-                                            <el-table-column
-                                                fixed
-                                                prop="date"
-                                                label="日期"
-                                            />
-                                            <el-table-column
-                                                prop="name"
-                                                label="内容"
-                                            />
-                                            <el-table-column
-                                                prop="name"
-                                                label="类型"
-                                            />
-                                            <el-table-column
-                                                fixed="right"
-                                                label="操作"
-                                            >
-                                                <template slot-scope="scope">
-                                                    <el-button
-                                                        type="text"
-                                                        size="small"
-                                                    >
-                                                        查看
-                                                    </el-button>
-                                                    <el-button
-                                                        type="text"
-                                                        size="small"
-                                                        @click.native.prevent="deleteRow(scope.$index, pageEnterpriseNotice)"
-                                                    >
-                                                        已读
-                                                    </el-button>
-                                                </template>
-                                            </el-table-column>
-                                        </el-table>
-                                    </el-row>
-                                </el-card>
-                            </el-col>
-                            <el-col :span="7" shadow="hover" style="margin-left: 10px; margin-right: 10px;">
-                                <el-card shadow="hover">
-                                    <div slot="header" class="clearfix">
-                                        <span>事务申请</span>
-                                    </div>
-                                    <el-row style="margin-top: 5px;">
-                                        <el-card shadow="hover">
-                                            <el-descriptions class="margin-top" title="会议申请" :column="2" :size="size" border>
-                                                <template slot="extra">
-                                                    <el-button type="primary" size="small" @click="handleApplication('会议')">填写申请</el-button>
-                                                </template>
-                                                <el-descriptions-item>
-                                                    <template slot="label">
-                                                        提交会议申请
-                                                    </template>
-                                                    请申请前阅读注意事项
-                                                </el-descriptions-item>
-                                                <el-descriptions-item>
-                                                    <template slot="label">
-                                                        要求
-                                                    </template>
-                                                    <el-tag size="small">主管级别以上</el-tag>
-                                                </el-descriptions-item>
-                                            </el-descriptions>
-                                        </el-card>
-                                    </el-row>
-                                    <el-row style="margin-top: 5px;">
-                                        <el-card shadow="hover">
-                                            <el-descriptions class="margin-top" title="请假申请" :column="2" :size="size" border>
-                                                <template slot="extra">
-                                                    <el-button type="primary" size="small" @click="handleApplication('请假')">填写申请</el-button>
-                                                </template>
-                                                <el-descriptions-item>
-                                                    <template slot="label">
-                                                        提交请假申请
-                                                    </template>
-                                                    包括所有请假类型
-                                                </el-descriptions-item>
-                                                <el-descriptions-item>
-                                                    <template slot="label">
-                                                        要求
-                                                    </template>
-                                                    <el-tag size="small">合适理由及剩余假期</el-tag>
-                                                </el-descriptions-item>
-                                            </el-descriptions>
-                                        </el-card>
-                                    </el-row>
-                                    <el-row style="margin-top: 5px;">
-                                        <el-card shadow="hover">
-                                            <el-descriptions class="margin-top" title="离职申请" :column="2" :size="size" border>
-                                                <template slot="extra">
-                                                    <el-button type="primary" size="small" @click="handleApplication('离职')">填写申请</el-button>
-                                                </template>
-                                                <el-descriptions-item>
-                                                    <template slot="label">
-                                                        提交离职申请
-                                                    </template>
-                                                    认真思考后填写
-                                                </el-descriptions-item>
-                                                <el-descriptions-item>
-                                                    <template slot="label">
-                                                        要求
-                                                    </template>
-                                                    <el-tag size="small">符合劳务合同解除要求</el-tag>
-                                                </el-descriptions-item>
-                                            </el-descriptions>
-                                        </el-card>
-                                    </el-row>
-                                    <el-row style="margin-top: 5px;">
-                                        <el-card shadow="hover">
-                                            <el-descriptions class="margin-top" title="自定义申请" :column="2" :size="size" border>
-                                                <template slot="extra">
-                                                    <el-button type="primary" size="small" @click="handleApplication('自定义')">填写申请</el-button>
-                                                </template>
-                                                <el-descriptions-item>
-                                                    <template slot="label">
-                                                        提交自定义申请
-                                                    </template>
-                                                    提供基本申请模板
-                                                </el-descriptions-item>
-                                                <el-descriptions-item>
-                                                    <template slot="label">
-                                                        要求
-                                                    </template>
-                                                    <el-tag size="small">符合基本制度要求</el-tag>
-                                                </el-descriptions-item>
-                                            </el-descriptions>
-                                        </el-card>
-                                    </el-row>
-                                </el-card>
-                            </el-col>
-                            <el-dialog
-                                :title="pageDialogTitle + '申请'"
-                                :visible.sync="dialogVisibleUni"
-                                width="30%"
-                                :before-close="handleClose"
-                            >
-                                <span>条件不满足也可以申请,但审核将会较为严格</span>
-                                <div>
-                                    申请理由：
-                                    <el-input
-                                        v-model="pageInput"
-                                        placeholder="请填写原由"
-                                        style="width: 350px;"
-                                        size="mini"
-                                    />
-                                </div>
-                                <div>
-                                    附加内容：
-                                    <el-input
-                                        v-model="pageInputUni"
-                                        placeholder="附加说明"
-                                        style="width: 350px;"
-                                        size="mini"
-                                    />
-                                </div>
-                                <span slot="footer" class="dialog-footer">
-                                    <el-button @click="dialogVisibleUni = false">取 消</el-button>
-                                    <el-button type="primary" @click="dialogVisibleUni = false">确 定</el-button>
-                                </span>
-                            </el-dialog>
-                            <el-col :span="7" shadow="hover" style="margin-left: 10px; margin-right: 10px;">
-                                <el-card shadow="hover">
-                                    <span>事务状态</span>
-                                    <el-row>
-                                        <el-table
-                                            :data="pageEnterpriseNotice"
-                                            style="width: 100%;"
-                                        >
-                                            <el-table-column
-                                                fixed
-                                                prop="date"
-                                                label="日期"
-                                            />
-                                            <el-table-column
-                                                prop="name"
-                                                label="内容"
-                                            />
-                                            <el-table-column
-                                                prop="name"
-                                                label="类型"
-                                            />
-                                            <el-table-column
-                                                fixed="right"
-                                                label="操作"
-                                            >
-                                                <template slot-scope="scope">
-                                                    <el-button
-                                                        type="text"
-                                                        size="small"
-                                                    >
-                                                        查看
-                                                    </el-button>
-                                                    <el-button
-                                                        type="text"
-                                                        size="small"
-                                                        @click.native.prevent="deleteRow(scope.$index, pageEnterpriseNotice)"
-                                                    >
-                                                        移除
-                                                    </el-button>
-                                                </template>
-                                            </el-table-column>
-                                        </el-table>
-                                    </el-row>
-                                </el-card>
-                            </el-col>
-                        </el-row>
-                    </el-card>
-                </el-col>
-            </el-row>
-            <div v-show="page.content">
-                <el-col><span>statement:double click would closed the window button create.</span></el-col>
-                <el-col>
-                    <el-card>
-                        <el-button-group style="margin-right: 10px;">
-                            <el-button type="success" plain @click="pageValueChange('user')">用户信息总览(用户)</el-button>
-                            <el-button type="primary" plain @click="pageValueChange('background')">背调信息总览(背调)</el-button>
-                        </el-button-group>
-                        <el-button-group style="margin-right: 10px;">
-                            <el-button type="success" plain @click="pageValueChange('role')">角色信息总览(角色)</el-button>
-                            <el-button type="primary" plain @click="pageValueChange('permission')">权限控制总览(权限)</el-button>
-                            <el-button type="warn" plain @click="pageValueChange('performance')">绩效信息总览(绩效)</el-button>
-                        </el-button-group>
-                    </el-card>
-                </el-col>
-                <el-col v-if="page.subContent.user">
-                    content of 用户信息总览(用户)
-                </el-col>
-                <el-col v-if="page.subContent.background">
-                    content of 背调信息总览(背调)
-                </el-col>
-                <el-col v-if="page.subContent.role">
-                    content of 角色信息总览(角色)
-                </el-col>
-                <el-col v-if="page.subContent.permission">
-                    content of 权限控制总览(权限)
-                </el-col>
-                <el-col v-if="page.subContent.performance">
-                    content of 绩效信息总览(绩效)
-                </el-col>
-                <el-col v-if="page.subContent.remain">
-                    content of 保留内容
-                </el-col>
+                    </el-col>
+                    <el-col v-if="page.subContent.user" :span="4">
+                        content of 用户信息总览(用户)
+                    </el-col>
+                    <el-col v-if="page.subContent.background" :span="4">
+                        content of 背调信息总览(背调)
+                    </el-col>
+                    <el-col v-if="page.subContent.role" :span="4">
+                        content of 角色信息总览(角色)
+                    </el-col>
+                    <el-col v-if="page.subContent.permission" :span="4">
+                        content of 权限控制总览(权限)
+                    </el-col>
+                    <el-col v-if="page.subContent.performance" :span="4">
+                        content of 绩效信息总览(绩效)
+                    </el-col>
+                    <el-col v-if="page.subContent.remain" :span="4">
+                        content of 保留内容
+                    </el-col>
+                </el-row>
             </div>
         </page-main>
         <el-dialog
@@ -1090,7 +1229,7 @@ export default {
                 remarks: '',
                 sex: ''
             },
-            pageRuleForm: {
+            pageEmployeeForm: {
                 userID: '',
                 userRealName: '',
                 enterprise: '',
@@ -1107,9 +1246,25 @@ export default {
                 type: '',
                 sex: ''
             },
-            pageRuleFormHeader: {
+            pageEmployeeChangeForm: {
+                userID: '',
+                userRealName: '',
+                enterprise: '',
+                enterpriseID: '',
+                position: '',
+                department: '',
+                phone: '',
+                remarks: '',
+                political: '',
+                status: '',
+                birth: '',
+                entry: '',
+                salary: '',
+                type: '',
+                sex: ''
+            },
+            pageEmployeeFormHeader: {
                 political: '政治面貌',
-                department: '隶属部门',
                 phone: '手机号码',
                 salary: '入职工资',
                 position: '所属职位',
@@ -1117,28 +1272,74 @@ export default {
                 type: '入职方式',
                 remarks: '员工备注'
             },
+            pageEmployeeChangeFormHeader: {
+                political: '政治面貌',
+                phone: '手机号码',
+                salary: '入职工资',
+                position: '所属职位',
+                status: '员工状态',
+                type: '入职方式',
+                remarks: '员工备注'
+            },
+            pageDepartment: {
+                name: '',
+                departmentStatus: '',
+                UIDD: '',
+                director: '',
+                phoneD: '',
+                UIDM: '',
+                manager: '',
+                phoneM: '',
+                departmentID: '',
+                enterpriseID: '',
+                enterprise: ''
+            },
+            pageDepartmentHeader: {
+                name: '部门名称',
+                departmentStatus: '部门状态',
+                director: '负责经理',
+                UIDD: '经理ID',
+                phoneD: '经理电话',
+                manager: '负责主管',
+                UIDM: '主管ID',
+                phoneM: '主管电话'
+            },
             rules: {
-                realName: [
-                    { required: true, message: '请输入真实姓名', trigger: 'blur' },
-                    { min: 2, max: 5, message: '长度在 2 到 10 个字符', trigger: 'blur' }
-                ],
                 userID: [
-                    { required: true, message: '请输入账户ID', trigger: 'change' }
+                    { required: true, message: '请输入员工账户ID', trigger: 'change' }
+                ],
+                sex: [
+                    { required: true, message: '请选择员工性别', trigger: 'change' }
                 ],
                 department: [
-                    { required: true, message: '请输入部门', trigger: 'change' }
+                    { required: true, message: '请输入部门', trigger: 'blur' }
                 ],
                 phone: [
-                    { required: true, message: '请输入电话号码', trigger: 'change' }
+                    { required: true, message: '请输入电话号码', trigger: 'blur' }
                 ],
                 type: [
-                    { required: true, message: '请输入入职方式', trigger: 'change' }
+                    { required: true, message: '请输入入职方式', trigger: 'blur' }
                 ],
                 position: [
-                    { required: true, message: '请输入所属职位', trigger: 'change' }
+                    { required: true, message: '请输入所属职位', trigger: 'blur' }
                 ],
                 political: [
                     { required: true, message: '请输入政治面貌', trigger: 'blur' }
+                ],
+                salary: [
+                    { required: true, message: '请输入员工工资', trigger: 'blur' }
+                ],
+                status: [
+                    { required: true, message: '请输入员工状态', trigger: 'blur' }
+                ],
+                entry: [
+                    { type: 'date', required: true, message: '请选择日期', trigger: 'blur' }
+                ],
+                birth: [
+                    { type: 'date', required: true, message: '请选择时间', trigger: 'blur' }
+                ],
+                remarks: [
+                    { required: true, message: '请输入员工备注', trigger: 'blur' }
                 ]
             },
             pageTableData: [
@@ -1146,6 +1347,14 @@ export default {
                     userID: '',
                     status: '',
                     realName: ''
+                }
+            ],
+            pageDepartmentData: [
+                {
+
+                    departmentID: '',
+                    name: '',
+                    departmentStatus: ''
                 }
             ],
             pageValue: {
@@ -1410,8 +1619,8 @@ export default {
                 }, 1000)
                 // console.log(this.listUni)
                 // console.log(this.options)
-                this.pageRuleForm.enterpriseID = this.enterpriseID
-                this.pageRuleForm.enterprise = this.enterprise
+                this.pageEmployeeForm.enterpriseID = this.enterpriseID
+                this.pageEmployeeForm.enterprise = this.enterprise
             } else {
                 this.options = []
             }
@@ -1625,12 +1834,21 @@ export default {
         },
         handleGetName(val) {
             if (val == '') {
-                return '输入账户即可自动查询'
+                return '输入后即可自动查询'
             }
-            return this.pageRuleForm.userRealName = val
+            return this.pageEmployeeForm.userRealName = val
         },
         handleConsole(val) {
             console.log(val)
+            this.$refs[val].validate(valid => {
+                if (valid) {
+                    console.log(valid)
+                    alert(valid)
+                } else {
+                    console.log(valid)
+                    return false
+                }
+            })
         }
     }
 }

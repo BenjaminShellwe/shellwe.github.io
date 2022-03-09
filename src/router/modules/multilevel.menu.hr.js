@@ -48,7 +48,7 @@ export default {
                         {
                             path: 'vacancies',
                             name: 'Vacancies',
-                            component: () => import('@/views/human_resources/recruitment/vacancies'),
+                            component: () => import('@/views/basic_human_resources/recruitment/vacancies'),
                             meta: {
                                 title: '职位空缺发布',
                                 sidebar: true,
@@ -58,7 +58,7 @@ export default {
                         {
                             path: 'recruitment',
                             name: 'RecruitmentInterviewManagement',
-                            component: () => import('@/views/human_resources/recruitment/recruitment'),
+                            component: () => import('@/views/basic_human_resources/recruitment/recruitment'),
                             meta: {
                                 title: '招聘面试管理',
                                 sidebar: true,
@@ -68,7 +68,7 @@ export default {
                         {
                             path: 'resume',
                             name: 'ResumeCollectionFilter',
-                            component: () => import('@/views/human_resources/recruitment/resume'),
+                            component: () => import('@/views/basic_human_resources/recruitment/resume'),
                             meta: {
                                 title: '简历筛选录用',
                                 sidebar: true,
@@ -78,7 +78,7 @@ export default {
                         {
                             path: 'builder',
                             name: 'ResumeBuilder',
-                            component: () => import('@/views/human_resources/recruitment/builder'),
+                            component: () => import('@/views/basic_human_resources/recruitment/builder'),
                             meta: {
                                 title: '简历生成工具',
                                 sidebar: true,
@@ -102,7 +102,7 @@ export default {
                         {
                             path: 'enterprise',
                             name: 'EnterpriseRecruitmentPortal',
-                            component: () => import('@/views/human_resources/recruitment/enterprise'),
+                            component: () => import('@/views/basic_human_resources/recruitment/enterprise'),
                             meta: {
                                 title: '企业招聘门户',
                                 sidebar: true,
@@ -113,7 +113,7 @@ export default {
                         {
                             path: 'background',
                             name: 'BackgroundInvestigationManagement',
-                            component: () => import('@/views/human_resources/background/background'),
+                            component: () => import('@/views/basic_human_resources/background/background'),
                             redirect: '',
                             meta: {
                                 title: '背景调查管理',
@@ -126,7 +126,7 @@ export default {
                 {
                     path: 'report',
                     name: 'StatisticalReport',
-                    component: () => import('@/views/human_resources/recruitment/report'),
+                    component: () => import('@/views/basic_human_resources/recruitment/report'),
                     redirect: '',
                     meta: {
                         title: '统计报表',
@@ -137,7 +137,7 @@ export default {
                         {
                             path: 'external',
                             name: 'ExternalTalentPoolInventoryReport',
-                            component: () => import('@/views/test'),
+                            component: () => import('@/views/extra_functions/test'),
                             // component: () => import('@/views/global_func_manage/data_dic/global_dic'),
                             meta: {
                                 title: '外库盘点报表',
@@ -208,7 +208,7 @@ export default {
                         {
                             path: 'overview',
                             name: 'TrainingInformationOverview',
-                            component: () => import('@/views/human_resources/training/overview'),
+                            component: () => import('@/views/basic_human_resources/training/overview'),
                             redirect: '',
                             meta: {
                                 title: '培训详情总览',
@@ -255,7 +255,7 @@ export default {
                         {
                             path: 'setting',
                             name: 'BasicDataSettings',
-                            component: () => import('@/views/human_resources/attendance/setting'),
+                            component: () => import('@/views/basic_human_resources/attendance/setting'),
                             redirect: '',
                             meta: {
                                 title: '考勤业务设置',
@@ -302,7 +302,7 @@ export default {
                         {
                             path: 'summary',
                             name: 'SalarySummary',
-                            component: () => import('@/views/human_resources/salary/summary'),
+                            component: () => import('@/views/basic_human_resources/salary/summary'),
                             redirect: '',
                             meta: {
                                 title: '薪资信息汇总',
@@ -337,7 +337,7 @@ export default {
                 {
                     path: 'performance',
                     name: 'PerformanceManagement',
-                    component: () => import('@/views/human_resources/performance/performance'),
+                    component: () => import('@/views/basic_human_resources/performance/performance'),
                     redirect: '',
                     meta: {
                         title: '绩效管理',

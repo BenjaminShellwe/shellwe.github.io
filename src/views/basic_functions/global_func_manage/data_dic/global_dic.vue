@@ -76,8 +76,8 @@
                     <el-alert title="编辑模式按钮允许你进行修改规则,但请先点击左下方左侧栏加载,删除规则请到全部字典信息表中操作" type="info" style="margin-bottom: 20px;" />
                 </el-col>
             </el-row>
-            <el-tabs tab-position="left" style="max-height: 310px; overflow-y: auto; overflow-x: hidden;" @tab-click="handleQueryUID">
-                <el-tab-pane v-for="(item, index) in pageTabValue" :key="index" :label="item" :name="index" style="min-height: 315px; overflow-y: auto; overflow-x: hidden;">
+            <el-tabs tab-position="left" style="max-height: 330px; overflow-y: auto; overflow-x: hidden;" @tab-click="handleQueryUID">
+                <el-tab-pane v-for="(item, index) in pageTabValue" :key="index" :label="item" :name="index.toString()" style="min-height: 315px; overflow-y: auto; overflow-x: hidden;">
                     <span style="margin: 5px 0 15px 0;">当前操作: {{ item }} - {{ index }}</span>
                     <el-row style="margin-top: 10px;">
                         <el-col v-for="(indexUni) in pageQueryUID.length" :key="indexUni" :span="4">

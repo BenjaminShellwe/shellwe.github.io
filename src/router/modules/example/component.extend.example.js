@@ -15,7 +15,7 @@ export default {
         {
             path: 'pageheader',
             name: 'componentExtendExamplePageheader',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/pageheader'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/pageheader'),
             meta: {
                 title: '页头'
             }
@@ -23,7 +23,7 @@ export default {
         {
             path: 'pagemain',
             name: 'componentExtendExamplePagemain',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/pagemain'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/pagemain'),
             meta: {
                 title: '内容块'
             }
@@ -31,7 +31,7 @@ export default {
         {
             path: 'editor',
             name: 'componentExtendExampleEditor',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/editor'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/editor'),
             meta: {
                 title: '编辑器'
             }
@@ -39,7 +39,7 @@ export default {
         {
             path: 'result',
             name: 'componentExtendExampleResult',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/result'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/result'),
             meta: {
                 title: '处理结果'
             }
@@ -47,7 +47,7 @@ export default {
         {
             path: 'actionbar',
             name: 'componentExtendExampleActionbar',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/actionbar'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/actionbar'),
             meta: {
                 title: '固定底部操作栏'
             }
@@ -55,7 +55,7 @@ export default {
         {
             path: 'searchbar',
             name: 'componentExtendExampleSearchbar',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/searchbar'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/searchbar'),
             meta: {
                 title: '搜索栏'
             }
@@ -63,7 +63,7 @@ export default {
         {
             path: 'batchactionbar',
             name: 'componentExtendExampleBatchactionbar',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/batchactionbar'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/batchactionbar'),
             meta: {
                 title: '批量操作栏'
             }
@@ -71,7 +71,7 @@ export default {
         {
             path: 'tableautoheight',
             name: 'componentExtendExampleTableautoheight',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/table.autoheight'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/table.autoheight'),
             meta: {
                 title: '表格自适应'
             }
@@ -79,7 +79,7 @@ export default {
         {
             path: 'upload',
             name: 'componentExtendExampleUpload',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/upload'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/upload'),
             meta: {
                 title: '上传'
             }
@@ -87,7 +87,7 @@ export default {
         {
             path: 'imagepreview',
             name: 'componentExtendExampleImagePreview',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/image.preview'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/image.preview'),
             meta: {
                 title: '图片预览'
             }
@@ -95,7 +95,7 @@ export default {
         {
             path: 'trend',
             name: 'componentExtendExampleTrend',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/trend'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/trend'),
             meta: {
                 title: '趋势标记'
             }
@@ -103,7 +103,7 @@ export default {
         {
             path: 'area',
             name: 'componentExtendExampleArea',
-            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/example/component_extend_example/area'),
+            component: () => import(/* webpackChunkName: 'component_extend_example' */ '@/views/extra_functions/example/component_extend_example/area'),
             meta: {
                 title: '省市区联动'
             }

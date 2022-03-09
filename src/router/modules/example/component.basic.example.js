@@ -15,7 +15,7 @@ export default {
         {
             path: 'icon',
             name: 'componentBasicExampleIcon',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/icon'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/icon'),
             meta: {
                 title: '图标'
             }
@@ -23,7 +23,7 @@ export default {
         {
             path: 'button',
             name: 'componentBasicExampleButton',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/button'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/button'),
             meta: {
                 title: '按钮'
             }
@@ -31,7 +31,7 @@ export default {
         {
             path: 'link',
             name: 'componentBasicExampleLink',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/link'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/link'),
             meta: {
                 title: '文字链接'
             }
@@ -39,7 +39,7 @@ export default {
         {
             path: 'radio',
             name: 'componentBasicExampleRadio',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/radio'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/radio'),
             meta: {
                 title: '单选框'
             }
@@ -47,7 +47,7 @@ export default {
         {
             path: 'checkbox',
             name: 'componentBasicExampleCheckbox',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/checkbox'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/checkbox'),
             meta: {
                 title: '多选框'
             }
@@ -55,7 +55,7 @@ export default {
         {
             path: 'input',
             name: 'componentBasicExampleInput',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/input'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/input'),
             meta: {
                 title: '输入框'
             }
@@ -63,7 +63,7 @@ export default {
         {
             path: 'inputnumber',
             name: 'componentBasicExampleInputnumber',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/inputnumber'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/inputnumber'),
             meta: {
                 title: '计数器'
             }
@@ -71,7 +71,7 @@ export default {
         {
             path: 'select',
             name: 'componentBasicExampleSelect',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/select'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/select'),
             meta: {
                 title: '选择器'
             }
@@ -79,7 +79,7 @@ export default {
         {
             path: 'switch',
             name: 'componentBasicExampleSwitch',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/switch'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/switch'),
             meta: {
                 title: '开关'
             }
@@ -87,7 +87,7 @@ export default {
         {
             path: 'slider',
             name: 'componentBasicExampleSlider',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/slider'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/slider'),
             meta: {
                 title: '滑块'
             }
@@ -95,7 +95,7 @@ export default {
         {
             path: 'timepicker',
             name: 'componentBasicExampleTimepicker',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/timepicker'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/timepicker'),
             meta: {
                 title: '时间选择器'
             }
@@ -103,7 +103,7 @@ export default {
         {
             path: 'datepicker',
             name: 'componentBasicExampleDatepicker',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/datepicker'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/datepicker'),
             meta: {
                 title: '日期选择器'
             }
@@ -111,7 +111,7 @@ export default {
         {
             path: 'datetimepicker',
             name: 'componentBasicExampleDatetimepicker',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/datetimepicker'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/datetimepicker'),
             meta: {
                 title: '日期时间选择器'
             }
@@ -119,7 +119,7 @@ export default {
         {
             path: 'rate',
             name: 'componentBasicExampleRate',
-            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/example/component_basic_example/rate'),
+            component: () => import(/* webpackChunkName: 'component_basic_example' */ '@/views/extra_functions/example/component_basic_example/rate'),
             meta: {
                 title: '评分'
             }

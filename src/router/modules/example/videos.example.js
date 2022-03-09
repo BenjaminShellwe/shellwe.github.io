@@ -11,7 +11,7 @@ export default [
             {
                 path: '',
                 name: 'videosExampleVideo1',
-                component: () => import(/* webpackChunkName: 'other_example' */ '@/views/example_other/1'),
+                component: () => import(/* webpackChunkName: 'other_example' */ '@/views/extra_functions/example_other/1'),
                 meta: {
                     title: '01 - 开发环境配置',
                     sidebar: false,

@@ -15,7 +15,7 @@ export default {
         {
             path: 'index',
             name: 'permissionExampleIndex',
-            component: () => import(/* webpackChunkName: 'permission_example' */ '@/views/example/permission_example'),
+            component: () => import(/* webpackChunkName: 'permission_example' */ '@/views/extra_functions/example/permission_example'),
             meta: {
                 title: '权限验证',
                 auth: ['permission.browse'],

@@ -16,7 +16,7 @@ export default {
         {
             path: 'index',
             name: 'mockExampleIndex',
-            component: () => import(/* webpackChunkName: 'mock_example' */ '@/views/example/mock_example'),
+            component: () => import(/* webpackChunkName: 'mock_example' */ '@/views/extra_functions/example/mock_example'),
             meta: {
                 title: 'Mock',
                 sidebar: false,

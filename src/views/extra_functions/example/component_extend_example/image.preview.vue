@@ -18,8 +18,8 @@ export default {
     props: {},
     data() {
         return {
-            imgUrl: require('../../../assets/images/yuf.png'),
-            imgUrl1: require('../../../assets/images/yuf1.jpg')
+            imgUrl: require('../../../../assets/images/yuf.png'),
+            imgUrl1: require('../../../../assets/images/yuf1.jpg')
         }
     },
     created() {},
