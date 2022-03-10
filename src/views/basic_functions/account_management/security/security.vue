@@ -11,15 +11,99 @@
                 </div>
             </template>
         </page-header>
-        <page-main>
-            <el-card>
-                <div>
-                    <el-carousel indicator-position="outside" :height="dataHeight">
-                        <el-carousel-item v-for="item in pageCarouselValue" :key="item">
-                            <h3 class="pageText">提示: {{ item }}</h3>
-                        </el-carousel-item>
-                    </el-carousel>
+        <!--  权限控制     -->
+        <page-main title="权限控制">
+            <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
+                <div slot="header" class="clearfix">
+                    <span>权限控制 开发中 (点击右边进行操作)</span>
+                    <el-button style="float: right; padding: 3px 0;" type="text">修改操作</el-button>
                 </div>
+                <el-row style="margin: 3px 0;">
+                    <!--企业高级-->
+                    <el-table
+                        :data="pagePermissionControl"
+                        border
+                        style="width: 100%;">
+                        <el-table-column
+                            v-for="(item, index) in pagePermissionControlEHeader"
+                            :key="index"
+                            :prop="index"
+                            :label="item"
+                            :fit="true"
+                            :width="item.width"
+                        />
+                        <el-table-column
+                            fixed="right"
+                            label="操作"
+                            width="90"
+                        >
+                            <template>
+                                <el-button-group>
+                                    <el-button type="text" size="mini" style="margin: 0 2px;">编辑</el-button>
+                                    <el-button type="text" size="mini" style="margin: 0 2px;">移除</el-button>
+                                </el-button-group>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-row>
+                <el-row style="margin: 3px 0;">
+                    <!--企业基础-->
+                    <el-table
+                        :data="pagePermissionControl"
+                        border
+                        style="width: 100%;">
+                        <el-table-column
+                            v-for="(item, index) in pagePermissionControlBHeader"
+                            :key="index"
+                            :prop="index"
+                            :label="item"
+                            :fit="true"
+                            :width="item.width"
+                        />
+                        <el-table-column
+                            fixed="right"
+                            label="操作"
+                            width="90"
+                        >
+                            <template>
+                                <el-button-group>
+                                    <el-button type="text" size="mini" style="margin: 0 2px;">编辑</el-button>
+                                    <el-button type="text" size="mini" style="margin: 0 2px;">移除</el-button>
+                                </el-button-group>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-row>
+                <el-row style="margin: 3px 0;">
+                    <!--企业个人-->
+                    <el-table
+                        :data="pagePermissionControl"
+                        border
+                        style="width: 100%;">
+                        <el-table-column
+                            v-for="(item, index) in pagePermissionControlPHeader"
+                            :key="index"
+                            :prop="index"
+                            :label="item"
+                            :fit="true"
+                            :width="item.width"
+                        />
+                        <el-table-column
+                            fixed="right"
+                            label="操作"
+                            width="90"
+                        >
+                            <template>
+                                <el-button-group>
+                                    <el-button type="text" size="mini" style="margin: 0 2px;">编辑</el-button>
+                                    <el-button type="text" size="mini" style="margin: 0 2px;">移除</el-button>
+                                </el-button-group>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-row>
+            </el-card>
+            <el-card shadow="hover">
                 <div>
                     <el-row>
                         <el-col :span="6">
@@ -36,12 +120,10 @@
                                         <el-row>
                                             <el-col :span="16">
                                                 <el-input v-model="pageInputValue" type="number" placeholder="仅能输入0-1的零后两位小数" />
-                                                <el-card class="pageCard" shadow="hover">
-                                                    <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
-                                                </el-card>
+                                                <el-button @click="handleChartsChange()">提交</el-button>
                                             </el-col>
                                             <el-col :span="8">
-                                                <el-button @click="handleChartsChange()">提交</el-button>
+
                                             </el-col>
                                         </el-row>
                                     </el-card>
@@ -53,51 +135,6 @@
                         </el-col>
                     </el-row>
                     <el-row />
-                    <el-row>
-                        <el-card class="pageCardRol" style="height: 260px;" shadow="hover">
-                            安全风险
-                            <el-row>
-                                <el-col :span="8">
-                                    <div class="grid-content">
-                                        <div class="Echarts">
-                                            <div id="chartsBin" style="width: 500px; height: 250px;" />
-                                        </div>
-                                    </div>
-                                </el-col>
-                                <el-col :span="8">
-                                    <div class="grid-content">
-                                        <div class="Echarts">
-                                            <div id="chartsTer" style="width: 500px; height: 250px;" />
-                                        </div>
-                                    </div>
-                                </el-col>
-                                <el-col :span="4">
-                                    <div class="grid-content">
-                                        <sapn style="font-weight: bold;">基本检测</sapn><br>
-                                        <span>检查后台数据存取情况</span><br>
-                                        <el-button size="mini" plain>立即检查</el-button>
-                                    </div>
-                                </el-col>
-                                <el-col :span="4">
-                                    <sapn style="font-weight: bold;">操作监控</sapn><br>
-                                    <span>监控后台操作情况</span><br>
-                                    <el-button size="mini" plain>立即检查</el-button>
-                                </el-col>
-                            </el-row>
-                        </el-card>
-                    </el-row>
-                </div>
-                <div>
-                    <el-row>
-                        <el-col>
-                            <el-card class="pageCard" shadow="hover">
-
-                            </el-card>
-                            <el-card shadow="hover">
-                                {{ pageInputValue }}
-                            </el-card>
-                        </el-col>
-                    </el-row>
                 </div>
             </el-card>
         </page-main>
@@ -119,11 +156,54 @@ export default {
     },
     data() {
         return {
-            pageCarouselValue: [
-                '安全值被修改会有显示',
-                '根据人员进行权限分配',
-                '完成操作需要重新登录'
+            pagePermissionControl: [
+                {
+                    role: '未检测到或数据受保护',
+                    enterprisePermission: '未检测到或数据受保护',
+                    enterpriseAdd: '未检测到或数据受保护',
+                    enterpriseAlter: '未检测到或数据受保护',
+                    enterpriseQuery: '未检测到或数据受保护',
+                    enterpriseDelete: '未检测到或数据受保护',
+                    basicPermission: '未检测到或数据受保护',
+                    basicAdd: '未检测到或数据受保护',
+                    basicAlter: '未检测到或数据受保护',
+                    basicQuery: '未检测到或数据受保护',
+                    basicDelete: '未检测到或数据受保护',
+                    personalPermission: '未检测到或数据受保护',
+                    personalAdd: '未检测到或数据受保护',
+                    personalAlter: '未检测到或数据受保护',
+                    personalQuery: '未检测到或数据受保护',
+                    personalDelete: '未检测到或数据受保护',
+                    status: '未检测到或数据受保护'
+                }
             ],
+            pagePermissionControlEHeader: {
+                role: '角色',
+                enterprisePermission: '企业高级权限',
+                enterpriseAdd: '高级增添',
+                enterpriseAlter: '高级修改',
+                enterpriseQuery: '高级查询',
+                enterpriseDelete: '高级删除',
+                status: '状态'
+            },
+            pagePermissionControlBHeader: {
+                role: '角色',
+                basicPermission: '企业基础权限',
+                basicAdd: '基础增添',
+                basicAlter: '基础修改',
+                basicQuery: '基础查询',
+                basicDelete: '基础删除',
+                status: '状态'
+            },
+            pagePermissionControlPHeader: {
+                role: '角色',
+                personalPermission: '个人账户权限',
+                personalAdd: '个人增加',
+                personalAlter: '个人修改',
+                personalQuery: '个人查询',
+                personalDelete: '个人删除',
+                status: '状态'
+            },
             pageInputValue: ''
         }
     },
@@ -322,19 +402,6 @@ export default {
 }
 </script>
 <style>
-.pageText {
-    margin: 0 auto;
-    text-align: center;
-}
-.pageCard {
-    margin-bottom: 15px;
-    margin-right: 10px;
-}
-.pageCardRol {
-    margin-bottom: 15px;
-    margin-right: 10px;
-    height: 140px;
-}
 .carousel .item {
     height: 20px;
     background-color: #777;
