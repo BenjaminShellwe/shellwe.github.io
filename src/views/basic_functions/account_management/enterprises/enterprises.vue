@@ -193,7 +193,6 @@
                             <el-button style="float: right; padding: 3px 0;" type="text" @click="pageTemplateShowUni = !pageTemplateShowUni">录入操作</el-button>
                         </div>
                         <el-card v-show="pageTemplateShowUni" shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
-                            <!--                            -->
                             <el-form ref="pageEmployeeForm" v-model="pageEmployeeForm" :rules="rules" hide-required-asterisk="hide-required-asterisk" :model="pageEmployeeForm" inline="inline" label-width="75px" size="mini">
                                 <el-row>
                                     <el-alert
@@ -282,11 +281,11 @@
                                             </el-form-item>
                                         </el-row>
                                         <el-row style="height: 50px;">
-                                            <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 200px;">
-                                                <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="19" />
+                                            <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="25" />
                                             </el-form-item>
                                             <el-form-item label="录入人员" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
-                                                <el-switch v-model="pageSwitchValueUni" active-text="自动读取" :width="19" disabled />
+                                                <el-switch v-model="pageSwitchValueUni" active-text="自动读取" :width="25" disabled />
                                             </el-form-item>
                                         </el-row>
                                         <el-row style="display: inline-block; margin: 0 0 0 8px; padding: 0; height: 30px;">
@@ -333,7 +332,7 @@
                             </el-form>
                         </el-card>
                     </el-card>
-                    <!--                行政部门录入    -->
+                    <!--  start of 行政部门增添    -->
                     <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
                         <div slot="header" class="clearfix">
                             <span>行政部门增添 开发中 (点击右边进行操作)</span>
@@ -364,8 +363,8 @@
                                                 <el-form-item label="企业名称" style="margin: 2px 0 2px 0; width: 220px; height: 53px;">
                                                     <el-input v-model="pageDepartmentHeader.enterprise" :placeholder="pageDepartmentHeader.enterprise" maxlength="30" style="width: 145px;" />
                                                 </el-form-item>
-                                                <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 200px; height: 53px;">
-                                                    <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="19" />
+                                                <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 220px; height: 53px;">
+                                                    <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="25" />
                                                 </el-form-item>
                                             </el-row>
                                         </el-col>
@@ -385,6 +384,163 @@
                             </el-card>
                         </el-row>
                     </el-card>
+                    <!--  end of 行政部门增添 -->
+
+                    <!-- start of 事务发布  -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
+                        <div slot="header" class="clearfix">
+                            <span>部门信息总览 开发中 (点击右边进行操作)</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text">修改操作</el-button>
+                        </div>
+                        <el-row>
+                            <!--   预览 部门信息总览    -->
+                            <el-col :span="12">
+                                <el-card shadow="hover" body-style="padding: 5px;" style="margin: 5px 2px;">
+                                    <el-descriptions title="部门状态" :column="2" size="mini" border>
+                                        <template slot="extra">
+                                            <el-select
+                                                v-model="pageDeptInfo.input"
+                                                filterable
+                                                allow-create
+                                                remote
+                                                reserve-keyword
+                                                placeholder="输入进行部门查询"
+                                                :remote-method="handleRemoteMethodUni"
+                                                :loading="pageLoading"
+                                                style="width: 150px; height: 20px;"
+                                                size="small"
+                                                @change="handleDeptInfoValue(pageDeptInfo.input)"
+                                            >
+                                                <el-option
+                                                    v-for="item in optionsUni"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value"
+                                                />
+                                            </el-select>
+                                        </template>
+                                        <el-descriptions-item label="部门">{{ pageDeptInfo.name }}</el-descriptions-item>
+                                        <el-descriptions-item label="ID">{{ pageDeptInfo.departmentID }}</el-descriptions-item>
+                                        <el-descriptions-item label="主管">{{ pageDeptInfo.director }}</el-descriptions-item>
+                                        <el-descriptions-item label="经理">{{ pageDeptInfo.manager }}</el-descriptions-item>
+                                        <el-descriptions-item label="状态">
+                                            <el-tag size="small">{{ pageDeptInfo.departmentStatus }}</el-tag>
+                                        </el-descriptions-item>
+                                    </el-descriptions>
+                                </el-card>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-card shadow="hover" body-style="padding: 5px;" style="margin: 5px 2px;">
+                                    <!--      @tab-click=""         -->
+                                    <el-tabs v-model="pageDeptInfo.affair" style="margin: 0 15px;">
+                                        <el-tab-pane label="事务发布" name="second">
+                                            <el-form ref="pageAffairForm" :model="pageAffairForm" label-width="10px;" size="mini" style="display: inline-block;" label-position="left">
+                                                <el-row style="height: 25px; margin: 1px; padding: 1px;">
+                                                    <el-col :span="12">
+                                                        <el-form-item label="名称">
+                                                            <el-input v-model="pageAffairForm.name" style="height: 20px; width: 70%;" />
+                                                        </el-form-item>
+                                                    </el-col>
+                                                    <el-col :span="12">
+                                                        <el-form-item label="时间">
+                                                            <el-date-picker v-model="pageAffairForm.date" type="datetime" placeholder="选择日期" style="height: 20px; width: 70%;" />
+                                                        </el-form-item>
+                                                    </el-col>
+                                                </el-row>
+                                                <el-row style="height: 25px; margin: 1px; padding: 1px;">
+                                                    <el-form-item label="性质">
+                                                        <el-checkbox-group v-model="pageAffairForm.type">
+                                                            <el-checkbox-button label="线上" name="type" />
+                                                            <el-checkbox-button label="线下" name="type" />
+                                                            <el-checkbox-button label="品牌" name="type" />
+                                                        </el-checkbox-group>
+                                                    </el-form-item>
+                                                </el-row>
+                                                <el-row style="margin: 2px 0; padding: 1px 0;">
+                                                    <el-form-item style="margin: 2px 0; padding: 1px 0;">
+                                                        <el-input v-model="pageAffairForm.desc" placeholder="事务内容详情" style="margin: 2px 0; padding: 1px 0;" type="textarea" />
+                                                    </el-form-item>
+                                                    <el-form-item>
+                                                        <el-button type="primary">立即创建</el-button>
+                                                        <el-button>取消</el-button>
+                                                    </el-form-item>
+                                                </el-row>
+                                            </el-form>
+                                        </el-tab-pane>
+                                        <el-tab-pane label="通知发布" name="third">
+                                            <el-form ref="pageAffairForm" :model="pageAffairForm" label-width="10px;" size="mini" style="display: inline-block;" label-position="left">
+                                                <el-row style="height: 25px; margin: 1px; padding: 1px;">
+                                                    <el-col :span="12">
+                                                        <el-form-item label="名称">
+                                                            <el-input v-model="pageAffairForm.name" style="height: 20px; width: 70%;" />
+                                                        </el-form-item>
+                                                    </el-col>
+                                                    <el-col :span="12">
+                                                        <el-form-item label="时间">
+                                                            <el-date-picker v-model="pageAffairForm.date" type="datetime" placeholder="选择日期" style="height: 20px; width: 70%;" />
+                                                        </el-form-item>
+                                                    </el-col>
+                                                </el-row>
+                                                <el-row style="height: 25px; margin: 1px; padding: 1px;">
+                                                    <el-form-item label="类型">
+                                                        <el-checkbox-group v-model="pageAffairForm.type">
+                                                            <el-checkbox-button label="紧急" name="type" />
+                                                            <el-checkbox-button label="常规" name="type" />
+                                                            <el-checkbox-button label="通告" name="type" />
+                                                        </el-checkbox-group>
+                                                    </el-form-item>
+                                                </el-row>
+                                                <el-row style="margin: 2px 0; padding: 1px 0;">
+                                                    <el-form-item style="margin: 2px 0; padding: 1px 0;">
+                                                        <el-input v-model="pageAffairForm.desc" placeholder="通知内容详情" style="margin: 2px 0; padding: 1px 0;" type="textarea" />
+                                                    </el-form-item>
+                                                    <el-form-item>
+                                                        <el-button type="primary">立即发布</el-button>
+                                                        <el-button>取消</el-button>
+                                                    </el-form-item>
+                                                </el-row>
+                                            </el-form>
+                                        </el-tab-pane>
+                                        <el-tab-pane label="定时任务" name="fourth">
+                                            <el-form ref="pageAffairForm" :model="pageAffairForm" label-width="10px;" size="mini" style="display: inline-block;" label-position="left">
+                                                <el-row style="height: 25px; margin: 1px; padding: 1px;">
+                                                    <el-col :span="12">
+                                                        <el-form-item label="名称">
+                                                            <el-input v-model="pageAffairForm.name" style="height: 20px; width: 70%;" />
+                                                        </el-form-item>
+                                                    </el-col>
+                                                    <el-col :span="12">
+                                                        <el-form-item label="时间">
+                                                            <el-date-picker v-model="pageAffairForm.date" type="datetime" placeholder="选择日期" style="height: 20px; width: 70%;" />
+                                                        </el-form-item>
+                                                    </el-col>
+                                                </el-row>
+                                                <el-row style="height: 25px; margin: 1px; padding: 1px;">
+                                                    <el-form-item label="性质">
+                                                        <el-checkbox-group v-model="pageAffairForm.type">
+                                                            <el-checkbox-button label="线上" name="type" />
+                                                            <el-checkbox-button label="线下" name="type" />
+                                                            <el-checkbox-button label="品牌" name="type" />
+                                                        </el-checkbox-group>
+                                                    </el-form-item>
+                                                </el-row>
+                                                <el-row style="margin: 2px 0; padding: 1px 0;">
+                                                    <el-form-item style="margin: 2px 0; padding: 1px 0;">
+                                                        <el-input v-model="pageAffairForm.desc" placeholder="事务内容详情" style="margin: 2px 0; padding: 1px 0;" type="textarea" />
+                                                    </el-form-item>
+                                                    <el-form-item>
+                                                        <el-button type="primary">立即创建</el-button>
+                                                        <el-button>取消</el-button>
+                                                    </el-form-item>
+                                                </el-row>
+                                            </el-form>
+                                        </el-tab-pane>
+                                    </el-tabs>
+                                </el-card>
+                            </el-col>
+                        </el-row>
+                    </el-card>
+                    <!-- end of 事务发布    -->
                 </el-col>
                 <el-col :span="12">
                     <!--                员工信息更改    -->
@@ -497,7 +653,7 @@
                             </el-card>
                         </el-row>
                     </el-card>
-                    <!--                部门信息更改    -->
+                    <!-- start of 部门信息更改    -->
                     <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
                         <div slot="header" class="clearfix">
                             <span>部门信息更改 开发中 (点击右边进行操作)</span>
@@ -559,8 +715,8 @@
                                                 <el-form-item label="企业名称" style="margin: 2px 0 2px 0; width: 220px;">
                                                     <el-input v-model="pageDepartmentHeader.enterprise" :placeholder="pageDepartmentHeader.enterprise" maxlength="30" style="width: 145px;" />
                                                 </el-form-item>
-                                                <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 200px;">
-                                                    <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="19" />
+                                                <el-form-item label="立即审核" :fit="true" style="margin: 5px 0 5px 0; width: 220px;">
+                                                    <el-switch v-model="pageSwitchValue" active-text="立即提交审核" :width="25" />
                                                 </el-form-item>
                                             </el-row>
                                         </el-col>
@@ -580,6 +736,115 @@
                             </el-card>
                         </el-col>
                     </el-card>
+                    <!-- end of 部门信息更改 -->
+
+                    <!-- start of 事务处理  -->
+                    <el-card shadow="hover" body-style="padding: 5px;" style="margin: 2px;">
+                        <div slot="header" class="clearfix">
+                            <span>部门事务修改与处理 开发中 (点击右边进行操作)</span>
+                            <el-button style="float: right; padding: 3px 0;" type="text">修改操作</el-button>
+                        </div>
+                        <!--      @tab-click=""         -->
+                        <el-tabs v-model="pageDeptInfoChange.affair" style="margin: 5px 15px;">
+                            <el-tab-pane label="部门状态修改" name="first">
+                                <el-form>
+                                    <el-row>
+                                        <el-col :span="22">
+                                            <el-row>
+                                                <el-form-item label="部门状态" style="margin: 2px 0 2px 0;">
+                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;"/>
+                                                </el-form-item>
+                                            </el-row>
+                                        </el-col>
+                                        <el-col :span="2">
+                                            <el-form-item size="mini">
+                                                <el-row>
+                                                    <!--handleUpdate(pageEmployeeForm)-->
+                                                    <el-button type="primary" style="margin: 6px 0 3px;" >完成</el-button>
+                                                </el-row>
+                                                <el-row>
+                                                    <el-button style="margin: 6px 0 3px;">取消</el-button>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-tab-pane>
+                            <el-tab-pane label="事务修改处理" name="second">
+                                <el-form>
+                                    <el-row>
+                                        <el-col :span="22">
+                                            <el-row>
+                                                <el-form-item label="事务状态" style="margin: 2px 0 2px 0;">
+                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;"/>
+                                                </el-form-item>
+                                            </el-row>
+                                        </el-col>
+                                        <el-col :span="2">
+                                            <el-form-item size="mini">
+                                                <el-row>
+                                                    <!--handleUpdate(pageEmployeeForm)-->
+                                                    <el-button type="primary" style="margin: 6px 0 3px;" >完成</el-button>
+                                                </el-row>
+                                                <el-row>
+                                                    <el-button style="margin: 6px 0 3px;">取消</el-button>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-tab-pane>
+                            <el-tab-pane label="通知修改处理" name="third">
+                                <el-form>
+                                    <el-row>
+                                        <el-col :span="22">
+                                            <el-row>
+                                                <el-form-item label="通知状态" style="margin: 2px 0 2px 0;">
+                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;"/>
+                                                </el-form-item>
+                                            </el-row>
+                                        </el-col>
+                                        <el-col :span="2">
+                                            <el-form-item size="mini">
+                                                <el-row>
+                                                    <!--handleUpdate(pageEmployeeForm)-->
+                                                    <el-button type="primary" style="margin: 6px 0 3px;" >完成</el-button>
+                                                </el-row>
+                                                <el-row>
+                                                    <el-button style="margin: 6px 0 3px;">取消</el-button>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-tab-pane>
+                            <el-tab-pane label="定时发布修改" name="fourth">
+                                <el-form>
+                                    <el-row>
+                                        <el-col :span="22">
+                                            <el-row>
+                                                <el-form-item label="定时发布状态" style="margin: 2px 0 2px 0;">
+                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;"/>
+                                                </el-form-item>
+                                            </el-row>
+                                        </el-col>
+                                        <el-col :span="2">
+                                            <el-form-item size="mini">
+                                                <el-row>
+                                                    <!--handleUpdate(pageEmployeeForm)-->
+                                                    <el-button type="primary" style="margin: 6px 0 3px;" >完成</el-button>
+                                                </el-row>
+                                                <el-row>
+                                                    <el-button style="margin: 6px 0 3px;">取消</el-button>
+                                                </el-row>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </el-card>
+                    <!-- end of 事务处理    -->
                 </el-col>
             </el-row>
             <!--        员工信息页面    -->
@@ -894,38 +1159,38 @@
                             <el-tab-pane label="办公空间(建立)" name="first">
                                 <el-collapse accordion>
                                     <el-collapse-item title="1.1 选址" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="1.2 租赁" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="1.3 装修" name="3">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="1.4 搬迁" name="4">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
                             <el-tab-pane label="办公环境(维护)" name="second">
                                 <el-collapse accordion>
                                     <el-collapse-item title="2.1 卫生" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="2.2 环境(照明,温湿,空气)" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="2.3 绿植" name="3">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="2.4 公共空间" name="4">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="2.5 报修" name="4">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="2.6 安保" name="4">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
@@ -934,31 +1199,31 @@
                                     <el-collapse-item title="3.1 小额报销采购" name="1">
                                         <el-collapse accordion>
                                             <el-collapse-item title="3.1.1 采购" name="11">
-                                                <div>不实现</div>
+                                                <el-empty description="不实现" />
                                             </el-collapse-item>
                                             <el-collapse-item title="3.1.2 报销" name="22">
-                                                <div>不实现</div>
+                                                <el-empty description="不实现" />
                                             </el-collapse-item>
                                             <el-collapse-item title="3.1.3 记账" name="33">
-                                                <div>不实现</div>
+                                                <el-empty description="不实现" />
                                             </el-collapse-item>
                                         </el-collapse>
                                     </el-collapse-item>
                                     <el-collapse-item title="3.2 合同对公采购(照明,温湿,空气)" name="2">
                                         <el-collapse-item title="3.2.1 采购申请" name="111">
-                                            <div>不实现</div>
+                                            <el-empty description="不实现" />
                                         </el-collapse-item>
                                         <el-collapse-item title="3.2.2 供应商登记" name="222">
-                                            <div>不实现</div>
+                                            <el-empty description="不实现" />
                                         </el-collapse-item>
                                         <el-collapse-item title="3.2.3 合同审批" name="333">
-                                            <div>不实现</div>
+                                            <el-empty description="不实现" />
                                         </el-collapse-item>
                                         <el-collapse-item title="3.2.4 支付与验收" name="444">
-                                            <div>不实现</div>
+                                            <el-empty description="不实现" />
                                         </el-collapse-item>
                                         <el-collapse-item title="3.2.5 入账" name="555">
-                                            <div>不实现</div>
+                                            <el-empty description="不实现" />
                                         </el-collapse-item>
                                     </el-collapse-item>
                                 </el-collapse>
@@ -966,116 +1231,116 @@
                             <el-tab-pane label="资产维护(维护)" name="fourth">
                                 <el-collapse accordion>
                                     <el-collapse-item title="4.1 入库出库" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="4.2 维修维护" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="4.3 盘点" name="3">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="4.4 报废" name="4">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
                             <el-tab-pane label="IT运维(运维)" name="fifth">
                                 <el-collapse accordion>
                                     <el-collapse-item title="5.1 计算机调试维修维护" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="5.2 网络设施通信维护" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="5.3 数据维护" name="3">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="5.4 企业邮件管理" name="4">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
                             <el-tab-pane label="其它事务" name="sixth">
                                 <el-collapse accordion>
                                     <el-collapse-item title="6.1 接待" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="6.2 会议" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="6.3 差旅" name="3">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="6.4 通知" name="4">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
                             <el-tab-pane label="科技项目" name="seventh">
                                 <el-collapse accordion>
                                     <el-collapse-item title="7.1 项目规划" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="7.2 项目立项" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="7.3 项目申报" name="3">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="7.4 项目验收" name="4">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
                             <el-tab-pane label="供应商管理" name="eighth">
                                 <el-collapse accordion>
                                     <el-collapse-item title="8.1 按程序" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="8.2 按对象" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
                             <el-tab-pane label="行政费用管理" name="ninth">
                                 <el-collapse accordion>
                                     <el-collapse-item title="9.1 预算编制" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="9.2 预算执行项" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="9.3 预算分析" name="3">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="9.4 预算控制" name="4">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
                             <el-tab-pane label="制度流程" name="tenth">
                                 <el-collapse accordion>
                                     <el-collapse-item title="10.1 制度规定" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="10.2 工作流程" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="10.3 执行标准" name="3">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
                             <el-tab-pane label="团队建设" name="eleventh">
                                 <el-collapse accordion>
                                     <el-collapse-item title="11.1 部门工作职责梳理" name="1">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="11.2 部门工作分配协调" name="2">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                     <el-collapse-item title="11.3 人员规划与指导" name="3">
-                                        <div>不实现</div>
+                                        <el-empty description="不实现" />
                                     </el-collapse-item>
                                 </el-collapse>
                             </el-tab-pane>
@@ -1150,6 +1415,7 @@ export default {
     inject: ['reload'],
     data() {
         return {
+            pageAffair: '',
             pageSwitchValue: false,
             pageSwitchValueUni: true,
             pageTemplateShowUni: true,
@@ -1165,7 +1431,7 @@ export default {
             pageRowVisibleUni: false,
             pageSelectValue: [],
             pageSelectValueUni: [],
-            size: 'small',
+            size: 'mini',
             pageSearch: '',
             pageSearchUni: '',
             pageLoading: false,
@@ -1217,6 +1483,38 @@ export default {
                         picker.$emit('pick', date)
                     }
                 }]
+            },
+            pageTemporaryTransfer: {},
+            pageDeptInfo: {
+                input: '',
+                name: '未检测到数据',
+                departmentStatus: '未检测到数据',
+                director: '未检测到数据',
+                manager: '未检测到数据',
+                departmentID: '未检测到数据',
+                affair: ''
+            },
+            pageAffairForm: {
+                name: '',
+                date: '',
+                time: '',
+                type: [],
+                desc: ''
+            },
+            pageDeptInfoChange: {
+                affair: '',
+                affairForm: {
+                    name: '',
+                    date: '',
+                    time: '',
+                    type: [],
+                    desc: ''
+                },
+                name: '未检测到数据',
+                departmentStatus: '未检测到数据',
+                director: '未检测到数据',
+                manager: '未检测到数据',
+                departmentID: '未检测到数据'
             },
             pageDataForm: {
                 realName: 'Benjamin Thomas Shellwe',
@@ -1584,8 +1882,8 @@ export default {
                         // console.log(that.pageRemoteValue.map)
                         // console.log(that.listUni)
                     })
+                    this.pageTemporaryTransfer = response.data.data
                 })
-
             }).catch(error => {
                 this.$notify({
                     message: error,
@@ -1840,14 +2138,10 @@ export default {
         },
         handleConsole(val) {
             console.log(val)
-            this.$refs[val].validate(valid => {
-                if (valid) {
-                    console.log(valid)
-                    alert(valid)
-                } else {
-                    console.log(valid)
-                    return false
-                }
+        },
+        handleDeptInfoValue(val) {
+            this.pageDeptInfo = this.pageTemporaryTransfer.find(item => {
+                return item.name = val
             })
         }
     }
@@ -1866,6 +2160,6 @@ export default {
     padding: 0 6px;
 }
 .el-input .el-input__icon {
-    padding: 0 0 0 120px;
+    padding: 0 0 0 90px;
 }
 </style>

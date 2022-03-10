@@ -23,23 +23,31 @@
                 <div>
                     <el-row>
                         <el-col :span="6">
-                            <div class="Echarts" style="height: 260px;" shadow="hover">
-                                <div id="chartsUni" style="width: 400px; height: 350px;" />
-                            </div>
+                            <el-card style="margin: 0 10px 10px 0; height: 250px;" shadow="hover" body-style="padding: 2px">
+                                <div class="Echarts">
+                                    <div id="chartsUni" style="width: 350px; height: 350px; padding: 0; margin: 0;" />
+                                </div>
+                            </el-card>
                         </el-col>
                         <el-col :span="18">
                             <el-row>
                                 <el-col :span="12">
                                     <el-card class="pageCard" shadow="hover">
-                                        <h3>发现 问题</h3>
-                                        <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
+                                        <el-row>
+                                            <el-col :span="16">
+                                                <el-input v-model="pageInputValue" type="number" placeholder="仅能输入0-1的零后两位小数" />
+                                                <el-card class="pageCard" shadow="hover">
+                                                    <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
+                                                </el-card>
+                                            </el-col>
+                                            <el-col :span="8">
+                                                <el-button @click="handleChartsChange()">提交</el-button>
+                                            </el-col>
+                                        </el-row>
                                     </el-card>
                                 </el-col>
                                 <el-col :span="12">
-                                    <el-card class="pageCard" shadow="hover">
-                                        <h3>发现 问题</h3>
-                                        <span>存在问题可能造成安全风险  <el-button type="warning" size="mini" plain>点击处理</el-button></span>
-                                    </el-card>
+
                                 </el-col>
                             </el-row>
                         </el-col>
@@ -83,14 +91,7 @@
                     <el-row>
                         <el-col>
                             <el-card class="pageCard" shadow="hover">
-                                <el-row>
-                                    <el-col :span="16">
-                                        <el-input v-model="pageInputValue" type="number" placeholder="仅能输入0-1的零后两位小数" />
-                                    </el-col>
-                                    <el-col :span="8">
-                                        <el-button @click="handleChartsChange()">提交</el-button>
-                                    </el-col>
-                                </el-row>
+
                             </el-card>
                             <el-card shadow="hover">
                                 {{ pageInputValue }}
@@ -119,9 +120,9 @@ export default {
     data() {
         return {
             pageCarouselValue: [
-                '请经常修改密码',
-                '不要随意打开未知连接',
-                '反正怎么安全怎么做'
+                '安全值被修改会有显示',
+                '根据人员进行权限分配',
+                '完成操作需要重新登录'
             ],
             pageInputValue: ''
         }
