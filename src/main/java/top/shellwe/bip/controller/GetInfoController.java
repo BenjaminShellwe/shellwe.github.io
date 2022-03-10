@@ -77,4 +77,11 @@ public class GetInfoController {
         List<Department> list = departmentRepository.getByEnterpriseID(data.getString("enterpriseID"));
         return new Result(200, "部门信息操作已从数据库取出", list);
     }
+
+    @PostMapping("/role")
+    public Result role(@RequestBody JSONObject data) {
+
+
+        return new Result(200, "数据库已返回数据");
+    }
 }
