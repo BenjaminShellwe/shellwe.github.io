@@ -9,7 +9,7 @@
             </template>
         </page-header>
         <el-alert
-            title="背景调查主要调查:基本信息、调查工作履历和履职表现。禁止未经授权随意调用!"
+            title="背景调查主要调查:基本信息、调查工作履历和履职表现，并非深入调查个人信息的功能。禁止未经授权随意调用!"
             type="warning"
         />
         <page-main title="背景调查">
@@ -50,7 +50,7 @@
                         border
                     >
                         <el-table-column type="expand">
-                            <template slot-scope="props">
+                            <template #default="props">
                                 <el-form label-position="left" inline class="demo-table-expand">
                                     <el-descriptions class="margin-top" title="详情列表" :column="2" size="mini" border>
                                         <template slot="extra">

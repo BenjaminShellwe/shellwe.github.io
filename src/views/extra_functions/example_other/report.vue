@@ -8,17 +8,6 @@
                 </div>
             </template>
         </page-header>
-        <page-main>
-
-            <el-collapse v-model="pageActiveCollapse" @change="handleChange">
-                <el-collapse-item title="展示图形表格" name="1">
-                    1
-                </el-collapse-item>
-                <el-collapse-item title="展示图形表格" name="2">
-                    2
-                </el-collapse-item>
-            </el-collapse>
-        </page-main>
         <page-main title="外人才库盘点">
             <el-tabs tab-position="left" class="pageTabCSS">
                 <el-tab-pane label="招聘选拔">

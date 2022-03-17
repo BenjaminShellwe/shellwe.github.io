@@ -126,12 +126,12 @@ export default {
                 {
                     path: 'report',
                     name: 'StatisticalReport',
-                    component: () => import('@/views/basic_human_resources/recruitment/report'),
+                    component: () => import('@/views/extra_functions/example_other/report'),
                     redirect: '',
                     meta: {
                         title: '统计报表',
-                        sidebar: true,
-                        breadcrumb: true
+                        sidebar: false,
+                        breadcrumb: false
                     },
                     children: [
                         {

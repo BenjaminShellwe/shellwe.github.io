@@ -106,19 +106,19 @@
                                          :width="items.width"
                                          show-overflow-tooltip
                         >
-                            <template slot-scope="scope">
+                            <template #default="scope">
                                 {{ scope.row[items.prop] }}
                             </template>
                         </el-table-column>
                         <el-table-column
                             fixed="right"
                             label="操作"
-                            width="210"
+                            width="160"
                         >
-                            <template slot-scope="scope">
-                                <el-button type="primary" size="small" @click="dialogVisible = true">查看</el-button>
-                                <el-button type="primary" size="small" @click="dialogVisible = true">编辑</el-button>
-                                <el-button type="danger" size="small" @click.native.prevent="deleteRow(scope.$index, data)">移除</el-button>
+                            <template #default="scope">
+                                <el-button type="text" size="mini" @click="dialogVisible = true">查看</el-button>
+                                <el-button type="text" size="mini" @click="dialogVisible = true">编辑</el-button>
+                                <el-button type="danger" size="mini" @click.native.prevent="deleteRow(scope.$index, data)">移除</el-button>
                                 <!--                            <el-button type="danger" size="small" @click.native.prevent="deleteRow(scope.$index, data)">移除</el-button>-->
                             </template>
                         </el-table-column>

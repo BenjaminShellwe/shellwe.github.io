@@ -184,19 +184,6 @@ export default {
                         //    前端功能要求1 完善访问路径和交互页面
                         //    后端功能要求1 统计
                     }
-                },
-                {
-                    path: 'desensitize',
-                    name: 'Desensitization',
-                    component: () => import('@/views/basic_functions/monitor_manage/desensitize/desensitize'),
-                    meta: {
-                        title: '数据脱敏',
-                        sidebar: true,
-                        breadcrumb: true,
-                        auth: ['permission.access', 'permission.edit']
-                        //    前端功能要求1 完善访问路径和交互页面
-                        //    后端功能要求1 数据脱敏
-                    }
                 }
             ]
         }

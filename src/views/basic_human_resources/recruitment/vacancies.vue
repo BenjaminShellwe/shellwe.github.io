@@ -188,6 +188,7 @@
                 </el-col>
             </el-row>
         </page-main>
+        <!--已经空缺与信息调整-->
         <page-main id="pageBin" title="已经空缺与信息调整">
             <el-row>
                 <el-col :span="12">

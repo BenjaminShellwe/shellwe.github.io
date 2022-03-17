@@ -26,29 +26,30 @@
                 <el-table-column
                     align="right"
                 >
-                    <template slot="header">
-                        <input
+                    <template #header>
+                        <el-input
                             v-model="search"
                             size="mini"
-                            placeholder="输入事务ID搜索"
-                            style="width: 100px;"
-                        >
+                            placeholder="输入ID搜索"
+                        />
                     </template>
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                             size="mini"
-                            style="width: 50px; margin-right: 5px;"
+                            type="text"
+                            style="margin-right: 5px; padding: 2px;"
                             @click="handleEdit(scope.$index, scope.row), pageDialogVisible = true"
                         >
                             详情
                         </el-button>
                         <el-dropdown
-                            style="width: 50px; margin-left: 5px;"
+                            style="margin-left: 5px;"
                             size="mini"
                         >
                             <el-button
                                 size="mini"
                                 type="success"
+                                style="padding: 2px;"
                                 @click="handleDelete(scope.$index, scope.row)"
                             >
                                 操作
