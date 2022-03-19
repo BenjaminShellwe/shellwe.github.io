@@ -26,7 +26,8 @@
                                                     <span>个人中心 图片处理正在修复</span>
                                                 </el-col>
                                                 <el-col :span="11">
-                                                    <image-upload :url.sync="pageDataFormUni.headimg" action="http://scrm.1daas.com/api/upload/upload" name="image" :data="{'token':'TKD628431923530324'}" notip class="headimg-upload" @onSuccess="handleSuccess" />
+                                                    <image-upload action="/avatar/insert" name="12321" />
+                                                    <image-preview src="/avatar/query"/>
                                                 </el-col>
                                             </el-row>
                                         </div>
@@ -168,9 +169,11 @@
 
 <script>
 import axios from 'axios'
+import ImagePreview from '@/components/ImagePreview'
 
 export default {
     name: 'PersonalSetting',
+    components: {ImagePreview},
     beforeRouteLeave(to, from, next) {
         if (['personalEditPassword'].includes(to.name)) {
             this.$store.commit('keepAlive/add', 'PersonalSetting')
@@ -201,7 +204,7 @@ export default {
                 phone: '',
                 position: '',
                 status: '',
-                headimg: ''
+                avatar: ''
             },
             options: [{
                 value: 'Male',
@@ -229,9 +232,12 @@ export default {
             history.go(-1)
         },
         handleSuccess(res) {
+            console.log(res)
             if (res.error == '') {
-                this.pageDataFormUni.headimg = res.data.path
+                this.pageDataFormUni.avatar = res.data.path
+                console.log(res)
             } else {
+                console.log(res)
                 this.$message.warning(res.error)
             }
         },

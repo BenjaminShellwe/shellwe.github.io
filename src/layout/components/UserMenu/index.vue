@@ -3,7 +3,6 @@
         <div class="tools">
             <span v-if="$store.state.settings.mode == 'pc'" class="item item-pro">
                 <svg-icon name="el-icon-loading" />
-                <!--<span class="title">加油,很快就做完的了</span>-->
             </span>
             <el-tooltip v-if="$store.state.settings.enableNavSearch" effect="dark" content="搜索页面" placement="bottom">
                 <span class="item" @click="$eventBus.$emit('global-search-toggle')">
@@ -29,6 +28,7 @@
         <el-dropdown class="user-container" @command="handleCommand">
             <div class="user-wrapper">
                 <el-avatar size="medium">
+
                     <i class="el-icon-user-solid" />
                 </el-avatar>
                 {{ $store.state.user.account }}

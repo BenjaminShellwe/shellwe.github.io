@@ -14,11 +14,21 @@
                 <el-tab-pane label="员工出勤统计">
                     <el-main>
                         <el-row>
-                            <el-col class="Echarts" :span="9">
-                                <el-card id="chartsUni" style="width: 470px; height: 430px;" shadow="hover" />
-                            </el-col>
-                            <el-col class="Echarts" :span="8">
-                                <el-card id="chartsBin" style="width: 470px; height: 430px;" shadow="hover" />
+                            <el-col>
+                                <el-card shadow="hover">
+                                    <div slot="header">
+                                        <span>考勤记录 (点击右边进行操作)</span>
+                                        <el-button style="float: right; padding: 3px 0;" type="text">操作</el-button>
+                                    </div>
+                                    <el-row>
+                                        <el-col :span="15">
+                                            <div id="chartsAbnormal" class="Echarts" style="width: 850px; height: 420px;" />
+                                        </el-col>
+                                        <el-col :span="9">
+                                            <div id="chartsCompare" class="Echarts" style="width: 490px; height: 420px;" />
+                                        </el-col>
+                                    </el-row>
+                                </el-card>
                             </el-col>
                         </el-row>
                     </el-main>
@@ -59,21 +69,23 @@
                                 <el-input
                                     v-model="search"
                                     size="mini"
-                                    placeholder="输入关键字类型搜索"
+                                    placeholder="输入ID搜索"
                                 />
                             </template>
                             <template>
-                                <el-button
-                                    size="mini"
-                                >
-                                    Edit
-                                </el-button>
-                                <el-button
-                                    size="mini"
-                                    type="danger"
-                                >
-                                    Delete
-                                </el-button>
+                                <el-button-group>
+                                    <el-button
+                                        size="mini"
+                                    >
+                                        Edit
+                                    </el-button>
+                                    <el-button
+                                        size="mini"
+                                        type="danger"
+                                    >
+                                        Delete
+                                    </el-button>
+                                </el-button-group>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -84,8 +96,6 @@
 </template>
 
 <script>
-
-import * as echarts from 'echarts'
 
 export default {
     name: 'Setting',
@@ -118,211 +128,153 @@ export default {
         }
     },
     mounted() {
-        this.echartsUni()
-        this.echartsBin()
+        this.echartsAbnormal()
+        this.echartsCompare()
         this.echartsTer()
     },
     methods: {
         back() {
             history.go(-1)
         },
-        echartsUni() {
-            var chartUni = this.$echarts.init(document.getElementById('chartsUni'))
-            const graphData = [
-                ['2022-02-01', 26],
-                ['2022-02-04', 30],
-                ['2022-02-09', 47],
-                ['2022-02-13', 54],
-                ['2022-02-18', 74],
-                ['2022-02-23', 91]
-            ]
-            const links = graphData.map(function(item, idx) {
-                return {
-                    source: idx,
-                    target: idx + 1
-                }
-            })
-            function getVirtulData(year) {
-                year = year || '2022'
-                var date = +echarts.number.parseDate(year + '-01-01')
-                var end = +echarts.number.parseDate(+year + 1 + '-01-01')
-                var dayTime = 3600 * 24 * 1000
-                var data = []
-                for (var time = date; time < end; time += dayTime) {
-                    data.push([
-                        echarts.format.formatTime('yyyy-MM-dd', time),
-                        Math.floor(Math.random() * 100)
-                    ])
-                }
-                return data
-            }
-            links.pop()
+        echartsAbnormal() {
+            var chartAbnormal = this.$echarts.init(document.getElementById('chartsAbnormal'))
             // 配置图表
+            const hours = [
+                '12a', '1a', '2a', '3a', '4a', '5a', '6a',
+                '7a', '8a', '9a', '10a', '11a',
+                '12p', '1p', '2p', '3p', '4p', '5p',
+                '6p', '7p', '8p', '9p', '10p', '11p'
+            ]
+            // prettier-ignore
+            const days = [
+                'Saturday', 'Friday', 'Thursday',
+                'Wednesday', 'Tuesday', 'Monday', 'Sunday'
+            ]
+            // prettier-ignore
+            const data = [[0, 0, 5], [0, 1, 1], [0, 2, 0], [0, 3, 0], [0, 4, 0], [0, 5, 0], [0, 6, 0], [0, 7, 0], [0, 8, 0], [0, 9, 0], [0, 10, 0], [0, 11, 2], [0, 12, 4], [0, 13, 1], [0, 14, 1], [0, 15, 3], [0, 16, 4], [0, 17, 6], [0, 18, 4], [0, 19, 4], [0, 20, 3], [0, 21, 3], [0, 22, 2], [0, 23, 5], [1, 0, 7], [1, 1, 0], [1, 2, 0], [1, 3, 0], [1, 4, 0], [1, 5, 0], [1, 6, 0], [1, 7, 0], [1, 8, 0], [1, 9, 0], [1, 10, 5], [1, 11, 2], [1, 12, 2], [1, 13, 6], [1, 14, 9], [1, 15, 11], [1, 16, 6], [1, 17, 7], [1, 18, 8], [1, 19, 12], [1, 20, 5], [1, 21, 5], [1, 22, 7], [1, 23, 2], [2, 0, 1], [2, 1, 1], [2, 2, 0], [2, 3, 0], [2, 4, 0], [2, 5, 0], [2, 6, 0], [2, 7, 0], [2, 8, 0], [2, 9, 0], [2, 10, 3], [2, 11, 2], [2, 12, 1], [2, 13, 9], [2, 14, 8], [2, 15, 10], [2, 16, 6], [2, 17, 5], [2, 18, 5], [2, 19, 5], [2, 20, 7], [2, 21, 4], [2, 22, 2], [2, 23, 4], [3, 0, 7], [3, 1, 3], [3, 2, 0], [3, 3, 0], [3, 4, 0], [3, 5, 0], [3, 6, 0], [3, 7, 0], [3, 8, 1], [3, 9, 0], [3, 10, 5], [3, 11, 4], [3, 12, 7], [3, 13, 14], [3, 14, 13], [3, 15, 12], [3, 16, 9], [3, 17, 5], [3, 18, 5], [3, 19, 10], [3, 20, 6], [3, 21, 4], [3, 22, 4], [3, 23, 1], [4, 0, 1], [4, 1, 3], [4, 2, 0], [4, 3, 0], [4, 4, 0], [4, 5, 1], [4, 6, 0], [4, 7, 0], [4, 8, 0], [4, 9, 2], [4, 10, 4], [4, 11, 4], [4, 12, 2], [4, 13, 4], [4, 14, 4], [4, 15, 14], [4, 16, 12], [4, 17, 1], [4, 18, 8], [4, 19, 5], [4, 20, 3], [4, 21, 7], [4, 22, 3], [4, 23, 0], [5, 0, 2], [5, 1, 1], [5, 2, 0], [5, 3, 3], [5, 4, 0], [5, 5, 0], [5, 6, 0], [5, 7, 0], [5, 8, 2], [5, 9, 0], [5, 10, 4], [5, 11, 1], [5, 12, 5], [5, 13, 10], [5, 14, 5], [5, 15, 7], [5, 16, 11], [5, 17, 6], [5, 18, 0], [5, 19, 5], [5, 20, 3], [5, 21, 4], [5, 22, 2], [5, 23, 0], [6, 0, 1], [6, 1, 0], [6, 2, 0], [6, 3, 0], [6, 4, 0], [6, 5, 0], [6, 6, 0], [6, 7, 0], [6, 8, 0], [6, 9, 0], [6, 10, 1], [6, 11, 0], [6, 12, 2], [6, 13, 1], [6, 14, 3], [6, 15, 4], [6, 16, 0], [6, 17, 0], [6, 18, 0], [6, 19, 0], [6, 20, 1], [6, 21, 2], [6, 22, 2], [6, 23, 6]]
+                .map(function(item) {
+                    return [item[1], item[0], item[2] || '-']
+                })
             var option = {
-                tooltip: {},
-                calendar: {
-                    top: 'middle',
-                    left: 'center',
-                    orient: 'vertical',
-                    cellSize: 40,
-                    yearLabel: {
-                        margin: 50,
-                        fontSize: 30
-                    },
-                    dayLabel: {
-                        firstDay: 0,
-                        nameMap: 'cn'
-                    },
-                    monthLabel: {
-                        nameMap: 'cn',
-                        margin: 15,
-                        fontSize: 20,
-                        color: '#999'
-                    },
-                    range: ['2022-02']
+                title: {
+                    text: '考勤异常记录',
+                    subtext: '颜色越深异常人数越多'
+                },
+                tooltip: {
+                    position: 'top'
+                },
+                grid: {
+                    height: '50%',
+                    top: '10%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: hours,
+                    splitArea: {
+                        show: true
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: days,
+                    splitArea: {
+                        show: true
+                    }
                 },
                 visualMap: {
                     min: 0,
-                    max: 100,
-                    type: 'piecewise',
+                    max: 10,
+                    calculable: true,
+                    orient: 'horizontal',
                     left: 'center',
-                    bottom: 20,
-                    inRange: {
-                        color: ['#5291FF', '#C7DBFF']
-                    },
-                    seriesIndex: [1],
-                    orient: 'horizontal'
+                    bottom: '15%'
                 },
                 series: [
                     {
-                        type: 'graph',
-                        edgeSymbol: ['none', 'arrow'],
-                        coordinateSystem: 'calendar',
-                        links: links,
-                        symbolSize: 15,
-                        calendarIndex: 0,
-                        itemStyle: {
-                            color: 'yellow',
-                            shadowBlur: 9,
-                            shadowOffsetX: 1.5,
-                            shadowOffsetY: 3,
-                            shadowColor: '#555'
-                        },
-                        lineStyle: {
-                            color: '#D10E00',
-                            width: 1,
-                            opacity: 1
-                        },
-                        data: graphData,
-                        z: 20
-                    },
-                    {
+                        name: 'Punch Card',
                         type: 'heatmap',
-                        coordinateSystem: 'calendar',
-                        data: getVirtulData(2022)
+                        data: data,
+                        label: {
+                            show: true
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
                     }
                 ]
             }
-            chartUni.setOption(option)
+            chartAbnormal.setOption(option)
         },
-        echartsBin() {
-            var chartBin = this.$echarts.init(document.getElementById('chartsBin'))
-            const graphData = [
-                ['2022-03-01', 270],
-                ['2022-03-05', 270],
-                ['2022-03-06', 279],
-                ['2022-03-15', 877],
-                ['2022-03-22', 271],
-                ['2022-03-29', 471]
-            ]
-            const links = graphData.map(function(item, idx) {
-                return {
-                    source: idx,
-                    target: idx + 1
-                }
-            })
-            function getVirtulData(year) {
-                year = year || '2022'
-                var date = +echarts.number.parseDate(year + '-01-01')
-                var end = +echarts.number.parseDate(+year + 1 + '-01-01')
-                var dayTime = 3600 * 24 * 1000
-                var data = []
-                for (var time = date; time < end; time += dayTime) {
-                    data.push([
-                        echarts.format.formatTime('yyyy-MM-dd', time),
-                        Math.floor(Math.random() * 1000)
-                    ])
-                }
-                return data
-            }
-            links.pop()
-            // 配置图表
-            var option = {
-                tooltip: {},
-                calendar: {
-                    top: 'middle',
-                    left: 'center',
-                    orient: 'vertical',
-                    cellSize: 40,
-                    yearLabel: {
-                        margin: 50,
-                        fontSize: 30
-                    },
-                    dayLabel: {
-                        firstDay: 0,
-                        nameMap: 'cn'
-                    },
-                    monthLabel: {
-                        nameMap: 'cn',
-                        margin: 15,
-                        fontSize: 20,
-                        color: '#999'
-                    },
-                    range: ['2022-03']
+        echartsCompare() {
+            let chartCompare = this.$echarts.init(document.getElementById('chartsCompare'))
+            let option = {
+                title: {
+                    text: '考勤丁格尔图',
+                    subtext: 'Data',
+                    left: 'center'
                 },
-                visualMap: {
-                    min: 0,
-                    max: 1000,
-                    type: 'piecewise',
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c} ({d}%)'
+                },
+                legend: {
                     left: 'center',
-                    bottom: 20,
-                    inRange: {
-                        color: ['#5291FF', '#C7DBFF']
-                    },
-                    seriesIndex: [1],
-                    orient: 'horizontal'
+                    top: 'bottom',
+                    data: [
+                        'rose1',
+                        'rose2',
+                        'rose3',
+                        'rose4',
+                        'rose5',
+                        'rose6',
+                        'rose7',
+                        'rose8'
+                    ]
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
                 },
                 series: [
                     {
-                        type: 'graph',
-                        edgeSymbol: ['none', 'arrow'],
-                        coordinateSystem: 'calendar',
-                        links: links,
-                        symbolSize: 15,
-                        calendarIndex: 0,
+                        name: 'Radius Mode',
+                        type: 'pie',
+                        radius: [20, 130],
+                        center: ['50%', '50%'],
+                        roseType: 'radius',
                         itemStyle: {
-                            color: 'yellow',
-                            shadowBlur: 9,
-                            shadowOffsetX: 1.5,
-                            shadowOffsetY: 3,
-                            shadowColor: '#555'
+                            borderRadius: 8
                         },
-                        lineStyle: {
-                            color: '#D10E00',
-                            width: 1,
-                            opacity: 1
+                        label: {
+                            show: false
                         },
-                        data: graphData,
-                        z: 20
-                    },
-                    {
-                        type: 'heatmap',
-                        coordinateSystem: 'calendar',
-                        data: getVirtulData(2022)
+                        emphasis: {
+                            label: {
+                                show: true
+                            }
+                        },
+                        data: [
+                            { value: 40, name: 'rose 1' },
+                            { value: 33, name: 'rose 2' },
+                            { value: 28, name: 'rose 3' },
+                            { value: 22, name: 'rose 4' },
+                            { value: 20, name: 'rose 5' },
+                            { value: 15, name: 'rose 6' },
+                            { value: 12, name: 'rose 7' },
+                            { value: 10, name: 'rose 8' }
+                        ]
                     }
                 ]
             }
-            chartBin.setOption(option)
+            chartCompare.setOption(option)
         },
         echartsTer() {
             var chartTer = this.$echarts.init(document.getElementById('chartsTer'))

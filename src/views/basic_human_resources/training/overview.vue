@@ -305,9 +305,10 @@
                                         width="120"
                                     >
                                         <template >
-                                            <el-button type="text" size="small">移除</el-button>
-                                            <el-button type="text" size="small">允许</el-button>
-                                            <el-button type="text" size="small">编辑</el-button>
+                                            <el-button-group style="padding: 2px;">
+                                                <el-button style="padding: 0 5px;" type="text" size="small">移除</el-button>
+                                                <el-button style="padding: 0 5px;" type="text" size="small">编辑</el-button>
+                                            </el-button-group>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
@@ -354,9 +355,10 @@
                                         width="120"
                                     >
                                         <template >
-                                            <el-button type="text" size="small">移除</el-button>
-                                            <el-button type="text" size="small">允许</el-button>
-                                            <el-button type="text" size="small">编辑</el-button>
+                                            <el-button-group style="padding: 2px;">
+                                                <el-button style="padding: 0 5px;" type="text" size="small">移除</el-button>
+                                                <el-button style="padding: 0 5px;" type="text" size="small">编辑</el-button>
+                                            </el-button-group>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>

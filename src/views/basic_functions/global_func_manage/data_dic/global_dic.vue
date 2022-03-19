@@ -26,14 +26,14 @@
                 />
             </span><br>
             <el-row>
-                <el-col :span="5">
+                <el-col :span="6">
                     <div class="inLine">
                         <span slot="label">
                             <el-tooltip content="定义字典的名称 必填" placement="top">
                                 <i class="el-icon-warning-outline" style="color: red;" />
                             </el-tooltip>
                         </span>
-                        模板名称&nbsp;
+                        模板名称
                         <div class="inLine">
                             <el-input
                                 v-model="pageQueryValue.typeName"
@@ -99,7 +99,7 @@
                                         <el-input v-model="pageFormValue.valueName" :placeholder="pageQueryUID[indexUni-1].valueName" :disabled="editable" style="width: 100px;" size="mini" clearable />
                                     </el-descriptions-item>
                                     <el-descriptions-item label="生效">
-                                        <el-select v-model="pageFormValue.valueStatus" :placeholder="pageQueryUID[indexUni-1].valueStatus" :disabled="editable" style="width: 100px;" size="mini" >
+                                        <el-select v-model="pageFormValue.valueStatus" :placeholder="pageQueryUID[indexUni-1].valueStatus" :disabled="editable" style="width: 100px;" size="mini">
                                             <el-option v-for="item in options" :key="item.valueState" :label="item.label" :value="item.valueState" />
                                         </el-select>
                                     </el-descriptions-item>

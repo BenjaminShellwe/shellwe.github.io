@@ -9,7 +9,7 @@
             </template>
         </page-header>
         <el-alert
-            title="背景调查主要调查:基本信息、调查工作履历和履职表现，并非深入调查个人信息的功能。禁止未经授权随意调用!"
+            title="背景调查主要调查:基本信息、调查工作履历和履职表现，并非深入调查个人信息的功能。"
             type="warning"
         />
         <page-main title="背景调查">
@@ -27,7 +27,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item label="所属部门" prop="department" >
+                            <el-form-item label="所属部门" prop="department">
                                 <el-input v-model.number="pageRuleForm.department" class="pageInputCSS" />
                             </el-form-item>
                         </el-col>

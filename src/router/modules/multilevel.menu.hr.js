@@ -196,7 +196,7 @@ export default {
                 {
                     path: 'training',
                     name: 'TrainingManagement',
-                    component: EmptyLayout,
+                    component: () => import('@/views/basic_human_resources/training/overview'),
                     // component: () => import('@/views/index'),
                     redirect: '',
                     meta: {
@@ -208,12 +208,12 @@ export default {
                         {
                             path: 'overview',
                             name: 'TrainingInformationOverview',
-                            component: () => import('@/views/basic_human_resources/training/overview'),
+                            // component: () => import('@/views/basic_human_resources/training/overview'),
                             redirect: '',
                             meta: {
                                 title: '培训详情总览',
-                                sidebar: true,
-                                breadcrumb: true
+                                sidebar: false,
+                                breadcrumb: false
                             }
                         },
                         {
@@ -243,7 +243,7 @@ export default {
                 {
                     path: 'attendance',
                     name: 'AttendanceManagement',
-                    component: EmptyLayout,
+                    component: () => import('@/views/basic_human_resources/attendance/setting'),
                     // component: () => import('@/views/index'),
                     redirect: '',
                     meta: {
@@ -255,12 +255,12 @@ export default {
                         {
                             path: 'setting',
                             name: 'BasicDataSettings',
-                            component: () => import('@/views/basic_human_resources/attendance/setting'),
+                            // component: () => import('@/views/basic_human_resources/attendance/setting'),
                             redirect: '',
                             meta: {
                                 title: '考勤业务设置',
-                                sidebar: true,
-                                breadcrumb: true
+                                sidebar: false,
+                                breadcrumb: false
                             }
                         },
                         {
@@ -290,7 +290,7 @@ export default {
                 {
                     path: 'salary',
                     name: 'SalaryManagement',
-                    component: EmptyLayout,
+                    component: () => import('@/views/basic_human_resources/salary/summary'),
                     // component: () => import('@/views/index'),
                     redirect: '',
                     meta: {
@@ -302,12 +302,12 @@ export default {
                         {
                             path: 'summary',
                             name: 'SalarySummary',
-                            component: () => import('@/views/basic_human_resources/salary/summary'),
+                            // component: () => import('@/views/basic_human_resources/salary/summary'),
                             redirect: '',
                             meta: {
                                 title: '薪资信息汇总',
-                                sidebar: true,
-                                breadcrumb: true
+                                sidebar: false,
+                                breadcrumb: false
                             }
                         },
                         {
