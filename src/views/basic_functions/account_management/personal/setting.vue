@@ -26,7 +26,7 @@
                                                     <span>个人中心 图片处理正在修复</span>
                                                 </el-col>
                                                 <el-col :span="11">
-                                                    <image-upload action="/avatar/insert" name="12321" />
+                                                    <image-upload action="/avatar/insert" />
                                                     <image-preview src="/avatar/query"/>
                                                 </el-col>
                                             </el-row>

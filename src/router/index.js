@@ -91,6 +91,22 @@ let asyncRoutes = [
         },
         children: [
             // ...VideosExample
+            {
+                path: 'testingLog',
+                name: 'testingLog',
+                component: () => import('@/views/extra_functions/log'),
+                meta: {
+                    title: '测试系统日志'
+                }
+            },
+            {
+                path: 'testingChat',
+                name: 'testingChat',
+                component: () => import('@/views/extra_functions/chat'),
+                meta: {
+                    title: '测试系统聊天'
+                }
+            }
         ]
     }
 ]

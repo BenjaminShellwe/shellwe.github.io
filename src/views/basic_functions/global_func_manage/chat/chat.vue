@@ -14,31 +14,31 @@
         <page-main>
             <div class="container">
                 <h2 class="text-center">即时通讯</h2>
-                <p>昵称:{{ $store.state.user.account }}</p>
-                <form action="" class="form-horizontal">
-                    <div class="form-group">
-                        <div class="chat-list form-control">
-                            <p v-for="item in chatList" :key="item">{{ item.$store.state.user.account }} : {{ item.content }}</p>
+                <p>姓名:{{ $store.state.user.account }}</p>
+                <el-card>
+                    <div class="chat-box">
+                        <header>聊天室 (在线:{{ count }}人)</header>
+                        <div ref="msg-box" class="msg-box">
+                            <div
+                                v-for="(i,index) in list"
+                                :key="index"
+                                class="msg"
+                                :style="i.userId == userId?'flex-direction:row-reverse':''"
+                            >
+                                <div class="user-head">
+                                    <img :src="i.avatar" height="30" width="30" :title="i.username">
+                                </div>
+                                <div class="user-msg">
+                                    <span :style="i.userId == userId?' float: right;':''" :class="i.userId == userId?'right':'left'">{{ i.content }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-box">
+                            <input ref="sendMsg" v-model="contentText" type="text" @keyup.enter="sendText()">
+                            <div class="btn" :class="{['btn-active']:contentText}" @click="sendText()">发送</div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="inLine">
-                            <el-input v-model="content" clearable type="text" class="form-control" placeholder="请输入内容" />
-                        </div>
-                        <el-button type="success" icon="el-icon-check" round class="inLine" @click.prevent="send" @click="dialogVisible = true">发送</el-button>
-                        <el-dialog
-                            title="来自shellwe的警告"
-                            :visible.sync="dialogVisible"
-                            width="30%"
-                        >
-                            <span>开发中 此操作暂时拒绝</span>
-                            <span slot="footer" class="dialog-footer">
-                                <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
-                                <el-button type="primary" @click="dialogVisible = false">明 白</el-button>
-                            </span>
-                        </el-dialog>
-                    </div>
-                </form>
+                </el-card>
             </div>
         </page-main>
     </div>
@@ -54,34 +54,76 @@ export default {
         return {
             dialogVisible: false,
             ws: null,
-            nickName: '',
-            chatList: [],
-            content: ''
+            count: 0,
+            userId: this.$store.state.user.id, // 当前用户ID
+            username: this.$store.state.user.userName, // 当前用户昵称
+            // avatar: this.$store.getters.avatar, // 当前用户头像
+            list: [], // 聊天记录的数组
+            contentText: '' // input输入的值
         }
     },
-    mounted: function() {
-        this.nickName = this.$store.state.user.account
-        this.ws = new WebSocket('ws://localhost:3000')
-        this.ws.onopen = function() {
-            console.log('连接成功')
-        }
-        const _this = this
-        this.ws.onmessage = function(ev) {
-            const item = JSON.parse(ev.data)
-            _this.chatList.push(item)
-        }
+    mounted() {
+        this.initWebSocket()
+    },
+    destroyed() {
+        // 离开页面时关闭websocket连接
+        this.ws.onclose(undefined)
     },
     methods: {
-        send() {
-            const data = {
-                nickName: this.nickName,
-                content: this.content
+        sendText() {
+            let _this = this
+            _this.$refs['sendMsg'].focus()
+            if (!_this.contentText) {
+                return
             }
-            // 将信息发送到后端
-            this.ws.send(JSON.stringify(data))
+            let params = {
+                userId: _this.userId,
+                username: _this.username,
+                // avatar: _this.avatar,
+                msg: _this.contentText,
+                count: _this.count
+            }
+            _this.ws.send(JSON.stringify(params)) // 调用WebSocket send()发送信息的方法
+            _this.contentText = ''
+            setTimeout(() => {
+                _this.scrollBottm()
+            }, 500)
         },
-        back() {
-            history.go(-1)
+        // 进入页面创建websocket连接
+        initWebSocket() {
+            let _this = this
+            // 判断页面有没有存在websocket连接
+            if (window.WebSocket) {
+                var serverHot =  window.location.hostname
+                let sip = '房间号'
+                // 填写本地IP地址 此处的 :9101端口号 要与后端配置的一致！
+                var url = 'ws://' + serverHot + ':9101' + '/groupChat/' + sip + '/' + this.userId // `ws://127.0.0.1/9101/groupChat/10086/聊天室`
+                let ws = new WebSocket(url)
+                _this.ws = ws
+                ws.onopen = function() {
+                    console.log('服务器连接成功: ' + url)
+                }
+                ws.onclose = function() {
+                    console.log('服务器连接关闭: ' + url)
+                }
+                ws.onerror = function() {
+                    console.log('服务器连接出错: ' + url)
+                }
+                ws.onmessage = function(e) {
+                    // 接收服务器返回的数据
+                    let resData = JSON.parse(e.data)
+                    _this.count = resData.count
+                    _this.list = [
+                        ..._this.list,
+                        { userId: resData.userId, username: resData.username, avatar: resData.avatar, content: resData.msg }
+                    ]
+                }
+            }
+        },
+        // 滚动条到底部
+        scrollBottm() {
+            let el = this.$refs['msg-box']
+            el.scrollTop = el.scrollHeight
         }
     }
 }

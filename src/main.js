@@ -7,6 +7,14 @@ import store from './store/index'
 import * as echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
+import i18n from './lang'
+
+import Cookies from 'js-cookie'
+Vue.use(ElementUI, {
+    size: Cookies.get('size') || 'medium', // set element-ui default size
+    i18n: (key, value) => i18n.t(key, value)
+})
+
 import moment from 'moment'
 Vue.prototype.moment = moment
 
@@ -61,5 +69,6 @@ Vue.config.productionTip = false
 Vue.prototype.$eventBus = new Vue({
     router,
     store,
+    i18n,
     render: h => h(App)
 }).$mount('#app')
