@@ -3,9 +3,9 @@ package top.shellwe.bip;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.JpaRepository;
 import top.shellwe.bip.service.*;
-import top.shellwe.bip.util.Result;
+import top.shellwe.bip.system.service.*;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.ReflectPermission;
 import java.util.Collection;
