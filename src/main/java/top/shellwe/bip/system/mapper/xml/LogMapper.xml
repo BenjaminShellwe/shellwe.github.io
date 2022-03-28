@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright from TernaryProject (c) 2022.
+  ~ Author BenjaminThomasShellwe
+  ~ Date 2022/3/28 8:56:24
+  -->
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhengqing.modules.system.mapper.LogMapper">
+<mapper namespace="top.shellwe.bip.system.mapper.LogMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.zhengqing.modules.system.entity.SysLog">
+	<resultMap id="BaseResultMap" type="top.shellwe.bip.system.entity.SysLog">
 		<id column="id" property="id" />
 		<result column="name" property="name" />
 		<result column="url" property="url" />
@@ -16,7 +23,7 @@
 	</resultMap>
 
 
-  <!--    <resultMap id="ResultMap" type="com.zhengqing.modules.system.dto.output.RoleView" extends="BaseResultMap"></resultMap>-->
+  <!--    <resultMap id="ResultMap" type="top.shellwe.bip.system.dto.output.BasicRoleView" extends="BaseResultMap"></resultMap>-->
 
     <select id="selectLogs" resultMap="BaseResultMap">
         SELECT

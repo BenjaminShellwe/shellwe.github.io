@@ -1,9 +1,15 @@
 package top.shellwe.bip.system.service;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import top.shellwe.bip.util.Result;
 
 /**
- * The interface Performance service.
+ * The interface InformationEnterprisePerformance service.
  */
 public interface PerformanceService {
     /**

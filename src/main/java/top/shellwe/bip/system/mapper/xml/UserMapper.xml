@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright from TernaryProject (c) 2022.
+  ~ Author BenjaminThomasShellwe
+  ~ Date 2022/3/28 8:56:24
+  -->
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.shellwe.bip.system.mapper.UserMapper">
+<mapper namespace="top.shellwe.bip.system.mapper.BasicUserMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="top.shellwe.bip.system.entity.User.java">
+	<resultMap id="BaseResultMap" type="top.shellwe.bip.system.entity.BasicUser.java">
 		<id column="id" property="id" />
 		<result column="userName" property="userName" />
 		<result column="GID" property="GID" />
@@ -37,7 +44,7 @@
         ORDER BY id DESC
     </select>
 
-    <select id="selectUserByUsername" resultType="top.shellwe.bip.system.entity.User">
+    <select id="selectUserByUsername" resultType="top.shellwe.bip.system.entity.BasicUser">
 		SELECT
 			*
 		FROM t_sys_user
@@ -47,7 +54,7 @@
 		</if>
 	</select>
 
-    <select id="getUserInfoByToken" resultType="top.shellwe.bip.system.entity.User">
+    <select id="getUserInfoByToken" resultType="top.shellwe.bip.system.entity.BasicUser">
 		SELECT
 		*
 		FROM t_sys_user
@@ -57,7 +64,7 @@
 		</if>
 	</select>
 
-	<select id="getUserInfoByQQ" resultType="top.shellwe.bip.system.entity.User">
+	<select id="getUserInfoByQQ" resultType="top.shellwe.bip.system.entity.BasicUser">
 		SELECT
 		*
 		FROM t_sys_user
@@ -67,7 +74,7 @@
 		</if>
 	</select>
 
-	<select id="selectUserByRoleId" resultType="top.shellwe.bip.system.entity.User">
+	<select id="selectUserByRoleId" resultType="top.shellwe.bip.system.entity.BasicUser">
         SELECT su.* FROM t_sys_user su
         LEFT JOIN t_sys_user_role sur ON su.id=sur.user_id
         WHERE sur.role_id = #{roleId}

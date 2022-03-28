@@ -1,8 +1,14 @@
 package top.shellwe.bip.system.service.impl;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import org.springframework.stereotype.Service;
 import top.shellwe.bip.system.dao.GlobalDicRepository;
-import top.shellwe.bip.system.entity.Dictionary;
+import top.shellwe.bip.system.entity.DictionaryGlobal;
 import top.shellwe.bip.system.service.GlobalDicService;
 import top.shellwe.bip.util.Result;
 
@@ -16,13 +22,13 @@ public class GlobalDicServiceImpl implements GlobalDicService {
 
     @Override
     public Result queryAll() {
-        List<Dictionary> list = globalDicRepository.findAll();
+        List<DictionaryGlobal> list = globalDicRepository.findAll();
         return new Result(list);
     }
 
     @Override
-    public void updateGlobalDic(Dictionary dictionary) {
-        globalDicRepository.save(dictionary);
+    public void updateGlobalDic(DictionaryGlobal dictionaryGlobal) {
+        globalDicRepository.save(dictionaryGlobal);
         new Result(200, "Success");
     }
 }

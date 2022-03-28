@@ -37,14 +37,14 @@
         </dependency>
 
         <!-- Spring Security依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-aop</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-security</artifactId>-->
+<!--        </dependency>-->
         <!-- mybatis-plus begin =================================== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -134,7 +134,7 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
+            <version>2.6.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.mapstruct</groupId>
@@ -145,14 +145,19 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0</version>
+            <version>2.6.1</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-bean-validators</artifactId>
-            <version>3.0.0</version>
+            <version>2.6.1</version>
         </dependency>
-
+        <!-- jwt依赖: https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
         <!-- websocket -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

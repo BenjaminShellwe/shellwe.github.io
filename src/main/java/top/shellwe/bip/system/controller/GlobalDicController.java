@@ -1,10 +1,16 @@
 package top.shellwe.bip.system.controller;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import top.shellwe.bip.system.entity.Dictionary;
-import top.shellwe.bip.system.mapper.GlobalDicMapper;
+import top.shellwe.bip.system.entity.DictionaryGlobal;
+import top.shellwe.bip.system.mapper.DictionaryMapper;
 import top.shellwe.bip.system.service.GlobalDicService;
 import top.shellwe.bip.util.Result;
 
@@ -27,7 +33,7 @@ public class GlobalDicController {
      * The Global dic mapper.
      */
     @Autowired
-    GlobalDicMapper globalDicMapper;
+    DictionaryMapper dictionaryMapper;
 
     /**
      * Query all result.
@@ -48,7 +54,7 @@ public class GlobalDicController {
      */
     @PostMapping("/queryTypeName")
     public Result getByTypeName(@RequestBody JSONObject data) {
-        List<top.shellwe.bip.system.entity.Dictionary> list = globalDicMapper.getByTypeName(data.get("typeName"));
+        List<DictionaryGlobal> list = dictionaryMapper.getByTypeName(data.get("typeName"));
         if (list.size() == 0){
             return new Result(200, "查无数据");
         }
@@ -63,7 +69,7 @@ public class GlobalDicController {
      */
     @PostMapping("/queryId")
     public Result getById(@RequestBody JSONObject data) {
-        List<top.shellwe.bip.system.entity.Dictionary> list = globalDicMapper.getById(data.get("id"));
+        List<DictionaryGlobal> list = dictionaryMapper.getById(data.get("id"));
         if (list.size() == 0){
             return new Result(200, "查无数据");
         }
@@ -82,68 +88,68 @@ public class GlobalDicController {
      */
     @PostMapping("/deleteId")
     public Result DeleteById(@RequestBody JSONObject data) {
-        List<top.shellwe.bip.system.entity.Dictionary> list = globalDicMapper.getById(data.get("id"));
+        List<DictionaryGlobal> list = dictionaryMapper.getById(data.get("id"));
 //        System.out.println(list);
         if(Objects.equals(list.get(0).getEditable(), "0")){
             return new Result(4033, "删除动作被拒绝");
         }
-        globalDicMapper.deleteId(data.get("id"));
+        dictionaryMapper.deleteId(data.get("id"));
         return new Result(200, "删除已执行");
     }
 
     /**
      * Add global dic result.
      *
-     * @param dictionary the dictionary
+     * @param dictionaryGlobal the dictionary
      * @return the result
      */
     @PostMapping("/addGlobalDic")
-    public Result addGlobalDic(@RequestBody top.shellwe.bip.system.entity.Dictionary dictionary) {
-        cherkType(dictionary);
-        if(dictionary.getType().equals("single")){
-            List<top.shellwe.bip.system.entity.Dictionary> list = globalDicMapper.getByTypeName(dictionary.getTypeName());
+    public Result addGlobalDic(@RequestBody DictionaryGlobal dictionaryGlobal) {
+        cherkType(dictionaryGlobal);
+        if(dictionaryGlobal.getType().equals("single")){
+            List<DictionaryGlobal> list = dictionaryMapper.getByTypeName(dictionaryGlobal.getTypeName());
             if(list.size() > 0) {
                 return new Result(415, "Same rule found!");
             }
         }
-        dictionary.setEditable("0");
-        globalDicService.updateGlobalDic(dictionary);
+        dictionaryGlobal.setEditable("0");
+        globalDicService.updateGlobalDic(dictionaryGlobal);
         return new Result(200, "添加规则成功!");
     }
 
     /**
      * Update global dic field result.
      *
-     * @param dictionary the dictionary
+     * @param dictionaryGlobal the dictionary
      * @return the result
      */
     @ResponseBody
     @RequestMapping("/update/field")
-    public Result updateGlobalDicField(@RequestBody top.shellwe.bip.system.entity.Dictionary dictionary) {
-        cherkType(dictionary);
-        globalDicService.updateGlobalDic(dictionary);
+    public Result updateGlobalDicField(@RequestBody DictionaryGlobal dictionaryGlobal) {
+        cherkType(dictionaryGlobal);
+        globalDicService.updateGlobalDic(dictionaryGlobal);
         return new Result(200, "Success");
     }
 
     /**
      * Cherk type.
      *
-     * @param dictionary the dictionary
+     * @param dictionaryGlobal the dictionary
      */
-    public void cherkType(@RequestBody top.shellwe.bip.system.entity.Dictionary dictionary) {
-        if(dictionary.getType().equals("single")) {
-            dictionary.setValueID(0);
-            if(dictionary.getTypeCode().contains("_")){
-                dictionary.setTypeCode((dictionary.getTypeCode().split("_Type")[0]));
+    public void cherkType(@RequestBody DictionaryGlobal dictionaryGlobal) {
+        if(dictionaryGlobal.getType().equals("single")) {
+            dictionaryGlobal.setValueID(0);
+            if(dictionaryGlobal.getTypeCode().contains("_")){
+                dictionaryGlobal.setTypeCode((dictionaryGlobal.getTypeCode().split("_Type")[0]));
             }
         }
-        if(dictionary.getType().equals("group")) {
-            if(!dictionary.getTypeCode().contains("_")){
-                dictionary.setTypeCode(dictionary.getTypeCode() + "_Type");
+        if(dictionaryGlobal.getType().equals("group")) {
+            if(!dictionaryGlobal.getTypeCode().contains("_")){
+                dictionaryGlobal.setTypeCode(dictionaryGlobal.getTypeCode() + "_Type");
             }
-            List<Dictionary> list = globalDicMapper.getByTypeName(dictionary.getTypeName());
+            List<DictionaryGlobal> list = dictionaryMapper.getByTypeName(dictionaryGlobal.getTypeName());
             if(list.size() > 0) {
-                dictionary.setValueID(list.size() + 1);
+                dictionaryGlobal.setValueID(list.size() + 1);
             }
         }
     }

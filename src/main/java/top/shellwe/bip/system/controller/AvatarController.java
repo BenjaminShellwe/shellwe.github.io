@@ -1,9 +1,15 @@
 package top.shellwe.bip.system.controller;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import top.shellwe.bip.system.entity.Avatar;
+import top.shellwe.bip.system.entity.BasicAvatar;
 import top.shellwe.bip.system.service.AvatarService;
 import top.shellwe.bip.util.Result;
 
@@ -33,7 +39,7 @@ public class AvatarController {
      * @return the result
      */
     @RequestMapping("/insert")
-    public Result Insert(Avatar data){
+    public Result Insert(BasicAvatar data){
         avatarService.insert(data);
         return new Result(200, "Success", "Data been changed.");
     }
@@ -61,10 +67,10 @@ public class AvatarController {
      */
     @RequestMapping(value = "/showImage.do")
     public  void showImage(int id, HttpServletResponse response, HttpServletRequest request) throws IOException, SQLException {
-        Avatar avatar=avatarService.query(id);
-        if(null != avatar){
+        BasicAvatar basicAvatar =avatarService.query(id);
+        if(null != basicAvatar){
             //从数据库读取出二进制数据……
-            byte[] bb=avatar.getImage();
+            byte[] bb= basicAvatar.getImage();
             // 将图像输出到Servlet输出流中。
             ServletOutputStream sos = response.getOutputStream();
             sos.write(bb, 0, bb.length);

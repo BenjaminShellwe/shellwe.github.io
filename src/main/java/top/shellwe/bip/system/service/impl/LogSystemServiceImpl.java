@@ -1,12 +1,18 @@
 package top.shellwe.bip.system.service.impl;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.shellwe.bip.system.dao.LogSystemRepository;
 import top.shellwe.bip.system.dto.input.LogQueryPara;
-import top.shellwe.bip.system.entity.LogSystem;
+import top.shellwe.bip.system.entity.SystemLogOrder;
 import top.shellwe.bip.system.entity.SysLog;
 import top.shellwe.bip.system.mapper.LogMapper;
 import top.shellwe.bip.system.service.LogSystemService;
@@ -26,7 +32,7 @@ public class LogSystemServiceImpl extends ServiceImpl<LogMapper, SysLog> impleme
 
     @Override
     public Result queryAll() {
-        List<LogSystem> list = logSystemRepository.findAll();
+        List<SystemLogOrder> list = logSystemRepository.findAll();
         return new Result(list);
     }
 

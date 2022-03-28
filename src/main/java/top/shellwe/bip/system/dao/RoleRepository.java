@@ -1,13 +1,19 @@
 package top.shellwe.bip.system.dao;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import top.shellwe.bip.system.entity.Role;
+import top.shellwe.bip.system.entity.BasicRole;
 
 /**
  * The interface Role repository.
  */
 @Repository(value = "RoleService")
-public interface RoleRepository extends JpaRepository<Role,Integer> {
+public interface RoleRepository extends JpaRepository<BasicRole,Integer> {
 
 }

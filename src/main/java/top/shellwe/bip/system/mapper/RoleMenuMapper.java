@@ -1,9 +1,16 @@
 package top.shellwe.bip.system.mapper;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import org.apache.ibatis.annotations.Mapper;
 import top.shellwe.bip.system.dto.input.RoleMenuQueryPara;
-import top.shellwe.bip.system.entity.Menu;
+import top.shellwe.bip.system.entity.SystemUrl;
 import top.shellwe.bip.system.entity.RoleMenu;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,10 +18,8 @@ import java.util.List;
 
 /**
  * <p> 系统管理 - 角色-菜单关联表  Mapper 接口 </p>
- *
- * @author : zhengqing
- * @date : 2019-08-20
  */
+@Mapper
 public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
 
     /**
@@ -47,8 +52,8 @@ public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
      * 根据角色ID查询关联菜单
      *
      * @param roleId:
-     * @return: java.util.List<com.zhengqing.modules.system.entity.Menu>
+     * @return: java.util.List<com.zhengqing.modules.system.entity.SystemUrl>
      */
-    List<Menu> selectMenusByRoleId(@Param("roleId") Integer roleId);
+    List<SystemUrl> selectMenusByRoleId(@Param("roleId") Integer roleId);
 
 }

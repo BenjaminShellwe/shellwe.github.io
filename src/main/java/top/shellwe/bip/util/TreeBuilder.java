@@ -1,9 +1,15 @@
 package top.shellwe.bip.util;
 
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.google.common.collect.Lists;
 import top.shellwe.bip.system.dto.model.MenuVO;
-import top.shellwe.bip.system.dto.output.MenuTreeNode;
+import top.shellwe.bip.system.dto.output.SystemUrlTreeNode;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -43,9 +49,9 @@ public class TreeBuilder {
         return treeNode;
     }
 
-    public static List<MenuTreeNode> buildMenuTree(List<MenuTreeNode> allNodes) {
+    public static List<SystemUrlTreeNode> buildMenuTree(List<SystemUrlTreeNode> allNodes) {
         // 根节点
-        List<MenuTreeNode> root = Lists.newArrayList();
+        List<SystemUrlTreeNode> root = Lists.newArrayList();
         allNodes.forEach(node -> {
             if (Integer.valueOf( node.getParentId() ) == 0) {
                 root.add(node);
@@ -56,7 +62,7 @@ public class TreeBuilder {
         });
 
         //对根节点排序
-        List<MenuTreeNode> sortedList = root.stream().sorted( Comparator.comparing( MenuTreeNode::getSortNo ) ).collect( Collectors.toList());
+        List<SystemUrlTreeNode> sortedList = root.stream().sorted( Comparator.comparing( SystemUrlTreeNode::getSortNo ) ).collect( Collectors.toList());
         //先清空，在添加
         root.clear();
         root.addAll( sortedList );
@@ -70,14 +76,14 @@ public class TreeBuilder {
      * @param treeNodes
      * @return
      */
-    private static MenuTreeNode findMenuChildren(MenuTreeNode treeNode, List<MenuTreeNode> treeNodes) {
-        for (MenuTreeNode it : treeNodes) {
+    private static SystemUrlTreeNode findMenuChildren(SystemUrlTreeNode treeNode, List<SystemUrlTreeNode> treeNodes) {
+        for (SystemUrlTreeNode it : treeNodes) {
             if (String.valueOf( treeNode.getId() ).equals(it.getParentId())) {
                 treeNode.getChildren().add(findMenuChildren(it, treeNodes));
             }
         }
         //对子节点排序
-        List<MenuTreeNode> childrenSorted = treeNode.getChildren().stream().sorted( Comparator.comparing( MenuTreeNode::getSortNo ) ).collect( Collectors.toList());
+        List<SystemUrlTreeNode> childrenSorted = treeNode.getChildren().stream().sorted( Comparator.comparing( SystemUrlTreeNode::getSortNo ) ).collect( Collectors.toList());
         //先清空，在添加
         treeNode.getChildren().clear();
         treeNode.getChildren().addAll( childrenSorted );

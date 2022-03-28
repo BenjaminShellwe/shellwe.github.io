@@ -1,6 +1,12 @@
 package top.shellwe.bip.common.enumeration;
 
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 /**
  *  <p> 响应码枚举 - 可参考HTTP状态码的语义 </p>
  *

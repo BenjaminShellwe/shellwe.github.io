@@ -1,10 +1,15 @@
 package top.shellwe.bip.system.controller.api;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.baomidou.mybatisplus.plugins.Page;
 import top.shellwe.bip.common.api.BaseController;
 import top.shellwe.bip.common.dto.output.ApiResult;
 import top.shellwe.bip.system.dto.input.UserRoleQueryPara;
-import top.shellwe.bip.system.entity.Role;
 import top.shellwe.bip.system.entity.UserRole;
 import top.shellwe.bip.system.service.UserRoleService;
 import io.swagger.annotations.Api;
@@ -41,7 +46,7 @@ public class SysUserRoleController extends BaseController {
     @PostMapping(value = "/list", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "获取系统管理 - 用户角色关联表 列表", httpMethod = "POST", response = ApiResult.class)
     public ApiResult list(@RequestBody UserRoleQueryPara filter) {
-        List<Role> result = userRoleService.list(filter);
+        List<UserRole> result = userRoleService.list(filter);
         return ApiResult.ok("获取系统管理 - 用户角色关联表 列表成功",result);
     }
 
@@ -62,7 +67,7 @@ public class SysUserRoleController extends BaseController {
     @PostMapping(value = "/detail", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "根据ID获取系统管理 - 用户角色关联表 信息", httpMethod = "POST", response = ApiResult.class)
     public ApiResult detail(@RequestBody UserRoleQueryPara input) {
-        Role entity = userRoleService.selectById(input.getId());
+        UserRole entity = userRoleService.selectById(input.getId());
         return ApiResult.ok("获取用户角色关联信息成功", entity);
     }
 

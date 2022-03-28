@@ -1,5 +1,11 @@
 package top.shellwe.bip.system.dto.model;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.google.common.collect.Lists;
 import lombok.Data;
 

@@ -1,17 +1,23 @@
 package top.shellwe.bip.system.service;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import top.shellwe.bip.system.dto.input.UserQueryPara;
 import top.shellwe.bip.system.dto.model.UserInfoVO;
-import top.shellwe.bip.system.entity.User;
+import top.shellwe.bip.system.entity.BasicUser;
 
 import java.util.List;
 
 /**
  * The interface User service.
  */
-public interface UserService extends IService<User> {
+public interface UserService extends IService<BasicUser> {
 
     /**
      * 系统管理-用户基础信息表列表分页
@@ -20,7 +26,7 @@ public interface UserService extends IService<User> {
      * @param filter
      * @return
      */
-    void listPage(Page<User> page, UserQueryPara filter);
+    void listPage(Page<BasicUser> page, UserQueryPara filter);
 
     /**
      * 保存系统管理-用户基础信息表
@@ -28,7 +34,7 @@ public interface UserService extends IService<User> {
      * @param input:
      * @return: java.lang.Integer
      */
-    Integer save(User input);
+    Integer save(BasicUser input);
 
     /**
      * 修改用户个人信息
@@ -36,7 +42,7 @@ public interface UserService extends IService<User> {
      * @param para:
      * @return: java.lang.Integer
      */
-    Integer updatePersonalInfo(User para);
+    Integer updatePersonalInfo(BasicUser para);
 
     /**
      * 系统管理-用户基础信息表列表
@@ -44,7 +50,7 @@ public interface UserService extends IService<User> {
      * @param filter
      * @return
      */
-    List<User> list(UserQueryPara filter);
+    List<BasicUser> list(UserQueryPara filter);
 
     /**
      * 通过token获取用户信息

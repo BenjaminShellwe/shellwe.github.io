@@ -1,10 +1,16 @@
 package top.shellwe.bip.system.controller.api;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.baomidou.mybatisplus.plugins.Page;
 import top.shellwe.bip.common.api.BaseController;
 import top.shellwe.bip.common.dto.output.ApiResult;
 import top.shellwe.bip.system.dto.input.RoleQueryPara;
-import top.shellwe.bip.system.entity.Role;
+import top.shellwe.bip.system.entity.BasicRole;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +39,7 @@ public class SysRoleController extends BaseController {
     @PostMapping(value = "/listPage", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "获取系统管理-角色表 列表分页", httpMethod = "POST", response = ApiResult.class)
     public ApiResult listPage(@RequestBody RoleQueryPara filter) {
-        Page<Role> page = new Page<>(filter.getPage(),filter.getLimit());
+        Page<BasicRole> page = new Page<>(filter.getPage(),filter.getLimit());
         roleService.listPage(page, filter);
         return ApiResult.ok("获取系统管理-角色表 列表分页成功", page);
     }
@@ -41,13 +47,13 @@ public class SysRoleController extends BaseController {
     @PostMapping(value = "/list", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "获取系统管理-角色表 列表", httpMethod = "POST", response = ApiResult.class)
     public ApiResult list(@RequestBody RoleQueryPara filter) {
-        List<Role> result = roleService.list(filter);
+        List<BasicRole> result = roleService.list(filter);
         return ApiResult.ok("获取系统管理-角色表 列表成功",result);
     }
 
     @PostMapping(value = "/saveOrUpdate", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "保存或更新角色", httpMethod = "POST", response = ApiResult.class)
-    public ApiResult saveOrUpdate(@RequestBody @Validated Role input) {
+    public ApiResult saveOrUpdate(@RequestBody @Validated BasicRole input) {
         Integer id = roleService.save(input);
         return ApiResult.ok("保存角色成功", id);
     }
@@ -62,7 +68,7 @@ public class SysRoleController extends BaseController {
     @PostMapping(value = "/detail", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "获取角色信息", httpMethod = "POST", response = ApiResult.class)
     public ApiResult detail(@RequestBody RoleQueryPara input) {
-        Role entity = roleService.selectById(input.getId());
+        BasicRole entity = roleService.selectById(input.getId());
         return ApiResult.ok("获取角色信息成功", entity);
     }
 

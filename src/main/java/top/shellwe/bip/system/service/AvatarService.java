@@ -1,6 +1,12 @@
 package top.shellwe.bip.system.service;
 
-import top.shellwe.bip.system.entity.Avatar;
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
+import top.shellwe.bip.system.entity.BasicAvatar;
 
 /**
  * The interface Avatar service.
@@ -12,12 +18,12 @@ public interface AvatarService {
      * @param id the id
      * @return the avatar
      */
-    Avatar query(int id);
+    BasicAvatar query(int id);
 
     /**
      * Insert.
      *
-     * @param avatar the avatar
+     * @param basicAvatar the avatar
      */
-    void insert(Avatar avatar);
+    void insert(BasicAvatar basicAvatar);
 }

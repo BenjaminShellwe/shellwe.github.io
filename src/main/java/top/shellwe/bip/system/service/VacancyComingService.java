@@ -1,10 +1,16 @@
 package top.shellwe.bip.system.service;
 
-import top.shellwe.bip.system.entity.VacancyComing;
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
+import top.shellwe.bip.system.entity.SeniorVacancyCreate;
 import top.shellwe.bip.util.Result;
 
 /**
- * The interface Vacancy coming service.
+ * The interface SeniorVacancy coming service.
  */
 public interface VacancyComingService {
     /**
@@ -17,8 +23,8 @@ public interface VacancyComingService {
     /**
      * Update all result.
      *
-     * @param vacancyComing the vacancy coming
+     * @param seniorVacancyCreate the vacancy coming
      * @return the result
      */
-    Result updateAll(VacancyComing vacancyComing);
+    Result updateAll(SeniorVacancyCreate seniorVacancyCreate);
 }

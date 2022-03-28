@@ -1,5 +1,11 @@
 package top.shellwe.bip.system.controller.api;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -7,8 +13,8 @@ import top.shellwe.bip.common.api.BaseController;
 import top.shellwe.bip.common.dto.output.ApiResult;
 import top.shellwe.bip.system.dto.input.UserQueryPara;
 import top.shellwe.bip.system.dto.model.UserInfoVO;
-import top.shellwe.bip.system.dto.output.UserTreeNode;
-import top.shellwe.bip.system.entity.User;
+import top.shellwe.bip.system.dto.output.BasicUserTreeNode;
+import top.shellwe.bip.system.entity.BasicUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +47,7 @@ public class SysUserController extends BaseController {
     @PostMapping(value = "/listPage", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "获取系统管理-用户基础信息表列表分页", httpMethod = "POST", response = ApiResult.class)
     public ApiResult listPage(@RequestBody UserQueryPara filter) {
-        Page<User> page = new Page<>(filter.getPage(), filter.getLimit());
+        Page<BasicUser> page = new Page<>(filter.getPage(), filter.getLimit());
         userService.listPage(page, filter);
         return ApiResult.ok("获取系统管理-用户基础信息表列表分页成功", page);
     }
@@ -49,10 +55,10 @@ public class SysUserController extends BaseController {
     @PostMapping(value = "/treeUser", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "获取用户树", httpMethod = "POST", response = ApiResult.class)
     public ApiResult treeUser() {
-        List<User> list = userService.selectList(null);
-        List<UserTreeNode> userTreeNodeList = new ArrayList<>();
+        List<BasicUser> list = userService.selectList(null);
+        List<BasicUserTreeNode> userTreeNodeList = new ArrayList<>();
         list.forEach(temp -> {
-            UserTreeNode userTreeNode = new UserTreeNode();
+            BasicUserTreeNode userTreeNode = new BasicUserTreeNode();
             BeanUtil.copyProperties(temp, userTreeNode);
             userTreeNodeList.add(userTreeNode);
         });
@@ -65,21 +71,21 @@ public class SysUserController extends BaseController {
     @PostMapping(value = "/list", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "获取系统管理-用户基础信息表列表", httpMethod = "POST", response = ApiResult.class)
     public ApiResult list(@RequestBody UserQueryPara filter) {
-        List<User> result = userService.list(filter);
+        List<BasicUser> result = userService.list(filter);
         return ApiResult.ok("获取系统管理-用户基础信息表列表成功", result);
     }
 
     @PostMapping(value = "/save", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "保存系统管理-用户基础信息表", httpMethod = "POST", response = ApiResult.class)
     // groups和默认校验同时应用 - 没有groups的属性和有groups的属性要想同时校验，则必须在value数组中同时指明，启动没有groups的属性通过Default.class来指定
-    public ApiResult save(@RequestBody @Validated User input) {
+    public ApiResult save(@RequestBody @Validated BasicUser input) {
         Integer id = userService.save(input);
         return ApiResult.ok("保存系统管理-用户基础信息表成功", id);
     }
 
     @PostMapping(value = "/updatePersonalInfo", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "修改个人信息", httpMethod = "POST", response = ApiResult.class)
-    public ApiResult updatePersonalInfo(@RequestBody User input) {
+    public ApiResult updatePersonalInfo(@RequestBody BasicUser input) {
         Integer id = userService.updatePersonalInfo(input);
         return ApiResult.ok("修改个人信息成功", id);
     }
@@ -94,7 +100,7 @@ public class SysUserController extends BaseController {
     @PostMapping(value = "/getById", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "获取系统管理-用户基础信息表信息", httpMethod = "POST", response = ApiResult.class)
     public ApiResult getById(@RequestBody UserQueryPara input) {
-        User entity = userService.selectById(input.getId());
+        BasicUser entity = userService.selectById(input.getId());
         return ApiResult.ok("获取系统管理-用户基础信息表信息成功", entity);
     }
 

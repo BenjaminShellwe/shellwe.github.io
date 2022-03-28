@@ -1,8 +1,14 @@
 package top.shellwe.bip.system.service.impl;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import org.springframework.stereotype.Service;
 import top.shellwe.bip.system.dao.AvatarRepository;
-import top.shellwe.bip.system.entity.Avatar;
+import top.shellwe.bip.system.entity.BasicAvatar;
 import top.shellwe.bip.system.service.AvatarService;
 
 import javax.annotation.Resource;
@@ -15,14 +21,14 @@ public class AvatarServiceImpl implements AvatarService {
     AvatarRepository avatarRepository;
 
     @Override
-    public void insert(Avatar avatar){
-        avatarRepository.save(avatar);
+    public void insert(BasicAvatar basicAvatar){
+        avatarRepository.save(basicAvatar);
     }
 
     @Override
-    public Avatar query(int id) {
-        Avatar avatar = avatarRepository.getById(id);
+    public BasicAvatar query(int id) {
+        BasicAvatar basicAvatar = avatarRepository.getById(id);
         System.out.println("测试输出" + avatarRepository.getById(id));
-        return avatar;
+        return basicAvatar;
     }
 }

@@ -1,5 +1,11 @@
 package top.shellwe.bip.common.validator;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import top.shellwe.bip.common.entity.BaseEntity;

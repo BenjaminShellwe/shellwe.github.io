@@ -1,9 +1,15 @@
 package top.shellwe.bip.system.controller.api.websocket;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.alibaba.fastjson.JSONObject;
 import top.shellwe.bip.system.dto.output.MsgVO;
-import top.shellwe.bip.system.entity.User;
-import top.shellwe.bip.system.mapper.UserMapper;
+import top.shellwe.bip.system.entity.BasicUser;
+import top.shellwe.bip.system.mapper.BasicUserMapper;
 import top.shellwe.bip.util.ApplicationContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -85,13 +91,13 @@ public class WebSocketServerController {
 
     public void sendInfo(String sid, Integer userId, Integer onlineSum, String info) {
         // 获取该连接用户信息
-        User currentUser = ApplicationContextUtil.getApplicationContext().getBean(UserMapper.class).selectById(userId);
+        BasicUser currentBasicUser = ApplicationContextUtil.getApplicationContext().getBean(BasicUserMapper.class).selectById(userId);
         // 发送通知
         MsgVO msg = new MsgVO();
         msg.setCount(onlineSum);
         msg.setUserId(userId);
-        msg.setAvatar(currentUser.getAvatarID());
-        msg.setMsg(currentUser.getUserRealName() + info);
+        msg.setAvatar(currentBasicUser.getAvatarID());
+        msg.setMsg(currentBasicUser.getUserRealName() + info);
         // json对象转字符串
         String text = JSONObject.toJSONString(msg);
         onMessage(sid, userId, text);

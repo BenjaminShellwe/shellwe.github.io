@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright from TernaryProject (c) 2022.
+  ~ Author BenjaminThomasShellwe
+  ~ Date 2022/3/28 8:56:24
+  -->
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhengqing.modules.system.mapper.RoleMenuMapper">
+<mapper namespace="top.shellwe.bip.system.mapper.RoleMenuMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.zhengqing.modules.system.entity.RoleMenu">
+	<resultMap id="BaseResultMap" type="top.shellwe.bip.system.entity.RoleMenu">
 		<id column="id" property="id" />
 		<result column="role_id" property="roleId" />
 		<result column="menu_id" property="menuId" />
@@ -11,7 +18,7 @@
         <result column="gmt_modified" property="gmtModified" />
 	</resultMap>
 
-    <!--    <resultMap id="ResultMap" type="com.zhengqing.modules.system.dto.output.RoleView" extends="BaseResultMap"></resultMap>-->
+    <!--    <resultMap id="ResultMap" type="top.shellwe.bip.system.dto.output.BasicRoleView" extends="BaseResultMap"></resultMap>-->
 
     <select id="selectRoleMenus" resultMap="BaseResultMap">
         SELECT
@@ -36,7 +43,7 @@
         </if>
     </delete>
 
-    <select id="selectMenusByRoleId" resultType="com.zhengqing.modules.system.entity.Menu">
+    <select id="selectMenusByRoleId" resultType="top.shellwe.bip.system.entity.SystemUrl">
         SELECT
             p.*
         FROM

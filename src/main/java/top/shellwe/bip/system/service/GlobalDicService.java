@@ -1,6 +1,12 @@
 package top.shellwe.bip.system.service;
 
-import top.shellwe.bip.system.entity.Dictionary;
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
+import top.shellwe.bip.system.entity.DictionaryGlobal;
 import top.shellwe.bip.util.Result;
 
 /**
@@ -17,7 +23,7 @@ public interface GlobalDicService {
     /**
      * Update global dic.
      *
-     * @param dictionary the dictionary
+     * @param dictionaryGlobal the dictionary
      */
-    void updateGlobalDic(Dictionary dictionary);
+    void updateGlobalDic(DictionaryGlobal dictionaryGlobal);
 }

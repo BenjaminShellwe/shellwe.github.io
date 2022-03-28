@@ -1,31 +1,37 @@
 package top.shellwe.bip.system.controller;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:27
+ */
+
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import top.shellwe.bip.system.entity.VacancyComing;
-import top.shellwe.bip.system.mapper.VacancyComingMapper;
+import top.shellwe.bip.system.entity.SeniorVacancyCreate;
+import top.shellwe.bip.system.mapper.VacancyMapper;
 import top.shellwe.bip.system.service.VacancyComingService;
 import top.shellwe.bip.util.Result;
 
 /**
- * The type Vacancy coming controller.
+ * The type SeniorVacancy coming controller.
  */
 @RestController
 @RequestMapping("/vacancyComing")
 public class VacancyComingController {
 
     /**
-     * The Vacancy coming service.
+     * The SeniorVacancy coming service.
      */
     @Autowired
     VacancyComingService vacancyComingService;
 
     /**
-     * The Vacancy coming mapper.
+     * The SeniorVacancy coming mapper.
      */
     @Autowired
-    VacancyComingMapper vacancyComingMapper;
+    VacancyMapper vacancyMapper;
     private JSONObject data;
 
     /**
@@ -50,7 +56,7 @@ public class VacancyComingController {
     public Result updateByAid(@RequestBody JSONObject data){
         String aid = data.getString("affairID");
         int i = data.getInteger("verify");
-        vacancyComingMapper.updateByAid(aid, i);
+        vacancyMapper.updateByAid(aid, i);
         return new Result(200, "Success");
     }
 
@@ -63,7 +69,7 @@ public class VacancyComingController {
     @ResponseBody
     @RequestMapping("/deleteByAid")
     public Result deleteByAid(@RequestBody JSONObject data){
-        vacancyComingMapper.deleteByAid(data.getString("affairID"));
+        vacancyMapper.deleteByAid(data.getString("affairID"));
         return new Result(200, "Success");
     }
 
@@ -77,24 +83,24 @@ public class VacancyComingController {
     @RequestMapping("/updateAll")
     public Result updateVacancyComing(@RequestBody JSONObject data){
 //        System.out.println("测试输出data" + data);
-        VacancyComing vacancyComing = new VacancyComing();
+        SeniorVacancyCreate seniorVacancyCreate = new SeniorVacancyCreate();
         JSONObject o = data.getJSONObject("data");
-        vacancyComing.setId(o.getInteger("id"));
-        vacancyComing.setAffairID(o.getString("affairID"));
-        vacancyComing.setResult(o.getString("result"));
-        vacancyComing.setEnterpriseID(o.getString("enterpriseID"));
-        vacancyComing.setDepartmentID(o.getString("departmentID"));
-        vacancyComing.setPosition(o.getString("position"));
-        vacancyComing.setDepartment(o.getString("department"));
-        vacancyComing.setEstimatedTime(o.getString("estimatedTime"));
-        vacancyComing.setName(o.getString("name"));
-        vacancyComing.setSex(o.getString("sex"));
-        vacancyComing.setDescription(o.getString("description"));
-        vacancyComing.setCreatedTime(o.getString("createdTime"));
-        vacancyComing.setAddress(o.getString("address"));
-        vacancyComing.setPhone(o.getString("phone"));
+        seniorVacancyCreate.setId(o.getInteger("id"));
+        seniorVacancyCreate.setAffairID(o.getString("affairID"));
+        seniorVacancyCreate.setResult(o.getString("result"));
+        seniorVacancyCreate.setEnterpriseID(o.getString("enterpriseID"));
+        seniorVacancyCreate.setDepartmentID(o.getString("departmentID"));
+        seniorVacancyCreate.setPosition(o.getString("position"));
+        seniorVacancyCreate.setDepartment(o.getString("department"));
+        seniorVacancyCreate.setEstimatedTime(o.getString("estimatedTime"));
+        seniorVacancyCreate.setName(o.getString("name"));
+        seniorVacancyCreate.setSex(o.getString("sex"));
+        seniorVacancyCreate.setDescription(o.getString("description"));
+        seniorVacancyCreate.setCreatedTime(o.getString("createdTime"));
+        seniorVacancyCreate.setAddress(o.getString("address"));
+        seniorVacancyCreate.setPhone(o.getString("phone"));
 
-        vacancyComingService.updateAll(vacancyComing);
+        vacancyComingService.updateAll(seniorVacancyCreate);
         return new Result(200, "Success");
     }
 }

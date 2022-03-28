@@ -1,12 +1,17 @@
 package top.shellwe.bip.system.controller;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.alibaba.fastjson.JSONObject;
-import top.shellwe.bip.system.entity.User;
-import top.shellwe.bip.system.mapper.UserMapper;
+import top.shellwe.bip.system.entity.BasicUser;
+import top.shellwe.bip.system.mapper.BasicUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import top.shellwe.bip.util.PasswordUtils;
 import top.shellwe.bip.util.Result;
 
 import java.security.MessageDigest;
@@ -24,7 +29,7 @@ public class UserController {
      * The User mapper.
      */
     @Autowired
-    UserMapper userMapper;
+    BasicUserMapper basicUserMapper;
 
     /**
      * Register string.
@@ -65,14 +70,14 @@ public class UserController {
     /**
      * Select string.
      *
-     * @param user the user
+     * @param basicUser the user
      * @return the string
      */
     @ResponseBody
     @RequestMapping(value = "/select", method = RequestMethod.POST)
-    public String select(@RequestBody User user) {
-        System.out.println("find user name = "+user.getUserName());
-        String result = userMapper.selectUserName(user.getUserName());
+    public String select(@RequestBody BasicUser basicUser) {
+        System.out.println("find user name = "+ basicUser.getUserName());
+        String result = basicUserMapper.selectUserName(basicUser.getUserName());
         System.out.println("result is → "+result);
         if (result == null) {
             System.out.println("callback is 0");
@@ -86,14 +91,14 @@ public class UserController {
     /**
      * Select user name int.
      *
-     * @param user the user
+     * @param basicUser the user
      * @return the int
      */
     @ResponseBody
     @RequestMapping(value = "/selectUserName", method = RequestMethod.POST)
-    public int selectUserName(@RequestBody User user) {
-        String userName = user.getUserName();
-        String userPassword = user.getUserPassword(PasswordUtils.encodePassword(para.getUserPassword(), user.getSalt()));
+    public int selectUserName(@RequestBody BasicUser basicUser) {
+        String userName = basicUser.getUserName();
+        String userPassword = basicUser.getUserPassword();
         System.out.println(userName +"+"+ userPassword);
 
         int result = -1;
@@ -102,21 +107,21 @@ public class UserController {
         //String passwordMD5 = passwordMD5(userName, userPassword);
 
         //用户不存在
-        if (userMapper.selectUserName(userName) == null) {
+        if (basicUserMapper.selectUserName(userName) == null) {
 //            return "用户不存在";
             result = 0;
             System.out.println("0 用户 "+ userName +" 不存在");
             return result;
             //用户存在，但密码输入错误
-        }else if(!userMapper.selectUserPassword(userName).equals(userPassword) ){
+        }else if(!basicUserMapper.selectUserPassword(userName).equals(userPassword) ){
             System.out.println("1 账号或密码输入错误");
             result = 1;
             return result;
 //            return "账号或密码输入错误";
-        }else if(userMapper.selectUserPassword(userName).equals(userPassword)&&userMapper.selectUserName(userName).equals(userName)) {
-            result = userMapper.check(userName);
+        }else if(basicUserMapper.selectUserPassword(userName).equals(userPassword)&& basicUserMapper.selectUserName(userName).equals(userName)) {
+            result = basicUserMapper.check(userName);
             System.out.println("2 成功登录");
-            userMapper.check(userName);
+            basicUserMapper.check(userName);
 //            return "成功登录";
             return result;
         }
@@ -127,22 +132,22 @@ public class UserController {
     /**
      * Add user string.
      *
-     * @param user the user
+     * @param basicUser the user
      * @return the string
      */
     @ResponseBody
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String addUser(@RequestBody User user) {
-        String userName = user.getUserName();
-        String userPassword = user.getUserPassword(PasswordUtils.encodePassword(para.getUserPassword(), user.getSalt()));
-        if(userName == user.getUserName()){
+    public String addUser(@RequestBody BasicUser basicUser) {
+        String userName = basicUser.getUserName();
+        String userPassword = basicUser.getUserPassword();
+        if(userName == basicUser.getUserName()){
             System.out.println(userName + " is already exist");
             return "0";
         }else{
             System.out.println(userName + "***" + userPassword);
             String passwordMD5 = passwordMD5(userName, userPassword);
 //        userMapper.addUser(userName, passwordMD5);
-            userMapper.addUser(userName, userPassword);
+            basicUserMapper.addUser(userName, userPassword);
             return "1";
         }
     }
@@ -162,7 +167,7 @@ public class UserController {
         }
         Object o1 = data.get("psw");
         Object o2 = data.get("userName");
-        userMapper.updatePsw(o, o1, o2);
+        basicUserMapper.updatePsw(o, o1, o2);
         return new Result(200, "success");
     }
 
@@ -175,7 +180,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/query/EID")
     public Result query(@RequestBody JSONObject data){
-        List<User> list = userMapper.queryEID("enterpriseID");
+        List<BasicUser> list = basicUserMapper.queryEID("enterpriseID");
         if (list.size() == 0){
             return new Result(2001, "暂无可绑定用户");
         }
@@ -191,7 +196,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/get/EID")
     public Result getEID(@RequestBody JSONObject data){
-        List<User> list = userMapper.getEID(data.getString("id"));
+        List<BasicUser> list = basicUserMapper.getEID(data.getString("id"));
         if (list.size() == 0){
             return new Result(2001, "企业不存在或用户未绑定企业");
         }

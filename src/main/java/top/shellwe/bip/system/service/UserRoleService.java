@@ -3,13 +3,12 @@ package top.shellwe.bip.system.service;
 /*
  * Copyright from TernaryProject (c) 2022.
  * Author BenjaminThomasShellwe
- * Date 2022/3/28 1:16:57
+ * Date 2022/3/28 8:56:24
  */
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import top.shellwe.bip.system.dto.input.UserRoleQueryPara;
-import top.shellwe.bip.system.entity.Role;
 import top.shellwe.bip.system.entity.UserRole;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * <p>  系统管理 - 用户角色关联表  服务类 </p>
  */
-public interface UserRoleService extends IService<Role> {
+public interface UserRoleService extends IService<UserRole> {
 
     /**
      * 系统管理 - 用户角色关联表 列表分页
@@ -41,7 +40,7 @@ public interface UserRoleService extends IService<Role> {
      * @param filter
      * @return
      */
-    List<Role> list(UserRoleQueryPara filter);
+    List<UserRole> list(UserRoleQueryPara filter);
 
     /**
      * 保存角色相关联用户

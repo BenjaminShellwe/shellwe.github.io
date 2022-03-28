@@ -1,14 +1,20 @@
 package top.shellwe.bip.system.controller;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:27
+ */
+
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import top.shellwe.bip.system.entity.Department;
-import top.shellwe.bip.system.entity.Enterprise;
-import top.shellwe.bip.system.mapper.EnterpriseMapper;
+import top.shellwe.bip.system.entity.InformationEnterpriseDepartment;
+import top.shellwe.bip.system.entity.InformationEnterprise;
+import top.shellwe.bip.system.mapper.InformationEnterpriseMapper;
 import top.shellwe.bip.system.service.DepartmentService;
 import top.shellwe.bip.util.Result;
 
@@ -26,9 +32,9 @@ public class EnterpriseController {
      * The Enterprise mapper.
      */
     @Autowired
-    EnterpriseMapper enterpriseMapper;
+    InformationEnterpriseMapper informationEnterpriseMapper;
     /**
-     * The Department service.
+     * The InformationEnterpriseDepartment service.
      */
     @Autowired
     DepartmentService departmentService;
@@ -43,7 +49,7 @@ public class EnterpriseController {
     @RequestMapping("/query/Info")
     public Result getById(@RequestBody JSONObject data){
 
-        List<Enterprise> list = enterpriseMapper.getById(data.get("userID"));
+        List<InformationEnterprise> list = informationEnterpriseMapper.getById(data.get("userID"));
         if (list.size() == 0){
             return new Result(2001, "????????");
         }
@@ -70,7 +76,7 @@ public class EnterpriseController {
     @ResponseBody
     @RequestMapping("/query/department")
     public Result queryDepartmentByEID(@RequestBody JSONObject data){
-        List<Department> list = departmentService.getByEnterpriseID(data.getString("enterpriseID"));
+        List<InformationEnterpriseDepartment> list = departmentService.getByEnterpriseID(data.getString("enterpriseID"));
         if (list.size() == 0) {
             return new Result(400, "Error!");
         }
@@ -86,7 +92,7 @@ public class EnterpriseController {
     @RequestMapping("/query/uniteTable")
     public List<Map<String, JSONObject>> uniteTable(){
 //        System.out.println("????" + enterpriseMapper.uniteTable());
-        return enterpriseMapper.uniteTable();
+        return informationEnterpriseMapper.uniteTable();
     }
 
     /**
@@ -98,21 +104,21 @@ public class EnterpriseController {
     @ResponseBody
     @RequestMapping("/update/department/field")
     public Result updateDepartmentField(@RequestBody JSONObject data){
-       Department department = new Department();
+       InformationEnterpriseDepartment informationEnterpriseDepartment = new InformationEnterpriseDepartment();
        System.out.println("????" + data);
         JSONObject o = data.getJSONObject("data");
-        department.setId(o.getInteger("id"));
-        department.setName(o.getString("name"));
-        department.setDepartmentID(o.getString("departmentID"));
-        department.setEnterpriseID(o.getString("enterpriseID"));
-        department.setUIDD(o.getString("uidd"));
-        department.setDirector(o.getString("director"));
-        department.setPhoneD(o.getString("phoneD"));
-        department.setUIDM(o.getString("uidm"));
-        department.setManager(o.getString("manager"));
-        department.setPhoneM(o.getString("phoneM"));
-        department.setDepartmentStatus(o.getString("departmentStatus"));
-        departmentService.updateDepartmentField(department);
+        informationEnterpriseDepartment.setId(o.getInteger("id"));
+        informationEnterpriseDepartment.setName(o.getString("name"));
+        informationEnterpriseDepartment.setDepartmentID(o.getString("departmentID"));
+        informationEnterpriseDepartment.setEnterpriseID(o.getString("enterpriseID"));
+        informationEnterpriseDepartment.setUIDD(o.getString("uidd"));
+        informationEnterpriseDepartment.setDirector(o.getString("director"));
+        informationEnterpriseDepartment.setPhoneD(o.getString("phoneD"));
+        informationEnterpriseDepartment.setUIDM(o.getString("uidm"));
+        informationEnterpriseDepartment.setManager(o.getString("manager"));
+        informationEnterpriseDepartment.setPhoneM(o.getString("phoneM"));
+        informationEnterpriseDepartment.setDepartmentStatus(o.getString("departmentStatus"));
+        departmentService.updateDepartmentField(informationEnterpriseDepartment);
         return new Result(200, "Success");
     }
 }

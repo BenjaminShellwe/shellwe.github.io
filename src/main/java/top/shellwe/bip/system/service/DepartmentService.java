@@ -1,13 +1,19 @@
 package top.shellwe.bip.system.service;
 
-import top.shellwe.bip.system.entity.Department;
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
+import top.shellwe.bip.system.entity.InformationEnterpriseDepartment;
 
 import top.shellwe.bip.util.Result;
 
 import java.util.List;
 
 /**
- * The interface Department service.
+ * The interface InformationEnterpriseDepartment service.
  */
 public interface DepartmentService {
     /**
@@ -23,13 +29,13 @@ public interface DepartmentService {
      * @param eid the eid
      * @return the by enterprise id
      */
-    List<Department> getByEnterpriseID(String eid);
+    List<InformationEnterpriseDepartment> getByEnterpriseID(String eid);
 
     /**
-     * Update department field result.
+     * Update informationEnterpriseDepartment field result.
      *
-     * @param department the department
+     * @param informationEnterpriseDepartment the informationEnterpriseDepartment
      * @return the result
      */
-    Result updateDepartmentField(Department department);
+    Result updateDepartmentField(InformationEnterpriseDepartment informationEnterpriseDepartment);
 }

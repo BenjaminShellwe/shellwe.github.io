@@ -1,26 +1,32 @@
 package top.shellwe.bip.system.controller;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import top.shellwe.bip.system.entity.Vacancy;
+import top.shellwe.bip.system.entity.SeniorVacancy;
 import top.shellwe.bip.system.service.VacancyService;
 import top.shellwe.bip.util.Result;
 
 import java.text.SimpleDateFormat;
 
 /**
- * The type Vacancy controller.
+ * The type SeniorVacancy controller.
  */
 @RestController
 @RequestMapping("/vacancy")
 public class VacancyController {
 
     /**
-     * The Vacancy service.
+     * The SeniorVacancy service.
      */
     @Autowired
     VacancyService vacancyService;
@@ -45,20 +51,20 @@ public class VacancyController {
     @ResponseBody
     @RequestMapping("/update")
     public Result update(@RequestBody JSONObject object) {
-        Vacancy vacancy = new Vacancy();
-        vacancy.setAffairID(object.getString("affairID"));
-        vacancy.setPosition(object.getString("position"));
-        vacancy.setDescription(object.getString("description"));
-        vacancy.setSalary(object.getString("salary"));
-        vacancy.setType(object.getString("type"));
-        vacancy.setRequirement(object.getString("requirement"));
-        vacancy.setDepartment(object.getString("department"));
-        vacancy.setDeadline(object.getDate("deadline"));
-        vacancy.setCreatedTime(object.getDate("createdTime"));
-        vacancy.setDepartmentID(object.getString("departmentID"));
-        vacancy.setEnterpriseID(object.getString("enterpriseID"));
-        vacancy.setPositionStatus(object.getString("positionStatus"));
-        vacancyService.update(vacancy);
+        SeniorVacancy seniorVacancy = new SeniorVacancy();
+        seniorVacancy.setAffairID(object.getString("affairID"));
+        seniorVacancy.setPosition(object.getString("position"));
+        seniorVacancy.setDescription(object.getString("description"));
+        seniorVacancy.setSalary(object.getString("salary"));
+        seniorVacancy.setType(object.getString("type"));
+        seniorVacancy.setRequirement(object.getString("requirement"));
+        seniorVacancy.setDepartment(object.getString("department"));
+        seniorVacancy.setDeadline(object.getDate("deadline"));
+        seniorVacancy.setCreatedTime(object.getDate("createdTime"));
+        seniorVacancy.setDepartmentID(object.getString("departmentID"));
+        seniorVacancy.setEnterpriseID(object.getString("enterpriseID"));
+        seniorVacancy.setPositionStatus(object.getString("positionStatus"));
+        vacancyService.update(seniorVacancy);
         return new Result(200, "提交数据已修改");
     }
 
@@ -73,26 +79,26 @@ public class VacancyController {
     public Result publish(@RequestBody JSONObject object){
         Long timeStamp = System.currentTimeMillis();
         SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyyMMddHHmmss");
-        Vacancy vacancy =new Vacancy();
-        vacancy.setCreatedTime(object.getDate("createdTime"));
-        vacancy.setDeadline(object.getDate("estimatedTime"));
-        vacancy.setPositionStatus(object.getString("positionStatus"));
-        vacancy.setType(object.getString("type"));
-        vacancy.setRequirement(object.getString("requirement"));
-        vacancy.setSalary(object.getString("salary"));
-        vacancy.setDepartment(object.getString("department"));
-        vacancy.setPosition(object.getString("position"));
-        vacancy.setDescription(object.getString("description"));
-        vacancy.setDepartmentID(object.getString("departmentID"));
-        vacancy.setEnterpriseID(object.getString("enterpriseID"));
+        SeniorVacancy seniorVacancy =new SeniorVacancy();
+        seniorVacancy.setCreatedTime(object.getDate("createdTime"));
+        seniorVacancy.setDeadline(object.getDate("estimatedTime"));
+        seniorVacancy.setPositionStatus(object.getString("positionStatus"));
+        seniorVacancy.setType(object.getString("type"));
+        seniorVacancy.setRequirement(object.getString("requirement"));
+        seniorVacancy.setSalary(object.getString("salary"));
+        seniorVacancy.setDepartment(object.getString("department"));
+        seniorVacancy.setPosition(object.getString("position"));
+        seniorVacancy.setDescription(object.getString("description"));
+        seniorVacancy.setDepartmentID(object.getString("departmentID"));
+        seniorVacancy.setEnterpriseID(object.getString("enterpriseID"));
         String s = simpleDateFormat.format(timeStamp);
         System.out.println("测试输出" + object.getString("AffairID"));
         if(object.getString("AffairID") == null ){
-            vacancy.setAffairID(s);
+            seniorVacancy.setAffairID(s);
         } else {
-            vacancy.setAffairID(object.getString("AffairID"));
+            seniorVacancy.setAffairID(object.getString("AffairID"));
         }
-        Result r = vacancyService.publish(vacancy);
+        Result r = vacancyService.publish(seniorVacancy);
         if (r.getCode() != 200){
             return new Result(401, "Error!", "error");
         }

@@ -1,9 +1,15 @@
 package top.shellwe.bip.common.interceptor;
 
-import top.shellwe.bip.config.Constants;
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
+//import top.shellwe.bip.config.Constants;
 import top.shellwe.bip.common.dto.output.ApiResult;
 import top.shellwe.bip.system.entity.SysLog;
-import top.shellwe.bip.system.mapper.UserMapper;
+import top.shellwe.bip.system.mapper.BasicUserMapper;
 import top.shellwe.bip.util.DateTimeUtils;
 import top.shellwe.bip.util.IpUtils;
 import io.swagger.annotations.ApiOperation;
@@ -36,7 +42,7 @@ import java.util.Date;
 public class SystemLogAspect {
 
     @Autowired
-    UserMapper userMapper;
+    BasicUserMapper basicUserMapper;
 
     @Pointcut("execution(* top.shellwe.bip.*.api.*Controller.*(..)))")
     public void systemLog() {
@@ -51,7 +57,7 @@ public class SystemLogAspect {
         // 拿到ip地址、请求路径、token
         String url = request.getRequestURL().toString();
         String ip = IpUtils.getIpAdrress(request);
-        String token = request.getHeader(Constants.REQUEST_HEADER);
+//        String token = request.getHeader(Constants.REQUEST_HEADER);
 
         // 从切面织入点处通过反射机制获取织入点处的方法
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -76,15 +82,16 @@ public class SystemLogAspect {
         sysLog.setUrl(url);
         sysLog.setIp(ip);
         // 获取用户信息
-        if (token == null) {
-            // 非法人员
-            sysLog.setUserId(0);
+//        if (token == null) {
+//            // 非法人员
+//            sysLog.setUserId(0);
 //            sysLog.setName(result.getMessage());
-        } else {
-            if (userMapper.getUserInfoByToken(token) != null) {
-                sysLog.setUserId(userMapper.getUserInfoByToken(token).getId());
-            }
-        }
+//        } else {
+
+//            if (userMapper.getUserInfoByToken(token) != null) {
+//                sysLog.setUserId(userMapper.getUserInfoByToken(token).getId());
+//            }
+//        }
         sysLog.setStatus(result.getCode());
         sysLog.setExecuteTime(totalTime + " ms");
         sysLog.insert();

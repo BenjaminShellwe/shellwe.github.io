@@ -1,5 +1,11 @@
 package top.shellwe.bip.system.controller.api;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.baomidou.mybatisplus.plugins.Page;
 import top.shellwe.bip.common.api.BaseController;
 import top.shellwe.bip.common.dto.output.ApiResult;

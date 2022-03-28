@@ -1,5 +1,11 @@
 package top.shellwe.bip.util;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.databind.PropertyName;
 import com.fasterxml.jackson.databind.introspect.Annotated;

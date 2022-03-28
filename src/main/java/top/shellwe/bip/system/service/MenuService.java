@@ -1,27 +1,30 @@
 package top.shellwe.bip.system.service;
 
+/*
+ * Copyright from TernaryProject (c) 2022.
+ * Author BenjaminThomasShellwe
+ * Date 2022/3/28 8:56:24
+ */
+
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import top.shellwe.bip.system.dto.input.MenuQueryPara;
-import top.shellwe.bip.system.entity.Menu;
+import top.shellwe.bip.system.entity.SystemUrl;
 
 import java.util.List;
 
 /**
  * <p>  系统管理-菜单表  服务类 </p>
- *
- * @author: zhengqing
- * @date: 2019-08-19
  */
-public interface MenuService extends IService<Menu> {
+public interface MenuService extends IService<SystemUrl> {
 
     /**
      * 菜单树
      *
      * @param :
-     * @return: java.util.List<com.zhengqing.modules.system.entity.Menu>
+     * @return: java.util.List<top.shellwe.bip.modules.system.entity.SystemUrl>
      */
-    List<Menu> listTreeMenu();
+    List<SystemUrl> listTreeMenu();
 
     /**
      * 系统管理-菜单表 列表分页
@@ -30,14 +33,14 @@ public interface MenuService extends IService<Menu> {
      * @param filter
      * @return
      */
-    void listPage(Page<Menu> page, MenuQueryPara filter);
+    void listPage(Page<SystemUrl> page, MenuQueryPara filter);
 
     /**
      * 保存系统管理-菜单表
      *
      * @param input
      */
-    Integer save(Menu input);
+    Integer save(SystemUrl input);
 
     /**
      * 系统管理-菜单表 列表
@@ -45,5 +48,5 @@ public interface MenuService extends IService<Menu> {
      * @param filter
      * @return
      */
-    List<Menu> list(MenuQueryPara filter);
+    List<SystemUrl> list(MenuQueryPara filter);
 }
