@@ -58,6 +58,22 @@ export default {
                 //    前端功能要求1 完善访问路径和交互页面
                 //    后端功能要求1 及时聊天
             }
+        },
+        {
+            path: 'test1',
+            name: 'testingLog',
+            component: () => import('@/views/extra_functions/log'),
+            meta: {
+                title: '测试系统日志'
+            }
+        },
+        {
+            path: 'test2',
+            name: 'testingChat',
+            component: () => import('@/views/extra_functions/chat'),
+            meta: {
+                title: '测试系统聊天'
+            }
         }
     ]
 }

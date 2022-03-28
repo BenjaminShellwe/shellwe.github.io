@@ -69,7 +69,7 @@ const constantRoutes = [
 import MultilevelMenuHR from './modules/multilevel.menu.hr'
 import MultilevelMenuBasic from './modules/multilevel.menu.basic'
 import MultilevelMenuAdvanced from './modules/multilevel.menu.advanced'
-import ExTernalLinkExample from './modules/external.link.example'
+import MultilevelHelp from './modules/external.link.help'
 // 当 children 不为空的主导航只有一项时，则隐藏
 let asyncRoutes = [
     {
@@ -81,7 +81,7 @@ let asyncRoutes = [
             MultilevelMenuBasic,
             MultilevelMenuHR,
             MultilevelMenuAdvanced,
-            ExTernalLinkExample
+            MultilevelHelp
         ]
     },
     {
@@ -91,22 +91,6 @@ let asyncRoutes = [
         },
         children: [
             // ...VideosExample
-            {
-                path: 'testingLog',
-                name: 'testingLog',
-                component: () => import('@/views/extra_functions/log'),
-                meta: {
-                    title: '测试系统日志'
-                }
-            },
-            {
-                path: 'testingChat',
-                name: 'testingChat',
-                component: () => import('@/views/extra_functions/chat'),
-                meta: {
-                    title: '测试系统聊天'
-                }
-            }
         ]
     }
 ]

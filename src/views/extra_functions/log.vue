@@ -31,7 +31,7 @@
                     <el-table-column label="请求状态" prop="status" align="center" />
                     <el-table-column label="接口执行时间" prop="executeTime" align="center" />
                     <el-table-column label="访问时间" align="center">
-                        <template slot-scope="scope">
+                        <template #default="scope">
                             <span>{{ scope.row.gmtCreate|dateTimeFilter }}</span>
                         </template>
                     </el-table-column>
