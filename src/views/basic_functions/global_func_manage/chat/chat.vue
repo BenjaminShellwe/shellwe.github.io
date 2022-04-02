@@ -5,46 +5,74 @@
                 <div class="inLine">
                     <p class="hover" @click="back">返回上一页</p>
                 </div>
-                &nbsp;
                 <div class="inLine">
                     此页为即时站内聊天室
                 </div>
             </template>
         </page-header>
         <page-main>
-            <div class="container">
-                <h2 class="text-center">即时通讯</h2>
-                <p>姓名:{{ $store.state.user.account }}</p>
-                <el-card>
-                    <div class="chat-box">
-                        <header>聊天室 (在线:{{ count }}人)</header>
-                        <div ref="msg-box" class="msg-box">
-                            <div
-                                v-for="(i,index) in list"
-                                :key="index"
-                                class="msg"
-                                :style="i.userId == userId?'flex-direction:row-reverse':''"
-                            >
-                                <div class="user-head">
-                                    <img :src="i.avatar" height="30" width="30" :title="i.username">
-                                </div>
-                                <div class="user-msg">
-                                    <span :style="i.userId == userId?' float: right;':''" :class="i.userId == userId?'right':'left'">{{ i.content }}</span>
-                                </div>
+            <div class="web-im dis-flex">
+                <div class="left">
+                    <div class="aside content">
+                        <div class="header">
+                            <div class="tabbar dis-flex">
+                                <label :class="{active:switchType==1, unread: usersUnRead}" @click="switchType=1">联系人</label>
+                                <label :class="{active:switchType==2, unread: groupsUnRead}" @click="switchType=2">群聊</label>
                             </div>
                         </div>
-                        <div class="input-box">
-                            <input ref="sendMsg" v-model="contentText" type="text" @keyup.enter="sendText()">
-                            <div class="btn" :class="{['btn-active']:contentText}" @click="sendText()">发送</div>
+                        <div class="body user-list">
+                            <el-row>
+                                <el-col v-for="item in currentGroups" :key="item">
+                                    <div v-if="switchType==2" class="user" @click="triggerGroup(item)">
+                                        {{ item.name }}
+                                        <span v-if="item.unread" class="tips-num">{{ item.unread }}</span>
+                                        <span v-if="!checkUserIsGroup(item)" class="add-group" @click.stop="addGroup(item)">+</span>
+                                    </div>
+                                </el-col>
+                                <el-col  v-for="item in currentUserList" :key="item">
+                                    <div v-if="switchType==1 && item.uid!=uid" class="user" :class="{offline: !item.status}" @click="triggerPersonal(item)">
+                                        {{ item.nickname }}
+                                        <span v-if="item.unread" class="tips-num">{{ item.unread }}</span>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div class="footer">
+                            <div class="func dis-flex">
+                                <label @click="$refs.createGroupDialog.show()">新建群</label>
+                            </div>
                         </div>
                     </div>
-                </el-card>
+                </div>
+                <div class="right content">
+                    <div class="header im-title">{{ title }}</div>
+                    <div id="im-record" class="body im-record">
+                        <div class="ul">
+                            <div v-for="item in currentMessage" :key="item" class="li" :class="{user: item.uid == uid}">
+                                <template v-if="item.type===1">
+                                    <p class="join-tips">{{ item.msg }}</p>
+                                </template>
+                                <template v-else>
+                                    <p class="message-date">
+                                        <span class="m-nickname">{{ item.nickname }}</span> {{ item.date }}
+                                    </p>
+                                    <p class="message-box">{{ item.msg }}</p>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer im-input dis-flex">
+                        <input v-model="msg" type="text" placeholder="请输入内容">
+                        <button @click="send">发送</button>
+                    </div>
+                </div>
             </div>
         </page-main>
     </div>
 </template>
 
 <script>
+import moment from 'moment'
 import PageMain from '@/components/PageMain'
 export default {
     el: 'container',
@@ -52,88 +80,216 @@ export default {
     components: {PageMain},
     data() {
         return {
+            title: '请选择群或者人员进行聊天',
+            switchType: 1,
+            uid: '',
+            nickname: '',
+            socket: '',
+            msg: '',
+            messageList: [],
+            users: [],
+            groups: [],
+            groupId: '',
+            bridge: [],
+            groupName: '',
             dialogVisible: false,
-            ws: null,
-            count: 0,
             userId: this.$store.state.user.id, // 当前用户ID
-            username: this.$store.state.user.userName, // 当前用户昵称
+            username: this.$store.state.user.userName // 当前用户昵称
             // avatar: this.$store.getters.avatar, // 当前用户头像
-            list: [], // 聊天记录的数组
-            contentText: '' // input输入的值
+        }
+    },
+    computed: {
+        currentMessage() {
+            let vm = this
+            let data = vm.messageList.filter(item => {
+                if (item.type === 1) {
+                    return item
+                } else if (this.groupId) {
+                    return item.groupId === this.groupId
+                } else if (item.bridge.length) {
+                    return item.bridge.sort().join(',') == vm.bridge.sort().join(',')
+                }
+            })
+            data.map(item => {
+                item.status = 0
+                return item
+            })
+            return data
+        },
+        currentGroups() {
+            let vm = this
+            vm.groups.map(group => {
+                group.unread = this.messageList.filter(item => {
+                    return item.groupId === group.id && item.status === 1
+                }).length
+                return group
+            })
+            return vm.groups
+        },
+        groupsUnRead() {
+            return this.messageList.some(item => {
+                return item.groupId && item.status === 1
+            })
+        },
+        usersUnRead() {
+            return this.messageList.some(item => {
+                return item.bridge.length && item.status === 1
+            })
+        },
+        currentUserList() {
+            let vm = this
+            vm.users.map(user => {
+                user.unread = this.messageList.filter(item => {
+                    return item.bridge.length && item.uid === user.uid && item.status === 1
+                }).length
+                return user
+            })
+            return vm.users
         }
     },
     mounted() {
-        this.initWebSocket()
+        let vm = this
+        let user = localStorage.getItem('WEB_IM_USER')
+        user = user && JSON.parse(user) || {}
+        vm.uid = user.uid
+        vm.nickname = user.nickname
+
+        if (!vm.uid) {
+            vm.$refs.loginDialog.show()
+        } else {
+            vm.conWebSocket()
+        }
     },
     destroyed() {
-        // 离开页面时关闭websocket连接
-        this.ws.onclose(undefined)
+
     },
     methods: {
-        sendText() {
-            let _this = this
-            _this.$refs['sendMsg'].focus()
-            if (!_this.contentText) {
+        back() {
+            history.go(-1)
+        },
+        addGroup(item) {
+            this.socket.send(JSON.stringify({
+                uid: this.uid,
+                type: 20,
+                nickname: this.nickname,
+                groupId: item.id,
+                groupName: item.name,
+                bridge: []
+            }))
+            this.$message({type: 'success', message: `成功加入${item.name}群`})
+        },
+        checkUserIsGroup(item) {
+            return item.users.some(item => {
+                return item.uid === this.uid
+            })
+        },
+        createGroup() {
+            this.groupName = this.groupName.trim()
+            if (!this.groupName) {
+                this.$message({type: 'error', message: '请输入群名称'})
                 return
             }
-            let params = {
-                userId: _this.userId,
-                username: _this.username,
-                // avatar: _this.avatar,
-                msg: _this.contentText,
-                count: _this.count
-            }
-            _this.ws.send(JSON.stringify(params)) // 调用WebSocket send()发送信息的方法
-            _this.contentText = ''
-            setTimeout(() => {
-                _this.scrollBottm()
-            }, 500)
+            this.socket.send(JSON.stringify({
+                uid: this.uid,
+                type: 10,
+                nickname: this.nickname,
+                groupName: this.groupName,
+                bridge: []
+            }))
         },
-        // 进入页面创建websocket连接
-        initWebSocket() {
-            let _this = this
-            // 判断页面有没有存在websocket连接
+        triggerGroup(item) {
+            let issome = item.users.some(item => {
+                return item.uid === this.uid
+            })
+            if (!issome) {
+                this.$message({type: 'error', message: `您还不是${item.name}群成员`})
+                return
+            }
+            this.bridge = []
+            this.groupId = item.id
+            this.title = `和${item.name}群成员聊天`
+        },
+        triggerPersonal(item) {
+            if (this.uid === item.uid) {
+                return
+            }
+            this.groupId = ''
+            this.bridge = [this.uid, item.uid]
+            this.title = `和${item.nickname}聊天`
+        },
+        send() {
+            this.msg = this.msg.trim()
+            if (!this.msg) {
+                return
+            }
+            if (!this.bridge.length && !this.groupId) {
+                this.$message({type: 'error', message: '请选择发送人或者群'})
+                return
+            }
+            this.sendMessage(100, this.msg)
+        },
+        sendMessage(type, msg) {
+            this.socket.send(JSON.stringify({
+                uid: this.uid,
+                type: type,
+                nickname: this.nickname,
+                msg: msg,
+                bridge: this.bridge,
+                groupId: this.groupId
+            }))
+            this.msg = ''
+        },
+        conWebSocket() {
+            let vm = this
             if (window.WebSocket) {
-                var serverHot =  window.location.hostname
-                let sip = '房间号'
-                // 填写本地IP地址 此处的 :9101端口号 要与后端配置的一致！
-                var url = 'ws://' + serverHot + ':9101' + '/groupChat/' + sip + '/' + this.userId // `ws://127.0.0.1/9101/groupChat/10086/聊天室`
-                let ws = new WebSocket(url)
-                _this.ws = ws
-                ws.onopen = function() {
-                    console.log('服务器连接成功: ' + url)
+                vm.socket = new WebSocket('ws://localhost:8001')
+                let socket = vm.socket
+
+                socket.onopen = function() {
+                    console.log('连接服务器成功')
+                    vm.$message({type: 'success', message: '连接服务器成功'})
+                    if (!vm.uid) {
+                        vm.uid = 'web_im_' + moment().valueOf()
+                        localStorage.setItem('WEB_IM_USER', JSON.stringify({
+                            uid: vm.uid,
+                            nickname: vm.nickname
+                        }))
+                    }
+                    vm.sendMessage(1)
                 }
-                ws.onclose = function() {
-                    console.log('服务器连接关闭: ' + url)
+                socket.onclose = function() {
+                    console.log('服务器关闭')
                 }
-                ws.onerror = function() {
-                    console.log('服务器连接出错: ' + url)
+                socket.onerror = function() {
+                    console.log('连接出错')
                 }
-                ws.onmessage = function(e) {
-                    // 接收服务器返回的数据
-                    let resData = JSON.parse(e.data)
-                    _this.count = resData.count
-                    _this.list = [
-                        ..._this.list,
-                        { userId: resData.userId, username: resData.username, avatar: resData.avatar, content: resData.msg }
-                    ]
+                // 接收服务器的消息
+                socket.onmessage = function(e) {
+                    let message = JSON.parse(e.data)
+                    vm.messageList.push(message)
+                    if (message.users) {
+                        vm.users = message.users
+                    }
+                    if (message.groups) {
+                        vm.groups = message.groups
+                    }
+
+                    vm.$nextTick(function() {
+                        var div = document.getElementById('im-record')
+                        div.scrollTop = div.scrollHeight
+                    })
                 }
             }
         },
-        // 滚动条到底部
-        scrollBottm() {
-            let el = this.$refs['msg-box']
-            el.scrollTop = el.scrollHeight
+        login() {
+            this.nickname = this.nickname.trim()
+            if (!this.nickname) {
+                this.$message({type: 'error', message: '请输入您的昵称'})
+                return
+            }
+            this.$refs.loginDialog.hide()
+            this.conWebSocket()
         }
     }
 }
 </script>
-
-<style>
-.inLine {
-    display: inline-block;
-}
-.hover {
-    cursor: pointer;
-}
-</style>
