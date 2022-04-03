@@ -43,7 +43,7 @@ public interface InformationMapper {
      * @param userID the user id
      * @return the by id pe
      */
-    @Select("select * from information_enterprise_personal where userID = #{'userID'}")
+    @Select("select * from information_personal where userID = #{'userID'}")
     public List<informationPersonal> getByIdPe(Object userID);
 
 }

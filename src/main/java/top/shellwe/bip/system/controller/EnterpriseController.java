@@ -51,7 +51,7 @@ public class EnterpriseController {
 
         List<InformationEnterprise> list = informationEnterpriseMapper.getById(data.get("userID"));
         if (list.size() == 0){
-            return new Result(2001, "????????");
+            return new Result(2001, "No data return from Database");
         }
         return new Result(list);
     }
@@ -105,7 +105,7 @@ public class EnterpriseController {
     @RequestMapping("/update/department/field")
     public Result updateDepartmentField(@RequestBody JSONObject data){
        InformationEnterpriseDepartment informationEnterpriseDepartment = new InformationEnterpriseDepartment();
-       System.out.println("????" + data);
+//       System.out.println("????" + data);
         JSONObject o = data.getJSONObject("data");
         informationEnterpriseDepartment.setId(o.getInteger("id"));
         informationEnterpriseDepartment.setName(o.getString("name"));

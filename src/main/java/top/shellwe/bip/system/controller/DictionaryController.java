@@ -22,7 +22,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/dictionary")
-public class GlobalDicController {
+public class DictionaryController {
     /**
      * The Global dic service.
      */

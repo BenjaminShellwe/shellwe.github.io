@@ -28,7 +28,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/queryInfo")
-public class GetInfoController {
+public class InformationController {
     /**
      * The Get info en repository.
      */

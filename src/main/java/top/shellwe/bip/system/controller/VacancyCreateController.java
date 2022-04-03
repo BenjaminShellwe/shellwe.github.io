@@ -19,7 +19,7 @@ import top.shellwe.bip.util.Result;
  */
 @RestController
 @RequestMapping("/vacancyComing")
-public class VacancyComingController {
+public class VacancyCreateController {
 
     /**
      * The SeniorVacancy coming service.

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import top.shellwe.bip.system.service.LogSystemService;
+import top.shellwe.bip.system.service.SystemLogEventService;
 import top.shellwe.bip.util.Result;
 
 /**
@@ -18,13 +18,13 @@ import top.shellwe.bip.util.Result;
  */
 @RestController
 @RequestMapping("/log")
-public class LogSystemController {
+public class SystemLogEventController {
 
     /**
      * The Log system service.
      */
     @Autowired
-    LogSystemService logSystemService;
+    SystemLogEventService systemLogEventService;
 
     /**
      * Query all result.
@@ -34,6 +34,6 @@ public class LogSystemController {
     @ResponseBody
     @RequestMapping("/queryAll")
     public Result queryAll(){
-        return logSystemService.queryAll();
+        return systemLogEventService.queryAll();
     }
 }

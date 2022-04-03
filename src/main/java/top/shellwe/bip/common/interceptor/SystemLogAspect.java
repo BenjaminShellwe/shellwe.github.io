@@ -8,7 +8,7 @@ package top.shellwe.bip.common.interceptor;
 
 //import top.shellwe.bip.config.Constants;
 import top.shellwe.bip.common.dto.output.ApiResult;
-import top.shellwe.bip.system.entity.SysLog;
+import top.shellwe.bip.system.entity.SystemLogEvent;
 import top.shellwe.bip.system.mapper.BasicUserMapper;
 import top.shellwe.bip.util.DateTimeUtils;
 import top.shellwe.bip.util.IpUtils;
@@ -77,10 +77,10 @@ public class SystemLogAspect {
         log.info("**********   Url: {}, Start: {}, End: {}, Total: {}ms, Code: {}   **********", url, DateTimeUtils.dateFormat(new Date(startTime), "yyyy-MM-dd HH:mm:ss:SSS"), DateTimeUtils.dateFormat(new Date(endTime), "yyyy-MM-dd HH:mm:ss:SSS"), totalTime, result.getCode());
 
         // 插入系统日志表
-        SysLog sysLog = new SysLog();
-        sysLog.setName(methodName);
-        sysLog.setUrl(url);
-        sysLog.setIp(ip);
+        SystemLogEvent systemLogEvent = new SystemLogEvent();
+        systemLogEvent.setName(methodName);
+        systemLogEvent.setUrl(url);
+        systemLogEvent.setIp(ip);
         // 获取用户信息
 //        if (token == null) {
 //            // 非法人员
@@ -92,9 +92,9 @@ public class SystemLogAspect {
 //                sysLog.setUserId(userMapper.getUserInfoByToken(token).getId());
 //            }
 //        }
-        sysLog.setStatus(result.getCode());
-        sysLog.setExecuteTime(totalTime + " ms");
-        sysLog.insert();
+        systemLogEvent.setStatus(result.getCode());
+        systemLogEvent.setExecuteTime(totalTime + " ms");
+        systemLogEvent.insert();
         return result;
     }
 

@@ -19,7 +19,7 @@ class BipAdminApplicationTests {
     @Autowired
     public GlobalDicService globalDicService;
     @Autowired
-    public LogSystemService logSystemService;
+    public SystemLogEventService systemLogEventService;
     @Autowired
     public MonitorService monitorService;
     @Autowired
@@ -74,7 +74,7 @@ class BipAdminApplicationTests {
 //        System.out.println("result2 = " + result2);
 //        Result result3 = globalDicService.getByTypeName("证件类型");
 //        System.out.println("result3 = " + result3);
-//        Result result4 = logSystemService.queryAll();
+//        Result result4 = systemLogEventService.queryAll();
 //        System.out.println("result4 = " + result4);
 //        Result result5 = monitorService.queryAll();
 //        System.out.println("result4 = " + result5);

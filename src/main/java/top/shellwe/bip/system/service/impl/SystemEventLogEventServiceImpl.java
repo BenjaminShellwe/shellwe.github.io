@@ -13,19 +13,19 @@ import org.springframework.stereotype.Service;
 import top.shellwe.bip.system.dao.LogSystemRepository;
 import top.shellwe.bip.system.dto.input.LogQueryPara;
 import top.shellwe.bip.system.entity.SystemLogOrder;
-import top.shellwe.bip.system.entity.SysLog;
-import top.shellwe.bip.system.mapper.LogMapper;
-import top.shellwe.bip.system.service.LogSystemService;
+import top.shellwe.bip.system.entity.SystemLogEvent;
+import top.shellwe.bip.system.mapper.SystemLogEventMapper;
+import top.shellwe.bip.system.service.SystemLogEventService;
 import top.shellwe.bip.util.Result;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class LogSystemServiceImpl extends ServiceImpl<LogMapper, SysLog> implements LogSystemService {
+public class SystemEventLogEventServiceImpl extends ServiceImpl<SystemLogEventMapper, SystemLogEvent> implements SystemLogEventService {
 
     @Autowired
-    LogMapper logMapper;
+    SystemLogEventMapper systemLogEventMapper;
 
     @Resource
     LogSystemRepository logSystemRepository;
@@ -37,27 +37,27 @@ public class LogSystemServiceImpl extends ServiceImpl<LogMapper, SysLog> impleme
     }
 
     @Override
-    public void listPage(Page<SysLog> page, LogQueryPara para) {
-        List<SysLog> result = logMapper.selectLogs(page, para);
+    public void listPage(Page<SystemLogEvent> page, LogQueryPara para) {
+        List<SystemLogEvent> result = systemLogEventMapper.selectSystemLogs(page, para);
         result.forEach( e->{
-            if (e.getUserId()==0){
-                e.setUsername("非法人员");
-            }
+//            if (e.getUserId()==0){
+//                e.setUsername("非法人员");
+//            }
         });
         page.setRecords(result);
     }
 
     @Override
-    public List<SysLog> list(LogQueryPara para) {
-        return logMapper.selectLogs(para);
+    public List<SystemLogEvent> list(LogQueryPara para) {
+        return systemLogEventMapper.selectSystemLogs(para);
     }
 
     @Override
-    public Integer save(SysLog para) {
+    public Integer save(SystemLogEvent para) {
         if (para.getId()!=null) {
-            logMapper.updateById(para);
+            systemLogEventMapper.updateById(para);
         } else {
-            logMapper.insert(para);
+            systemLogEventMapper.insert(para);
         }
         return para.getId();
     }

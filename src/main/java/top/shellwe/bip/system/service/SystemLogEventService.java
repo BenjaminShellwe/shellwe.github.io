@@ -9,7 +9,7 @@ package top.shellwe.bip.system.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import top.shellwe.bip.system.dto.input.LogQueryPara;
-import top.shellwe.bip.system.entity.SysLog;
+import top.shellwe.bip.system.entity.SystemLogEvent;
 import top.shellwe.bip.util.Result;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * The interface Log system service.
  */
-public interface LogSystemService extends IService<SysLog> {
+public interface SystemLogEventService extends IService<SystemLogEvent> {
     /**
      * Query all result.
      *
@@ -31,14 +31,14 @@ public interface LogSystemService extends IService<SysLog> {
      * @param para
      * @return
      */
-    void listPage(Page<SysLog> page, LogQueryPara para);
+    void listPage(Page<SystemLogEvent> page, LogQueryPara para);
 
     /**
      * 保存系统管理 - 日志表
      *
      * @param input
      */
-    Integer save(SysLog input);
+    Integer save(SystemLogEvent input);
 
     /**
      * 系统管理 - 日志表列表
@@ -46,5 +46,5 @@ public interface LogSystemService extends IService<SysLog> {
      * @param para
      * @return
      */
-    List<SysLog> list(LogQueryPara para);
+    List<SystemLogEvent> list(LogQueryPara para);
 }

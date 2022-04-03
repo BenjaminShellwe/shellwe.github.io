@@ -7,10 +7,10 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.shellwe.bip.system.mapper.LogMapper">
+<mapper namespace="top.shellwe.bip.system.mapper.SystemLogEventMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="top.shellwe.bip.system.entity.SysLog">
+	<resultMap id="BaseResultMap" type="top.shellwe.bip.system.entity.SystemLogEvent">
 		<id column="id" property="id" />
 		<result column="name" property="name" />
 		<result column="url" property="url" />
@@ -25,29 +25,29 @@
 
   <!--    <resultMap id="ResultMap" type="top.shellwe.bip.system.dto.output.BasicRoleView" extends="BaseResultMap"></resultMap>-->
 
-    <select id="selectLogs" resultMap="BaseResultMap">
+    <select id="selectSystemLogs" resultMap="BaseResultMap">
         SELECT
-             sl.*,su.nick_name as username
-        FROM t_sys_log sl
-        LEFT JOIN t_sys_user su ON sl.user_id = su.id
+             sle.*,bu.userName as username
+        FROM system_log_event sle
+        LEFT JOIN basic_user bu ON sle.user_id = bu.id
         WHERE
              1 = 1
         <if test="filter.id!=null and filter.id!=''">
-            AND sl.id = #{filter.id}
+            AND sle.id = #{filter.id}
         </if>
         <if test="filter.username!=null and filter.username!=''">
-            AND	su.nick_name like '%${filter.username}%'
+            AND	bu.userName like '%${filter.username}%'
         </if>
         <if test="filter.url!=null and filter.url!=''">
-            AND	sl.url like '%${filter.url}%'
+            AND	sle.url like '%${filter.url}%'
         </if>
         <if test="filter.startTime!=null">
-            AND <![CDATA[sl.gmt_create >= #{filter.startTime}]]>
+            AND <![CDATA[sle.gmt_create >= #{filter.startTime}]]>
         </if>
         <if test="filter.endTime!=null">
-            AND <![CDATA[sl.gmt_create <= #{filter.endTime}]]>
+            AND <![CDATA[sle.gmt_create <= #{filter.endTime}]]>
         </if>
-        ORDER BY sl.id DESC
+        ORDER BY sle.id DESC
     </select>
 
 </mapper>

@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import top.shellwe.bip.common.api.BaseController;
 import top.shellwe.bip.common.dto.output.ApiResult;
 import top.shellwe.bip.system.dto.input.LogQueryPara;
-import top.shellwe.bip.system.entity.SysLog;
+import top.shellwe.bip.system.entity.SystemLogEvent;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.shellwe.bip.system.service.LogSystemService;
+import top.shellwe.bip.system.service.SystemLogEventService;
 
 
 /**
@@ -31,13 +31,13 @@ import top.shellwe.bip.system.service.LogSystemService;
 public class SysLogController extends BaseController {
 
     @Autowired
-    LogSystemService logSystemService;
+    SystemLogEventService systemLogEventService;
 
     @PostMapping(value = "/listPage", produces = "application/json;charset=utf-8")
     @ApiOperation(value = "获取系统管理 - 日志表列表分页", httpMethod = "POST", response = ApiResult.class)
     public ApiResult listPage(@RequestBody LogQueryPara filter) {
-        Page<SysLog> page = new Page<>(filter.getPage(),filter.getLimit());
-        logSystemService.listPage(page, filter);
+        Page<SystemLogEvent> page = new Page<>(filter.getPage(),filter.getLimit());
+        systemLogEventService.listPage(page, filter);
         return ApiResult.ok("获取系统管理 - 日志表列表分页成功", page);
     }
 

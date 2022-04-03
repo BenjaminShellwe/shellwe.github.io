@@ -15,9 +15,7 @@ public class Result {
     private String msg = "操作成功";
     private Object data;
 
-    /**
-     * Instantiates a new Result.
-     *
+    /* Instantiates a new Result.
      * @param code the code
      * @param msg  the msg
      */
@@ -25,10 +23,7 @@ public class Result {
         this.code = code;
         this.msg = msg;
     }
-
-    /**
-     * Instantiates a new Result.
-     *
+    /* Instantiates a new Result.
      * @param code the code
      * @param msg  the msg
      * @param data the data
@@ -38,10 +33,7 @@ public class Result {
         this.msg = msg;
         this.data = data;
     }
-
-    /**
-     * Instantiates a new Result.
-     *
+    /* Instantiates a new Result.
      * @param data the data
      */
     public Result(Object data){
