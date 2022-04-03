@@ -11,6 +11,23 @@
             </template>
         </page-header>
         <page-main>
+            <CDialog
+                ref="loginDialog"
+                title="请输入你的昵称"
+                confirm-btn="开始聊天"
+                @confirm="login"
+            >
+                <input v-model="nickname" class="nickname" type="text" placeholder="请输入你的昵称">
+            </CDialog>
+
+            <!--            <CDialog-->
+            <!--                ref="createGroupDialog"-->
+            <!--                title="请输入群名称"-->
+            <!--                confirm-btn="确认"-->
+            <!--                @confirm="createGroup"-->
+            <!--            >-->
+            <!--                <el-input v-model="groupName" class="nickname" type="text" placeholder="请输入群名称" />-->
+            <!--            </CDialog>-->
             <div class="web-im dis-flex">
                 <div class="left">
                     <div class="aside content">
@@ -22,14 +39,14 @@
                         </div>
                         <div class="body user-list">
                             <el-row>
-                                <el-col v-for="item in currentGroups" :key="item">
+                                <el-col v-for="item in currentGroups" :key="item.id">
                                     <div v-if="switchType==2" class="user" @click="triggerGroup(item)">
                                         {{ item.name }}
                                         <span v-if="item.unread" class="tips-num">{{ item.unread }}</span>
                                         <span v-if="!checkUserIsGroup(item)" class="add-group" @click.stop="addGroup(item)">+</span>
                                     </div>
                                 </el-col>
-                                <el-col v-for="item in currentUserList" :key="item">
+                                <el-col v-for="item in currentUserList" :key="item.id">
                                     <div v-if="switchType==1 && item.uid!=uid" class="user" :class="{offline: !item.status}" @click="triggerPersonal(item)">
                                         {{ item.nickname }}
                                         <span v-if="item.unread" class="tips-num">{{ item.unread }}</span>
@@ -39,7 +56,8 @@
                         </div>
                         <div class="footer">
                             <div class="func dis-flex">
-                                <label @click="$refs.createGroupDialog.show()">新建群</label>
+                                <!--<label @click="$refs.createGroupDialog.show()">新建群</label>-->
+                                <label @click="dialogGroupName = true">新建群</label>
                             </div>
                         </div>
                     </div>
@@ -48,7 +66,7 @@
                     <div class="header im-title">{{ title }}</div>
                     <div id="im-record" class="body im-record">
                         <div class="ul">
-                            <div v-for="item in currentMessage" :key="item" class="li" :class="{user: item.uid == uid}">
+                            <div v-for="item in currentMessage" :key="item.id" class="li" :class="{user: item.uid == uid}">
                                 <template v-if="item.type===1">
                                     <p class="join-tips">{{ item.msg }}</p>
                                 </template>
@@ -67,23 +85,44 @@
                     </div>
                 </div>
             </div>
+            <el-dialog
+                title="请输入群名称"
+                :visible.sync="dialogGroupName"
+                width="30%"
+            >
+                <el-input v-model="groupName" class="nickname" type="text" placeholder="请输入群名称" />
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogGroupName = false">取 消</el-button>
+                    <el-button type="goon" @confirm="createGroup" @click="dialogGroupName = false">确 定</el-button>
+                </span>
+            </el-dialog>
+            <!--            <CDialog-->
+            <!--                ref="createGroupDialog"-->
+            <!--                title="请输入群名称"-->
+            <!--                confirm-btn="确认"-->
+            <!--                @confirm="createGroup"-->
+            <!--            >-->
+            <!--                <el-input v-model="groupName" class="nickname" type="text" placeholder="请输入群名称" />-->
+            <!--            </CDialog>-->
         </page-main>
     </div>
 </template>
 
 <script>
+// import Vue from 'vue'
 import moment from 'moment'
 import PageMain from '@/components/PageMain'
+import CDialog from '@/components/CDialog'
 export default {
-    el: 'container',
+    // el: 'container',
     name: 'Chat',
-    components: {PageMain},
+    components: {CDialog, PageMain},
     data() {
         return {
             title: '请选择群或者人员进行聊天',
             switchType: 1,
             uid: '',
-            nickname: '',
+            nickname: this.$store.state.user.userName, // 当前用户昵称
             socket: '',
             msg: '',
             messageList: [],
@@ -92,9 +131,8 @@ export default {
             groupId: '',
             bridge: [],
             groupName: '',
-            dialogVisible: false,
-            userId: this.$store.state.user.id, // 当前用户ID
-            username: this.$store.state.user.userName // 当前用户昵称
+            dialogGroupName: false,
+            userId: this.$store.state.user.id // 当前用户ID
             // avatar: this.$store.getters.avatar, // 当前用户头像
         }
     },
@@ -155,8 +193,15 @@ export default {
         vm.nickname = user.nickname
 
         if (!vm.uid) {
+            this.$notify({
+                title: 'error',
+                message: vm.uid,
+                type: 'error',
+                duration: 6500
+            })
             vm.$refs.loginDialog.show()
         } else {
+            // console.log(vm)
             vm.conWebSocket()
         }
     },
@@ -293,3 +338,27 @@ export default {
     }
 }
 </script>
+
+<style>
+.el-button--goon.is-active,
+.el-button--goon:active {
+    background: #20b2aa;
+    border-color: #20b2aa;
+    color: #fff;
+}
+.el-button--goon:focus,
+.el-button--goon:hover {
+    background: #48d1cc;
+    border-color: #48d1cc;
+    color: #fff;
+}
+.el-button--goon {
+    color: #fff;
+    background-color: #20b2aa;
+    border-color: #20b2aa;
+}
+</style>
+
+<style lang='stylus'>
+@import './chat.styl';
+</style>

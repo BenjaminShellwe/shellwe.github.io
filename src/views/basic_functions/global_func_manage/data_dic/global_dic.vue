@@ -100,7 +100,7 @@
                                     </el-descriptions-item>
                                     <el-descriptions-item label="生效">
                                         <el-select v-model="pageFormValue.valueStatus" :placeholder="pageQueryUID[indexUni-1].valueStatus" :disabled="editable" style="width: 100px;" size="mini">
-                                            <el-option v-for="item in options" :key="item.valueState" :label="item.label" :value="item.valueState" />
+                                            <el-option v-for="itemUni in options" :key="itemUni.valueState" :label="itemUni.label" :value="itemUni.valueState" />
                                         </el-select>
                                     </el-descriptions-item>
                                 </el-descriptions>

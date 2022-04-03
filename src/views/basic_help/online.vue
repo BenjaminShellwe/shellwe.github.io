@@ -7,7 +7,7 @@
                 </div>
                 &nbsp;
                 <div class="inLine">
-                    此页为系统在线助理 本页面还在设计中 在线助力由人事与技术部门管理
+                    此页为系统在线助理 本页面还在设计中
                 </div>
             </template>
         </page-header>

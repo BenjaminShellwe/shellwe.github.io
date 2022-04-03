@@ -30,7 +30,8 @@
                                                 v-for="(v,i) in pagePermissionControl.columnsHead"
                                                 :key="i"
                                                 :label="v.title"
-                                                :prop="v.field" width="80px">
+                                                :prop="v.field" width="80px"
+                                            >
                                                 <template #default="scope">
                                                     <span v-if="scope.row.isSet">
                                                         <el-input v-model="pagePermissionControl.sel[v.field]" size="mini" placeholder="请输入" />
@@ -91,7 +92,8 @@
                                                 :key="i+4"
                                                 :label="v.title"
                                                 :prop="v.field"
-                                                width="80px">
+                                                width="80px"
+                                            >
                                                 <template #default="scope">
                                                     <span v-if="scope.row.isSet">
                                                         <el-input v-model="pagePermissionControl.sel[v.field]" size="mini" placeholder="请输入" />
@@ -112,7 +114,6 @@
                                                     </span>
                                                 </template>
                                             </el-table-column>
-
                                         </el-table>
                                     </el-col>
                                     <el-col :span="24">
