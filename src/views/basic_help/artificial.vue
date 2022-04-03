@@ -16,7 +16,7 @@
                 <template slot="extra">
                     <el-dropdown>
                         <el-button type="primary">
-                            操作<i class="el-icon-arrow-down el-icon--right"></i>
+                            操作<i class="el-icon-arrow-down el-icon--right" />
                         </el-button>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>预设值班</el-dropdown-item>
@@ -27,35 +27,35 @@
                 </template>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-user"></i>
+                        <i class="el-icon-user" />
                         用户名
                     </template>
                     benjamin shellwe
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-mobile-phone"></i>
+                        <i class="el-icon-mobile-phone" />
                         值班电话号码
                     </template>
                     17654321123
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-document"></i>
+                        <i class="el-icon-document" />
                         部门
                     </template>
                     人事部
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-tickets"></i>
+                        <i class="el-icon-tickets" />
                         备注
                     </template>
                     <el-tag size="small">人事主管</el-tag>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-office-building"></i>
+                        <i class="el-icon-office-building" />
                         值班地点
                     </template>
                     非值班室值班 请 预约联系(*)
@@ -65,7 +65,7 @@
                 <template slot="extra">
                     <el-dropdown>
                         <el-button type="primary">
-                            操作<i class="el-icon-arrow-down el-icon--right"></i>
+                            操作<i class="el-icon-arrow-down el-icon--right" />
                         </el-button>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>更改值班信息</el-dropdown-item>
@@ -74,35 +74,35 @@
                 </template>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-user"></i>
+                        <i class="el-icon-user" />
                         用户名
                     </template>
                     benjamin thomas
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-mobile-phone"></i>
+                        <i class="el-icon-mobile-phone" />
                         值班电话号码
                     </template>
                     17654321153
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-document"></i>
+                        <i class="el-icon-document" />
                         部门
                     </template>
                     人事部
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-tickets"></i>
+                        <i class="el-icon-tickets" />
                         备注
                     </template>
                     <el-tag size="small">人事员工</el-tag>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template slot="label">
-                        <i class="el-icon-office-building"></i>
+                        <i class="el-icon-office-building" />
                         值班地点
                     </template>
                     值班室值班 请 前往 值班室预约

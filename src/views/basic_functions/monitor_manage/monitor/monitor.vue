@@ -22,7 +22,7 @@
         </page-header>
         <page-main v-show="pageMainShow">
             <el-table :data="pageDataList" border stripe highlight-current-row>
-                <el-table-column type="index" label="序列" width="50px"/>
+                <el-table-column type="index" label="序列" width="50px" />
                 <el-table-column prop="userName" label="账户名称" />
                 <el-table-column prop="userID" label="账户ID" />
                 <el-table-column prop="gid" label="GID" />

@@ -78,7 +78,7 @@
                     <span class="pageFontSubtitle" type="flex" justify="end">Bachelor of Engineering | TernaryProjectTeam Leader</span>
                 </el-col>
             </el-row>
-            <hr style="height: 1px; border: none; border-top: 1px solid #949494;" />
+            <hr style="height: 1px; border: none; border-top: 1px solid #949494;">
             <el-row>
                 <el-col :span="12">
                     <el-row>man / ***8.12</el-row>

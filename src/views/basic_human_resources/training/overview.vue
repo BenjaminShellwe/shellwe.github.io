@@ -185,19 +185,20 @@
                             >
                                 <el-table-column
                                     label="事务ID"
-                                    prop="id">
-                                </el-table-column>
+                                    prop="id"
+                                />
                                 <el-table-column
                                     label="负责人"
-                                    prop="name">
-                                </el-table-column>
+                                    prop="name"
+                                />
                                 <el-table-column
                                     label="培训内容"
-                                    prop="trainingType">
-                                </el-table-column>
+                                    prop="trainingType"
+                                />
                                 <el-table-column
                                     width="170px"
-                                    align="right">
+                                    align="right"
+                                >
                                     <template slot="header">
                                         <el-input
                                             v-model="search"
@@ -211,11 +212,15 @@
                                     >
                                         <el-button
                                             size="mini"
-                                        >编辑</el-button>
+                                        >
+                                            编辑
+                                        </el-button>
                                         <el-button
                                             size="mini"
                                             type="danger"
-                                        >删除</el-button>
+                                        >
+                                            删除
+                                        </el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -228,19 +233,20 @@
                             >
                                 <el-table-column
                                     label="事务ID"
-                                    prop="id">
-                                </el-table-column>
+                                    prop="id"
+                                />
                                 <el-table-column
                                     label="员工姓名"
-                                    prop="name">
-                                </el-table-column>
+                                    prop="name"
+                                />
                                 <el-table-column
                                     label="培训结果"
-                                    prop="trainingType">
-                                </el-table-column>
+                                    prop="trainingType"
+                                />
                                 <el-table-column
                                     width="170px"
-                                    align="right">
+                                    align="right"
+                                >
                                     <template slot="header">
                                         <el-input
                                             v-model="search"
@@ -254,11 +260,15 @@
                                     >
                                         <el-button
                                             size="mini"
-                                        >查看</el-button>
+                                        >
+                                            查看
+                                        </el-button>
                                         <el-button
                                             size="mini"
                                             type="success"
-                                        >打印</el-button>
+                                        >
+                                            打印
+                                        </el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -304,7 +314,7 @@
                                         label="操作"
                                         width="120"
                                     >
-                                        <template >
+                                        <template>
                                             <el-button-group style="padding: 2px;">
                                                 <el-button style="padding: 0 5px;" type="text" size="small">移除</el-button>
                                                 <el-button style="padding: 0 5px;" type="text" size="small">编辑</el-button>
@@ -342,7 +352,6 @@
                                         <el-table-column
                                             prop="trainingContent"
                                             label="培训内容/名称"
-
                                         />
                                         <el-table-column
                                             prop="notes"
@@ -354,7 +363,7 @@
                                         label="操作"
                                         width="120"
                                     >
-                                        <template >
+                                        <template>
                                             <el-button-group style="padding: 2px;">
                                                 <el-button style="padding: 0 5px;" type="text" size="small">移除</el-button>
                                                 <el-button style="padding: 0 5px;" type="text" size="small">编辑</el-button>

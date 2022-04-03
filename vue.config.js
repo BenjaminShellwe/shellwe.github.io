@@ -79,41 +79,41 @@ module.exports = {
         //     }
         // },
     },
-    transpileDependencies: ['element-ui'],
-    configureWebpack: config => {
-        config.resolve.modules = ['node_modules', 'assets/sprites']
-        config.plugins.push(...spritesmithTasks)
-        if (isCDN) {
-            config.externals = externals
-        }
-        config.optimization = {
-            minimizer: [
-                new terserPlugin({
-                    terserOptions: {
-                        compress: {
-                            warnings: false,
-                            drop_console: true,
-                            drop_debugger: true,
-                            pure_funcs: ['console.log']
-                        }
-                    }
-                })
-            ]
-        }
-        if (isGZIP) {
-            return {
-                plugins: [
-                    new CompressionPlugin({
-                        algorithm: 'gzip',
-                        test: /\.(js|css)$/, // 匹配文件名
-                        threshold: 10240, // 对超过10k的数据压缩
-                        deleteOriginalAssets: false, // 不删除源文件
-                        minRatio: 0.8 // 压缩比
-                    })
-                ]
-            }
-        }
-    },
+    // transpileDependencies: ['element-ui'],
+    // configureWebpack: config => {
+    //     config.resolve.modules = ['node_modules', 'assets/sprites']
+    //     config.plugins.push(...spritesmithTasks)
+    //     if (isCDN) {
+    //         config.externals = externals
+    //     }
+    //     config.optimization = {
+    //         minimizer: [
+    //             new terserPlugin({
+    //                 terserOptions: {
+    //                     compress: {
+    //                         warnings: false,
+    //                         drop_console: true,
+    //                         drop_debugger: true,
+    //                         pure_funcs: ['console.log']
+    //                     }
+    //                 }
+    //             })
+    //         ]
+    //     }
+    //     if (isGZIP) {
+    //         return {
+    //             plugins: [
+    //                 new CompressionPlugin({
+    //                     algorithm: 'gzip',
+    //                     test: /\.(js|css)$/, // 匹配文件名
+    //                     threshold: 10240, // 对超过10k的数据压缩
+    //                     deleteOriginalAssets: false, // 不删除源文件
+    //                     minRatio: 0.8 // 压缩比
+    //                 })
+    //             ]
+    //         }
+    //     }
+    // },
     pluginOptions: {
         lintStyleOnBuild: true,
         stylelint: {

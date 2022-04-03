@@ -71,12 +71,12 @@
                         </el-table-column>
                         <el-table-column
                             label="账户 ID"
-                            prop="id">
-                        </el-table-column>
+                            prop="id"
+                        />
                         <el-table-column
                             label="真实姓名"
-                            prop="name">
-                        </el-table-column>
+                            prop="name"
+                        />
                     </el-table>
                 </el-col>
                 <el-col v-show="pageColVisible" style="margin-left: 20px;" :span="14">
@@ -89,8 +89,8 @@
                                 <el-image
                                     style="width: 105px; height: 135px; margin-left: 30px;"
                                     :src="url"
-                                    :preview-src-list="srcList">
-                                </el-image>
+                                    :preview-src-list="srcList"
+                                />
                             </el-col>
                             <el-col :span="18">
                                 <el-descriptions title="基本信息" border>
@@ -116,7 +116,6 @@
                                 <el-descriptions-item label="联系地址">广东省广州市从化区广从南路 548 号</el-descriptions-item>
                             </el-descriptions>
                         </el-row>
-
                     </el-card>
                 </el-col>
             </el-row>

@@ -29,7 +29,7 @@
                                         <span v-if="!checkUserIsGroup(item)" class="add-group" @click.stop="addGroup(item)">+</span>
                                     </div>
                                 </el-col>
-                                <el-col  v-for="item in currentUserList" :key="item">
+                                <el-col v-for="item in currentUserList" :key="item">
                                     <div v-if="switchType==1 && item.uid!=uid" class="user" :class="{offline: !item.status}" @click="triggerPersonal(item)">
                                         {{ item.nickname }}
                                         <span v-if="item.unread" class="tips-num">{{ item.unread }}</span>

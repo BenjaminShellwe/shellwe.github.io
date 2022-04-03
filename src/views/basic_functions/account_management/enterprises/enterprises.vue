@@ -752,7 +752,7 @@
                                         <el-col :span="22">
                                             <el-row>
                                                 <el-form-item label="部门状态" style="margin: 2px 0 2px 0;">
-                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;"/>
+                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;" />
                                                 </el-form-item>
                                             </el-row>
                                         </el-col>
@@ -760,7 +760,7 @@
                                             <el-form-item size="mini">
                                                 <el-row>
                                                     <!--handleUpdate(pageEmployeeForm)-->
-                                                    <el-button type="primary" style="margin: 6px 0 3px;" >完成</el-button>
+                                                    <el-button type="primary" style="margin: 6px 0 3px;">完成</el-button>
                                                 </el-row>
                                                 <el-row>
                                                     <el-button style="margin: 6px 0 3px;">取消</el-button>
@@ -776,7 +776,7 @@
                                         <el-col :span="22">
                                             <el-row>
                                                 <el-form-item label="事务状态" style="margin: 2px 0 2px 0;">
-                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;"/>
+                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;" />
                                                 </el-form-item>
                                             </el-row>
                                         </el-col>
@@ -784,7 +784,7 @@
                                             <el-form-item size="mini">
                                                 <el-row>
                                                     <!--handleUpdate(pageEmployeeForm)-->
-                                                    <el-button type="primary" style="margin: 6px 0 3px;" >完成</el-button>
+                                                    <el-button type="primary" style="margin: 6px 0 3px;">完成</el-button>
                                                 </el-row>
                                                 <el-row>
                                                     <el-button style="margin: 6px 0 3px;">取消</el-button>
@@ -800,7 +800,7 @@
                                         <el-col :span="22">
                                             <el-row>
                                                 <el-form-item label="通知状态" style="margin: 2px 0 2px 0;">
-                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;"/>
+                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;" />
                                                 </el-form-item>
                                             </el-row>
                                         </el-col>
@@ -808,7 +808,7 @@
                                             <el-form-item size="mini">
                                                 <el-row>
                                                     <!--handleUpdate(pageEmployeeForm)-->
-                                                    <el-button type="primary" style="margin: 6px 0 3px;" >完成</el-button>
+                                                    <el-button type="primary" style="margin: 6px 0 3px;">完成</el-button>
                                                 </el-row>
                                                 <el-row>
                                                     <el-button style="margin: 6px 0 3px;">取消</el-button>
@@ -824,7 +824,7 @@
                                         <el-col :span="22">
                                             <el-row>
                                                 <el-form-item label="定时发布状态" style="margin: 2px 0 2px 0;">
-                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;"/>
+                                                    <el-input v-model="pageDeptInfoChange.departmentStatus" :placeholder="pageDeptInfoChange.departmentStatus" maxlength="30" style="width: 135px;" />
                                                 </el-form-item>
                                             </el-row>
                                         </el-col>
@@ -832,7 +832,7 @@
                                             <el-form-item size="mini">
                                                 <el-row>
                                                     <!--handleUpdate(pageEmployeeForm)-->
-                                                    <el-button type="primary" style="margin: 6px 0 3px;" >完成</el-button>
+                                                    <el-button type="primary" style="margin: 6px 0 3px;">完成</el-button>
                                                 </el-row>
                                                 <el-row>
                                                     <el-button style="margin: 6px 0 3px;">取消</el-button>

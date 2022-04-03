@@ -27,7 +27,7 @@
                                                 </el-col>
                                                 <el-col :span="11">
                                                     <image-upload action="/avatar/insert" />
-                                                    <image-preview src="/avatar/query"/>
+                                                    <image-preview src="/avatar/query" />
                                                 </el-col>
                                             </el-row>
                                         </div>
