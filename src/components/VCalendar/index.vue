@@ -13,7 +13,7 @@
                 <span>目标</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-button type="success" icon="el-icon-s-flag" circle style="margin-bottom: 10px;" @click="pageDialogUniVisible=true" /><br>
                 <span>提醒</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-button type="warning" icon="el-icon-thumb" circle style="margin-bottom: 10px;" @click="pageDialogSubVisible=true" /><br>
                 <span>任务</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-button type="danger" icon="el-icon-finished" circle style="margin-bottom: 10px;" @click="pageDialogTerVisible=true" /><br>
-                <span>活动</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-date" circle style="margin-bottom: 10px;" @click="pageDialogQuaVisible=true" />
+                <span>活动</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-button type="primary" icon="el-icon-date" circle style="margin-bottom: 10px;" @click="pageDialogActivityVisible=true, optTitle='活动'" />
             </div>
         </el-dialog>
         <el-dialog
@@ -111,78 +111,75 @@
                 <el-button type="primary" @click="handleButtonConfirm('pageDialogTerVisible')">确 定</el-button>
             </span>
         </el-dialog>
-
         <el-dialog
-            title="创建一个活动"
+            :title="'创建一个'+optTitle"
             width="30%"
-            :visible.sync="pageDialogQuaVisible"
+            :visible.sync="pageDialogActivityVisible"
         >
-            <div class="inLine">
-                <span>活动标题</span> &nbsp;&nbsp;
-                <el-input
-                    v-model="pageInputTitle"
-                    style="width: 220px;"
-                    prefix-icon="el-icon-circle-plus-outline"
-                    placeholder="请输入活动标题"
-                    size="medium"
-                />
-            </div>
-            <el-switch
-                v-model="pageSwitchValue"
-                active-value="1"
-                inactive-value="0"
-                active-text="全天活动"
-                inactive-text="精确活动"
-                active-color="#13ce66"
-                inactive-color="#0000FF"
-                @change="handleSwitch(0)"
-            />
-            <div class="inLine">
-                <span>选择时间</span> &nbsp;&nbsp;
-                <el-date-picker
-                    v-show="pageTimeShow"
-                    v-model="pageTimePickerValue"
-                    type="datetimerange"
-                    :picker-options="pickerOptions"
-                    range-separator="至"
-                    start-placeholder="开始时间"
-                    end-placeholder="结束时间"
-                    placeholder="选择时间范围"
-                    align="right"
-                    size="medium"
-                    style="width: 220px;"
-                />
-                <el-date-picker
-                    v-show="pageDateShow"
-                    v-model="pageDatePickerValue"
-                    type="daterange"
-                    :picker-options="pickerOptions"
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    align="right"
-                    size="medium"
-                    style="width: 220px;"
-                />
-            </div>
-            <div class="inLine">
-                <span>选择人员</span> &nbsp;&nbsp;
-                <el-select v-model="pageSelectValue" multiple placeholder="请选择参与人员" style="width: 220px;">
-                    <el-option
-                        v-for="item in pageSelectOptions"
-                        :key="item.selectValue"
-                        :label="item.selectLabel"
-                        :value="item.selectValue"
-                        size="medium"
-                    />
-                </el-select>
-            </div>
-            <div class="inLine">
+            <el-form :model="form">
                 <el-row>
-                    <el-col :span="6" style="margin-top: 5px;">
-                        <span>活动内容</span>
+                    <el-col :span="14">
+                        <el-form-item :label="optTitle + '标题'" label-width="70px">
+                            <el-input v-model="form.title" style="width: 220px;" auto-complete="off" :placeholder="'请输入'+optTitle+'名称'" />
+                        </el-form-item>
                     </el-col>
-                    <el-col :span="18">
+                    <el-col :span="10" style="margin-left: 20px; margin-top: 6px; width: 150px;">
+                        <el-switch
+                            v-model="pageSwitchValue"
+                            active-value="1"
+                            inactive-value="0"
+                            active-text="全天"
+                            inactive-text="精确"
+                            active-color="#13ce66"
+                            inactive-color="#0000FF"
+                            @change="handleSwitch(0)"
+                        />
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-form-item label="选择时间" label-width="70px">
+                        <el-date-picker
+                            v-show="pageTimeShow"
+                            v-model="pageTimePickerValue"
+                            type="datetimerange"
+                            :picker-options="pickerOptions"
+                            range-separator="至"
+                            start-placeholder="开始时间"
+                            end-placeholder="结束时间"
+                            placeholder="选择时间范围"
+                            align="right"
+                            size="medium"
+                            style="width: 220px;"
+                        />
+                        <el-date-picker
+                            v-show="pageDateShow"
+                            v-model="pageDatePickerValue"
+                            type="daterange"
+                            :picker-options="pickerOptions"
+                            range-separator="至"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            align="right"
+                            size="medium"
+                            style="width: 220px;"
+                        />
+                    </el-form-item>
+                </el-row>
+                <el-row>
+                    <el-form-item label="选择人员" label-width="70px">
+                        <el-select v-model="pageSelectValue" multiple placeholder="请选择参与人员" style="width: 220px;">
+                            <el-option
+                                v-for="item in pageSelectOptions"
+                                :key="item.selectValue"
+                                :label="item.selectLabel"
+                                :value="item.selectValue"
+                                size="medium"
+                            />
+                        </el-select>
+                    </el-form-item>
+                </el-row>
+                <el-row>
+                    <el-form-item :label="optTitle+'内容'" label-width="70px">
                         <el-input
                             v-model="pageInputText"
                             type="textarea"
@@ -190,12 +187,12 @@
                             placeholder="请输入活动说明内容"
                             style="width: auto; min-width: 220px; margin-left: 4px;"
                         />
-                    </el-col>
+                    </el-form-item>
                 </el-row>
-            </div>
+            </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="pageDialogQuaVisible = false">取 消</el-button>
-                <el-button type="primary" @click="handleButtonConfirm('pageDialogQuaVisible')">创建</el-button>
+                <el-button @click="pageDialogActivityVisible = false">取 消</el-button>
+                <el-button type="primary" @click="handleButtonConfirm('pageDialogActivityVisible')">创建</el-button>
             </div>
         </el-dialog>
     </div>
@@ -208,6 +205,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { INITIAL_EVENTS, createEventId } from './event-utils'
+import axios from 'axios'
 
 const dateOptions = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 export default {
@@ -228,6 +226,14 @@ export default {
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
+                buttonText: {
+                    today: '今天',
+                    month: '月',
+                    week: '周',
+                    day: '日'
+                },
+                locale: 'zh-cn', // 设置语言
+                weekNumberCalculation: 'ISO', // 周数
                 initialView: 'dayGridMonth',
                 initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
                 editable: true,
@@ -244,6 +250,26 @@ export default {
                 eventRemove:
                 */
             },
+            eventTime: {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: false
+            },
+            calendarEvents: [],
+            calendarEventDrop: info => {
+                this.dropEvent(info)
+            },
+            handleDatesRender: arg => {
+                this.getEventsList(arg.view)
+            },
+
+            dialogFormVisible: false,
+            form: {
+                title: null,
+                start: null,
+                end: null
+            },
+            optTitle: '',
             pickerOptions: {
                 shortcuts: [{
                     text: '最近一周',
@@ -300,7 +326,7 @@ export default {
             pageDialogUniVisible: false,
             pageDialogSubVisible: false,
             pageDialogTerVisible: false,
-            pageDialogQuaVisible: false,
+            pageDialogActivityVisible: false,
             pageDivVisible: false,
             pageDateShow: false,
             pageTimeShow: true,
@@ -320,9 +346,39 @@ export default {
     watch: {
 
     },
+    mounted() {
+
+    },
     methods: {
-        handleWeekendsToggle() {
-            this.calendarOptions.weekends = !this.calendarOptions.weekends // update a property
+        handleButtonConfirm(dialogvalue) {
+            this.pageDialogVisible = false
+            this[dialogvalue] = false
+        },
+        handleCheckAllWeek(val) {
+            this.checkDates = val ? dateOptions : []
+            this.isIndeterminateWeek = false
+            this.pageCheckboxVisible = !this.isIndeterminateWeek
+
+        },
+        handleCheckedDatesChange(value) {
+            let checkedCount = value.length
+            this.checkAllWeek = checkedCount === this.dates.length
+            this.isIndeterminateWeek = checkedCount > 0 && checkedCount < this.dates.length
+        },
+        handleClose(done) {
+            this.$confirm('close?')
+                .then(() => {
+                    done()
+                })
+                .catch(() => {})
+        },
+        handleDateClick(arg) {
+            this.dialogFormVisible = true
+            this.optTitle = '新增事件'
+            this.form.title = ''
+            this.form.id = ''
+            this.form.start = arg.date
+            this.form.end = arg.date
         },
         handleDateCheck() {
             this.pageDialogVisible = true
@@ -345,24 +401,36 @@ export default {
 
             }
         },
-        handleButtonConfirm(dialogvalue) {
-            this.pageDialogVisible = false
-            this[dialogvalue] = false
-        },
         handleEventClick(clickInfo) {
             if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
                 clickInfo.event.remove()
+            }
+            clickInfo.el.style.borderColor = 'red'
+            this.dialogFormVisible = true
+            this.optTitle = '修改事件'
+            this.form = {
+                id: clickInfo.event.id,
+                title: clickInfo.event.title,
+                start: clickInfo.event.start,
+                end: clickInfo.event.end
             }
         },
         handleEvents(events) {
             this.currentEvents = events
         },
-        handleClose(done) {
-            this.$confirm('close?')
-                .then(() => {
-                    done()
-                })
-                .catch(() => {})
+        getEventsList(info) {
+            let params = {
+                start: info.activeStart,
+                end: info.activeEnd
+            }
+            axios({
+                method: 'post',
+                url: 'url',
+                data: params
+            }).then(res => {
+                this.calendarEvents = res
+            })
+            console.log(info)
         },
         handleSwitch(val) {
             if (val == 0) {
@@ -390,16 +458,20 @@ export default {
             }
 
         },
-        handleCheckAllWeek(val) {
-            this.checkDates = val ? dateOptions : []
-            this.isIndeterminateWeek = false
-            this.pageCheckboxVisible = !this.isIndeterminateWeek
+        handleWeekendsToggle() {
+            this.calendarOptions.weekends = !this.calendarOptions.weekends // update a property
+        },
+        // 保存事件
+        saveEvent() {
 
         },
-        handleCheckedDatesChange(value) {
-            let checkedCount = value.length
-            this.checkAllWeek = checkedCount === this.dates.length
-            this.isIndeterminateWeek = checkedCount > 0 && checkedCount < this.dates.length
+        // 删除事件
+        delEvent() {
+
+        },
+        // 拖动事件
+        dropEvent(info) {
+            console.log(info)
         }
     }
 }
