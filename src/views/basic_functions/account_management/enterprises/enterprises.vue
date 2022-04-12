@@ -1,3 +1,4 @@
+<!--suppress CommaExpressionJS -->
 <template>
     <div>
         <page-header title="企业账户">

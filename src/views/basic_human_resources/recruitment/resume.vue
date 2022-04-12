@@ -34,6 +34,7 @@
                         />
                     </template>
                     <template #default="scope">
+                        <!--suppress CommaExpressionJS -->
                         <el-button
                             size="mini"
                             type="text"
