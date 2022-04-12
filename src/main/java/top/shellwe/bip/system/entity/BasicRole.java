@@ -18,13 +18,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
-/**
- * @author BenjaminThomas
- * @date 2022/03/28
- * The type Role.
- */
 @Entity(name = "basic_role")
-public class BasicRole extends BaseEntity {
+public class BasicRole extends BaseEntity<BasicRole> {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,11 +32,11 @@ public class BasicRole extends BaseEntity {
     @ApiModelProperty(value = "角色名称")
     @TableField("role")
     @NotBlank(message = "角色名称不能为空")
-    private String role;
+    private String name;
     @ApiModelProperty(value = "角色编码")
     @TableField("code")
     @NotBlank(message = "角色编码不能为空")
-    private String code;
+    private String role;
 
     private String enterprisePermission;
     private String enterpriseAdd;
@@ -60,12 +55,12 @@ public class BasicRole extends BaseEntity {
     private String personalDelete;
     private String status;
 
-    public String getCode() {
-        return code;
+    public String getName() {
+        return name;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**

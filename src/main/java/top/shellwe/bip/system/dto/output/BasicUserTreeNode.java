@@ -8,6 +8,7 @@ package top.shellwe.bip.system.dto.output;
 
 import com.google.common.collect.Lists;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import top.shellwe.bip.system.entity.BasicUser;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  *  <p> 用户树节点 </p>
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class BasicUserTreeNode extends BasicUser {
 

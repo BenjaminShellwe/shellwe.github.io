@@ -6,6 +6,7 @@ package top.shellwe.bip.system.dto.output;
  * Date 2022/3/28 8:56:24
  */
 
+import lombok.EqualsAndHashCode;
 import top.shellwe.bip.system.entity.BasicRole;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,6 +17,7 @@ import lombok.Data;
  * <p> 系统管理-角色表 输出内容</p>
  *
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(description = "系统管理 - 角色表 输出内容")
 public class BasicRoleView extends BasicRole {

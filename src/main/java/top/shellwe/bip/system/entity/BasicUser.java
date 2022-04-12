@@ -19,12 +19,10 @@ import com.baomidou.mybatisplus.enums.IdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import top.shellwe.bip.common.entity.BaseEntity;
 
-/**
- * The type User.
- * @author BenjaminThomas
- */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(description = "系统管理-用户基础表")
 @TableName("basic_user")
@@ -95,129 +93,58 @@ public class BasicUser extends BaseEntity<BasicUser> {
         this.id = id;
     }
 
-    /**
-     * Gets avatar id.
-     *
-     * @return the avatar id
-     */
     public String getAvatarID() {
         return avatarID;
     }
 
-    /**
-     * Sets avatar id.
-     *
-     * @param avatarID the avatar id
-     */
     public void setAvatarID(String avatarID) {
         this.avatarID = avatarID;
     }
 
-    /**
-     * Gets gid.
-     *
-     * @return the gid
-     */
     public String getGID() {
         return GID;
     }
 
-    /**
-     * Sets gid.
-     *
-     * @param GID the gid
-     */
     public void setGID(String GID) {
         this.GID = GID;
     }
 
-    /**
-     * Gets user name.
-     *
-     * @return the user name
-     */
     public String getUserName() {
         return userName;
     }
 
-    /**
-     * Sets user name.
-     *
-     * @param userName the user name
-     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    /**
-     * Gets user real name.
-     *
-     * @return the user real name
-     */
     public String getUserRealName() {
         return userRealName;
     }
 
-    /**
-     * Sets user real name.
-     *
-     * @param userRealName the user real name
-     */
     public void setUserRealName(String userRealName) {
         this.userRealName = userRealName;
     }
 
-    /**
-     * Gets user password.
-     *
-     * @return the user password
-     * @param s
-     */
     public String getUserPassword(String s) {
         return userPassword;
     }
 
-    /**
-     * Sets user password.
-     *
-     * @param userPassword the user password
-     */
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }
 
-    /**
-     * Gets user role.
-     *
-     * @return the user role
-     */
     public String getUserRole() {
         return userRole;
     }
 
-    /**
-     * Sets user role.
-     *
-     * @param userRole the user role
-     */
     public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
 
-    /**
-     * Gets enterprise id.
-     *
-     * @return the enterprise id
-     */
     public String getEnterpriseID() {
         return enterpriseID;
     }
 
-    /**
-     * Sets enterprise id.
-     *
-     * @param enterpriseID the enterprise id
-     */
     public void setEnterpriseID(String enterpriseID) {
         this.enterpriseID = enterpriseID;
     }
